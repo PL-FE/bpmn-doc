@@ -24,7 +24,7 @@
 
 ---
 
-### Canvas
+### List
 
 - [canvas.getDefaultLayer](#canvasgetDefaultLayer)
 - [canvas.getLayer](#canvasgetLayer)
@@ -46,6 +46,41 @@
 - [canvas.getSize](#canvasgetSize)
 - [canvas.getAbsoluteBBox](#canvasgetAbsoluteBBox)
 - [canvas.resized](#canvasresized)
+
+- elementFactory.createRoot
+- elementFactory.createLabel
+- elementFactory.createShape
+- elementFactory.createConnection
+
+* [elementRegistry.add](#elementRegistryadd)
+* [elementRegistry.remove](#elementRegistryremove)
+* [elementRegistry.get](#elementRegistryget)
+* [elementRegistry.getAll](#[elementRegistrygetAll)
+* [elementRegistry.updateId](#elementRegistryupdateId)
+* [elementRegistry.filter](#elementRegistryfilter)
+* [elementRegistry.forEach](#elementRegistryforEach)
+* [elementRegistry.getGraphics](#elementRegistrygetGraphics)
+
+- [modeling.updateProperties](#modelingupdateProperties)
+- [modeling.createShape](#modelingcreateShape)
+- [modeling.appendShape](#modelingappendShape)
+- [modeling.createElements](#modeling more)
+- [modeling.appendShape](#modeling more)
+- [modeling.createLabel](#modeling more)
+- [modeling.removeElements](#modeling more)
+- [modeling.removeShape](#modeling more)
+- [modeling.removeConnection](#modeling more)
+- [modeling.alignElements](#modeling more)
+- [modeling.resizeShape](#modeling more)
+- [modeling.createSpace](#modeling more)
+- [modeling.updateWaypoints](#modeling more)
+- [modeling.reconnect](#modeling more)
+- [modeling.reconnectStart](#modeling more)
+- [modeling.reconnectEnd](#modeling more)
+- [modeling.connect](#modeling more)
+- [modeling.toggleCollapse](#modeling more)
+
+### Canvas
 
 ```js
 canvas = modeler.get('canvas')
@@ -378,14 +413,11 @@ canvas.resized()
 
 ### [BpmnFactory](https://github.com/bpmn-io/diagram-js/blob/master/lib/core/ElementFactory.js)
 
-- elementFactory.createRoot
-- elementFactory.createLabel
-- elementFactory.createShape
-- elementFactory.createConnection
-
 ```js
 elementFactory = modeler.get('elementFactory')
 ```
+
+#### elementFactory.createRoot
 
 ```js
 /**
@@ -401,18 +433,30 @@ elementFactory.createShape(attrs)
 elementFactory.createConnection(attrs)
 ```
 
+#### elementFactory.createLabel
+
+```js
+elementFactory.createLabel(attrs)
+elementFactory.createShape(attrs)
+elementFactory.createConnection(attrs)
+```
+
+#### elementFactory.createShape
+
+```js
+elementFactory.createShape(attrs)
+elementFactory.createConnection(attrs)
+```
+
+#### elementFactory.createConnection
+
+```js
+elementFactory.createConnection(attrs)
+```
+
 ---
 
 ### [ElementRegistry](https://github.com/bpmn-io/diagram-js/blob/master/lib/core/ElementRegistry.js)
-
-- [elementRegistry.add](#elementRegistryadd)
-- [elementRegistry.remove](#elementRegistryremove)
-- [elementRegistry.get](#elementRegistryget)
-- [elementRegistry.getAll](#[elementRegistrygetAll)
-- [elementRegistry.updateId](#elementRegistryupdateId)
-- [elementRegistry.filter](#elementRegistryfilter)
-- [elementRegistry.forEach](#elementRegistryforEach)
-- [elementRegistry.getGraphics](#elementRegistrygetGraphics)
 
 ```js
 const elementRegistry = modeler.get('elementRegistry')
@@ -533,7 +577,7 @@ elementRegistry.getGraphics(filter, secondary)
 
 ### [Modeling](https://github.com/bpmn-io/diagram-js/blob/master/lib/features/modeling/Modeling.js)
 
-### modeling.updateProperties
+#### modeling.updateProperties
 
 ```js
 // 更新业务对象属性（常用） 包括 id
@@ -578,6 +622,8 @@ modeling.createShape(shape, position, target, parentIndex, hints)
  */
 modeling.appendShape(source, shape, position, target, hints)
 ```
+
+#### modeling more
 
 ```js
 modeling.createElements(shape, position, target, parentIndex, hints)
