@@ -1,6 +1,6 @@
 # bpmnApi
 
-一开始只能望官方 demo 发愣，因为没找到一个完整的 API 文档，所以只能自己慢慢记录
+本篇 API 根据对应源码总结而得，其中部分方法待验证。
 
 ---
 
@@ -10,21 +10,22 @@
 
 [https://pl-fe.github.io/bpmn-modeling-api-cn.github.io/](https://pl-fe.github.io/bpmn-modeling-api-cn.github.io/)
 
-原版 bpmn-modeling-api
+官方 bpmn-modeling-api
 
 [https://github.com/bpmn-io/bpmn-js-examples/tree/master/modeling-api](https://github.com/bpmn-io/bpmn-js-examples/tree/master/modeling-api)
 
-常用到的服务
+常用服务:
 
-- Canvas
-- [BpmnFactory](): 根据 bpmn-js 的内部数据模型`创建业务对象`的工厂
+- [Canvas](https://github.com/bpmn-io/diagram-js/blob/master/lib/core/Canvas.js):提供了添加和删除图形元素的 api;处理元素生命周期，并提供用于缩放和滚动的 api。
+- [BpmnFactory](https://github.com/bpmn-io/bpmn-js/blob/develop/lib/features/modeling/BpmnFactory.js): 根据 bpmn-js 的内部数据模型`创建业务对象`的工厂
 - [ElementFactory](https://github.com/bpmn-io/diagram-js/blob/master/lib/core/ElementFactory.js): 根据 bpmn-js 的内部数据模型`创建形状和连接`的工厂。
 - [ElementRegistry](https://github.com/bpmn-io/diagram-js/blob/master/lib/core/ElementRegistry.js): 知道添加到图中的所有元素，并提供 api 来根据 id `检索元素及其图形表示`。
-- Modeling: 提供用于`更新`画布上的元素`(移动、删除)`的 api
+- [Modeling](https://github.com/bpmn-io/diagram-js/blob/master/lib/features/modeling/Modeling.js): 提供用于`更新`画布上的元素`(移动、删除)`的 api
+- GraphicsFactory: 负责创建图形和连接的图形表示。实际的外观是由渲染器定义的，即绘制模块中的 DefaultRenderer。
 
----
+### Index
 
-### List
+建议使用<kbd>Ctrl</kbd> + <kbd>F</kbd> 或  <kbd>command</kbd> + <kbd>F</kbd>搜索
 
 - [canvas.getDefaultLayer](#canvasgetDefaultLayer)
 - [canvas.getLayer](#canvasgetLayer)
@@ -45,21 +46,23 @@
 - [canvas.zoom](#canvaszoom)
 - [canvas.getSize](#canvasgetSize)
 - [canvas.getAbsoluteBBox](#canvasgetAbsoluteBBox)
-- [canvas.resized](#canvasresized)
+- [canvas.getAbsoluteBBox](#canvasgetAbsoluteBBox)
 
-- elementFactory.createRoot
-- elementFactory.createLabel
-- elementFactory.createShape
-- elementFactory.createConnection
+* [bpmnFactory.create](#bpmnFactorycreate)
 
-- [elementRegistry.add](#elementRegistryadd)
-- [elementRegistry.remove](#elementRegistryremove)
-- [elementRegistry.get](#elementRegistryget)
-- [elementRegistry.getAll](#[elementRegistrygetAll)
-- [elementRegistry.updateId](#elementRegistryupdateId)
-- [elementRegistry.filter](#elementRegistryfilter)
-- [elementRegistry.forEach](#elementRegistryforEach)
-- [elementRegistry.getGraphics](#elementRegistrygetGraphics)
+- [elementFactory.createRoot](#elementFactorycreateRoot)
+- [elementFactory.createLabel](#elementFactorycreateLabel)
+- [elementFactory.createShape](#elementFactorycreateShape)
+- [elementFactory.createConnection](#elementFactorycreateConnection)
+
+* [elementRegistry.add](#elementRegistryadd)
+* [elementRegistry.remove](#elementRegistryremove)
+* [elementRegistry.get](#elementRegistryget)
+* [elementRegistry.getAll](#[elementRegistrygetAll)
+* [elementRegistry.updateId](#elementRegistryupdateId)
+* [elementRegistry.filter](#elementRegistryfilter)
+* [elementRegistry.forEach](#elementRegistryforEach)
+* [elementRegistry.getGraphics](#elementRegistrygetGraphics)
 
 - [modeling.updateProperties](#modelingupdateProperties)
 - [modeling.createShape](#modelingcreateShape)
@@ -407,7 +410,15 @@ canvas.resized()
 
 ### [BpmnFactory]()
 
-- bpmnFactory.create
+```js
+elementFactory = modeler.get('bpmnFactory')
+```
+
+#### bpmnFactory.create
+
+```js
+bpmnFactory.create(type, attrs)
+```
 
 ---
 
@@ -428,24 +439,18 @@ elementFactory = modeler.get('elementFactory')
  * @return {djs.model.Base} the newly created model instance
  */
 elementFactory.createRoot(attrs)
-elementFactory.createLabel(attrs)
-elementFactory.createShape(attrs)
-elementFactory.createConnection(attrs)
 ```
 
 #### elementFactory.createLabel
 
 ```js
 elementFactory.createLabel(attrs)
-elementFactory.createShape(attrs)
-elementFactory.createConnection(attrs)
 ```
 
 #### elementFactory.createShape
 
 ```js
 elementFactory.createShape(attrs)
-elementFactory.createConnection(attrs)
 ```
 
 #### elementFactory.createConnection
