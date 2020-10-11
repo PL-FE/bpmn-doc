@@ -9,6 +9,7 @@
       <el-button @click="handlerZoom(0.1)">放大</el-button>
       <el-button @click="handlerZoom(-0.1)">缩小</el-button>
       <el-button @click="handlerZoom(0)">还原</el-button>
+      <el-button @click="getElementAll">获取所有元素</el-button>
 
       <input type="file"
         id="files"
@@ -101,6 +102,8 @@ export default {
       // 调整与正中间
       this.bpmnModeler.get('canvas').zoom('fit-viewport', 'auto')
 
+      const a = this.bpmnModeler.get('canvas').getContainer()
+      console.log('a', a)
       // 初始化箭头
       this.initArrow('sequenceflow-arrow-normal')
       this.initArrow('sequenceflow-arrow-active')
@@ -228,7 +231,9 @@ export default {
 
     // 获取所有元素
     getElementAll () {
-      return this.bpmnModeler.get('elementRegistry').getAll()
+      const all = this.bpmnModeler.get('elementRegistry').getAll()
+      console.log('all', all)
+      return all
     },
     // 根据 id 获取元素
     getElementById (id) {
