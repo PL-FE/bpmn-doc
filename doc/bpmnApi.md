@@ -26,27 +26,26 @@
 
 ### Canvas
 
-- canvas.getDefaultLayer
-- canvas.getLayer
-- canvas.getContainer
-- canvas.addMarker
-- canvas.removeMarker
-- canvas.hasMarker
-- canvas.toggleMarker
-- canvas.setRootElement
-- canvas.addShape
-- canvas.addConnection
-- canvas.removeShape
-- canvas.removeConnection
-- canvas.getGraphics
-- canvas.viewbox
-- canvas.getGraphics
-- canvas.scroll
-- canvas.zoom
-- canvas.getSize
-- canvas.getAbsoluteBBox
-- canvas.resized
--
+- [canvas.getDefaultLayer](#canvasgetDefaultLayer)
+- [canvas.getLayer](#canvasgetLayer)
+- [canvas.getContainer](#canvasgetContainer)
+- [canvas.addMarker](#canvasaddMarker)
+- [canvas.removeMarker](#canvasremoveMarker)
+- [canvas.hasMarker](#canvashasMarker)
+- [canvas.toggleMarker](#canvastoggleMarker)
+- [canvas.setRootElement](#canvassetRootElement)
+- [canvas.addShape](#canvasaddShape)
+- [canvas.addConnection](#canvasaddConnection)
+- [canvas.removeShape](#canvasremoveShape)
+- [canvas.removeConnection](#canvasremoveConnection)
+- [canvas.getGraphics](#canvasgetGraphics)
+- [canvas.viewbox](#canvasviewbox)
+- [canvas.getGraphics](#canvasgetGraphics)
+- [canvas.scroll](#canvasscroll)
+- [canvas.zoom](#canvaszoom)
+- [canvas.getSize](#canvasgetSize)
+- [canvas.getAbsoluteBBox](#canvasgetAbsoluteBBox)
+- [canvas.resized](#canvasresized)
 
 ```js
 canvas = modeler.get('canvas')
@@ -375,6 +374,8 @@ canvas.resized()
 
 - bpmnFactory.create
 
+---
+
 ### [BpmnFactory](https://github.com/bpmn-io/diagram-js/blob/master/lib/core/ElementFactory.js)
 
 - elementFactory.createRoot
@@ -400,16 +401,18 @@ elementFactory.createShape(attrs)
 elementFactory.createConnection(attrs)
 ```
 
+---
+
 ### [ElementRegistry](https://github.com/bpmn-io/diagram-js/blob/master/lib/core/ElementRegistry.js)
 
-- [elementRegistry.add()](#elementRegistry.add)
-- [elementRegistry.remove](#elementRegistry.remove)
-- [elementRegistry.get](#elementRegistry.get)
-- [elementRegistry.getAll](#[elementRegistry.getAll)
-- [elementRegistry.updateId](#elementRegistry.updateId)
-- [elementRegistry.filter](#elementRegistry.filter)
-- [elementRegistry.forEach](#elementRegistry.forEach)
-- [elementRegistry.getGraphics](#elementRegistry.getGraphics)
+- [elementRegistry.add](#elementRegistryadd)
+- [elementRegistry.remove](#elementRegistryremove)
+- [elementRegistry.get](#elementRegistryget)
+- [elementRegistry.getAll](#[elementRegistrygetAll)
+- [elementRegistry.updateId](#elementRegistryupdateId)
+- [elementRegistry.filter](#elementRegistryfilter)
+- [elementRegistry.forEach](#elementRegistryforEach)
+- [elementRegistry.getGraphics](#elementRegistrygetGraphics)
 
 ```js
 const elementRegistry = modeler.get('elementRegistry')
@@ -526,6 +529,8 @@ elementRegistry.forEach(fn)
 elementRegistry.getGraphics(filter, secondary)
 ```
 
+---
+
 ### [Modeling](https://github.com/bpmn-io/diagram-js/blob/master/lib/features/modeling/Modeling.js)
 
 ### modeling.updateProperties
@@ -590,3 +595,5 @@ modeling.reconnectEnd(connection, newTarget, dockingOrPoints, hints)
 modeling.connect(source, target, attrs, hints)
 modeling.toggleCollapse(shape, hints)
 ```
+
+---
