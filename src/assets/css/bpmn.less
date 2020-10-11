@@ -1,0 +1,66 @@
+// minimap 的样式
+
+@lineColorNormal: #9e9e9e;
+@lineColorActive: #2196f3;
+
+// 左侧工具栏位置
+.djs-palette {
+  width: 100px;
+  height: 100%;
+  position: absolute;
+  border: 1px solid #ccc;
+  z-index: 2;
+  left: 0;
+  top: 0;
+}
+
+// 网格背景
+.djs-container {
+  background-image: linear-gradient(
+      90deg,
+      rgba(200, 200, 200, 0.15) 10%,
+      rgba(0, 0, 0, 0) 10%
+    ),
+    linear-gradient(rgba(200, 200, 200, 0.15) 10%, rgba(0, 0, 0, 0) 10%);
+  background-size: 10px 10px;
+}
+
+// 线的样式
+.djs-connection {
+  // 平常的样式
+  path {
+    stroke: @lineColorNormal !important;
+    marker-end: url(#sequenceflow-arrow-normal) !important;
+  }
+
+  // 选择时的样式
+  &.selected {
+    path {
+      stroke: @lineColorActive !important;
+      marker-end: url(#sequenceflow-arrow-active) !important;
+    }
+  }
+}
+
+// 拖拽时
+.djs-drag-active {
+  path {
+    stroke: @lineColorNormal !important;
+    marker-end: url(#sequenceflow-arrow-normal) !important;
+  }
+}
+
+#sequenceflow-arrow-normal {
+  fill: @lineColorNormal;
+  stroke: @lineColorNormal;
+}
+
+#sequenceflow-arrow-active {
+  fill: @lineColorActive;
+  stroke: @lineColorActive;
+}
+
+.djs-container {
+  --bendpoint-fill-color: #ffeb3b;
+  --bendpoint-stroke-color: #ffeb3b;
+}

@@ -1,8 +1,12 @@
 <template>
   <div id="app">
-    <div id="nav"><router-link to="/">Home</router-link> |</div>
     <router-view />
   </div>
 </template>
 
-<style lang="less"></style>
+<style lang="less">
+body {
+  margin: 0;
+  overflow: hidden;
+}
+</style>

@@ -16,8 +16,7 @@
         style="display: none"
         @change="loadXML" />
     </div>
-    <div ref="palette">
-    </div>
+    <div ref="palette"></div>
     <div class="canvas"
       ref="canvas"></div>
   </div>
@@ -36,9 +35,7 @@ import {
   create as svgCreate
 } from 'tiny-svg'
 
-import {
-  query as domQuery
-} from 'min-dom'
+import { query as domQuery } from 'min-dom'
 
 export default {
   name: 'Bpmn',
@@ -145,7 +142,8 @@ export default {
 
       svgAttr(path, {
         d: 'M 1 5 L 11 10 L 1 15 Z',
-        style: ' stroke-width: 1px; stroke-linecap: round; stroke-dasharray: 10000, 1; '
+        style:
+          ' stroke-width: 1px; stroke-linecap: round; stroke-dasharray: 10000, 1; '
       })
 
       const defs = domQuery('defs')
@@ -240,10 +238,16 @@ export default {
     // 创建 业务对象 business objects
     createBusinessElement () {
       const bpmnFactory = this.bpmnModeler.get('bpmnFactory')
-      const taskBusinessObject = bpmnFactory.create('bpmn:Task', { id: 'Task_1', name: 'Task' })
+      const taskBusinessObject = bpmnFactory.create('bpmn:Task', {
+        id: 'Task_1',
+        name: 'Task'
+      })
 
       // 使用刚创建的业务对象创建新的图表形状
-      const task = this.createElement({ type: 'bpmn:Task', businessObject: taskBusinessObject })
+      const task = this.createElement({
+        type: 'bpmn:Task',
+        businessObject: taskBusinessObject
+      })
       return task
     },
 
@@ -268,9 +272,19 @@ export default {
     },
 
     // 添加元素并连线
-    appendConnect (sourceElement, targetElement, location = { x: 400, y: 100 }, parentsElement) {
+    appendConnect (
+      sourceElement,
+      targetElement,
+      location = { x: 400, y: 100 },
+      parentsElement
+    ) {
       const modeling = this.bpmnModeler.get('modeling')
-      modeling.appendShape(sourceElement, targetElement, location, parentsElement)
+      modeling.appendShape(
+        sourceElement,
+        targetElement,
+        location,
+        parentsElement
+      )
     },
 
     // 查看所有可用事件
@@ -294,7 +308,7 @@ export default {
 <style lang="less" scoped>
 .bpmn {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   position: relative;
 
   .canvas {
