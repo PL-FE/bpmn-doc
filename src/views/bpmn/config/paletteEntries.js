@@ -1,10 +1,6 @@
-import {
-    assign
-} from 'min-dash'
-
+import { assign } from 'min-dash'
 
 function createAction (type, group, className, title, translate, options) {
-
     var shortType = type.replace(/^bpmn:/, '')
 
     function createListener (event, autoActivate, elementFactory, create) {
@@ -26,8 +22,6 @@ function createAction (type, group, className, title, translate, options) {
         }
     }
 }
-
-
 
 export default {
     'create.start-event2': createAction(

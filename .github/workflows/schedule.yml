@@ -1,8 +1,8 @@
-name: Update Vue Admin
+name: Update Bpmn-doc
 on:
   push:
     branches:
-      - master
+      - main
   schedule:
     - cron: '0 0 * * *'
 
