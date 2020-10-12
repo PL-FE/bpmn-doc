@@ -11,14 +11,14 @@
 
 ## 在线预览
 
-vue + bpmn 预览：[http://vue.pengliang.online/](http://vue.pengliang.online/)
+vue + bpmn 预览： [http://bpmn-doc.pengliang.online/](http://bpmn-doc.pengliang.online/)
 
 ## 功能
 
+- [x] <a href="./doc/bpmnApi.md">总结常用 API 🚩</a>
 - [x] <a href="./doc/customPalette.md">自定义 Palette</a>
 - [x] <a href="./doc/customConnectionColor.md">自定义连线和箭头的颜色</a>
 - [x] <a href="./doc/customMiniMap.md">右上角小地图</a>
-- [x] <a href="./doc/bpmnApi.md">总结常用 API 🚩</a>
 - [ ] 自定义 Renderer
 - [ ] 自定义 contextPad
 - [ ] 自定义 properties-panel

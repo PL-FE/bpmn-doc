@@ -104,8 +104,6 @@ export default {
       // 调整与正中间
       this.bpmnModeler.get('canvas').zoom('fit-viewport', 'auto')
 
-      const a = this.bpmnModeler.get('canvas').getContainer()
-      console.log('a', a)
       // 初始化箭头
       this.initArrow('sequenceflow-arrow-normal')
       this.initArrow('sequenceflow-arrow-active')

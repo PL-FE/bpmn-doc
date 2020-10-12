@@ -32,35 +32,35 @@ import {
   create as svgCreate
 } from 'tiny-svg'
 
- initArrow () {
-      const marker = svgCreate('marker')
+bpmnModeler.importXML(xml).then(() => {
+  const marker = svgCreate('marker')
 
-      svgAttr(marker, {
-        id: '#sequenceflow-arrow-normal',
-        viewBox: '0 0 20 20',
-        refX: '11',
-        refY: '10',
-        markerWidth: '10',
-        markerHeight: '10',
-        orient: 'auto'
-      })
+  svgAttr(marker, {
+    id: '#sequenceflow-arrow-normal',
+    viewBox: '0 0 20 20',
+    refX: '11',
+    refY: '10',
+    markerWidth: '10',
+    markerHeight: '10',
+    orient: 'auto'
+  })
 
-      const path = svgCreate('path')
+  const path = svgCreate('path')
 
-      svgAttr(path, {
-        d: 'M 1 5 L 11 10 L 1 15 Z',
-        style:
-          ' stroke-width: 1px; stroke-linecap: round; stroke-dasharray: 10000, 1; '
-      })
+  svgAttr(path, {
+    d: 'M 1 5 L 11 10 L 1 15 Z',
+    style:
+      ' stroke-width: 1px; stroke-linecap: round; stroke-dasharray: 10000, 1; '
+  })
 
-      const defs = domQuery('defs')
-      svgAppend(marker, path)
-      svgAppend(defs, marker)
-    },
+  const defs = domQuery('defs')
+  svgAppend(marker, path)
+  svgAppend(defs, marker)
+})
 ```
 
 ---
 
 ## 最后
 
-具体可以尝试运行一下项目或者[在线预览](http://vue.pengliang.online/)
+[在线预览](http://bpmn-doc.pengliang.online/)
