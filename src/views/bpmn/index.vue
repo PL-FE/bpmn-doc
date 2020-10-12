@@ -27,6 +27,7 @@
 // 引入相关的依赖
 import BpmnModeler from 'bpmn-js/lib/Modeler'
 import customPalette from './customBpmn/palette'
+import entries from './config/paletteEntries'
 import minimapModule from 'diagram-js-minimap'
 
 import { xmlStr } from './xmlData' // 这里是直接引用了xml字符串
@@ -71,6 +72,7 @@ export default {
         modules,
         container: canvas,
         paletteContainer: palette,
+        paletteEntries: entries,
         keyboard: {
           bindTo: document
         },

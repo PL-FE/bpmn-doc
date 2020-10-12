@@ -12,6 +12,7 @@ import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css'
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css'
 import 'diagram-js-minimap/assets/diagram-js-minimap.css'
 
+import '@/assets/css/diagram-js.less'
 import '@/assets/css/bpmn.less'
 
 Vue.use(ElementUI)

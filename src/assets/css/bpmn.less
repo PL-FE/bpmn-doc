@@ -3,17 +3,6 @@
 @lineColorNormal: #9e9e9e;
 @lineColorActive: #2196f3;
 
-// 左侧工具栏位置
-.djs-palette {
-  width: 100px;
-  height: 100%;
-  position: absolute;
-  border: 1px solid #ccc;
-  z-index: 2;
-  left: 0;
-  top: 0;
-}
-
 // 网格背景
 .djs-container {
   background-image: linear-gradient(
@@ -63,4 +52,89 @@
 .djs-container {
   --bendpoint-fill-color: #ffeb3b;
   --bendpoint-stroke-color: #ffeb3b;
+}
+
+// 左侧工具栏位置
+.custom-palette {
+  position: absolute;
+  left: 20px;
+  top: 0px;
+  box-sizing: border-box;
+  width: 96px;
+  height: 100vh;
+
+  .groupLabel {
+    width: 100%;
+    height: 30px;
+    background-color: #e4e4e4;
+    margin-bottom: 10px;
+    cursor: pointer;
+
+    span {
+      display: inline-block;
+      width: calc(100% - 20px);
+      line-height: 30px;
+      overflow: hidden;
+      text-align: center;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    i {
+      vertical-align: super;
+    }
+  }
+
+  // 所有元素
+  .entry {
+    float: none;
+    margin: 0 auto;
+    margin-bottom: 30px;
+    width: 46px;
+    height: 46px;
+    line-height: 46px;
+    box-sizing: border-box;
+    cursor: pointer;
+  }
+
+  // 开始事件
+  .custom-icon-start-event-none {
+    border: 2px solid #ccc;
+    background-color: #00bb3f;
+    border-radius: 50%;
+  }
+
+  // 结束事件
+  .custom-icon-end-event-none {
+    border: 2px solid #ccc;
+    background-color: #ff7373;
+    border-radius: 50%;
+  }
+
+  // 任务 Task
+  .custom-icon-task {
+    border-radius: 10px;
+    width: 60px;
+    height: 40px;
+    border: 1px solid #ccc;
+    background-color: #2ca9e1;
+  }
+
+  // 网关
+  .custom-icon-gateway-none {
+    background-color: #2ca9e1;
+    border: 1px solid #ccc;
+    width: 36px;
+    height: 36px;
+    transform: rotate(45deg);
+  }
+
+  // 数据对象
+  .custom-icon-data-object {
+    background-color: #2ca9e1;
+    height: 60px;
+    width: 40px;
+    border: 1px solid #ccc;
+  }
 }

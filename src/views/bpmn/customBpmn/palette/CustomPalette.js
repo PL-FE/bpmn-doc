@@ -1,8 +1,4 @@
-import {
-  isArray,
-  isFunction,
-  forEach
-} from 'min-dash'
+import { isArray, isFunction, forEach } from 'min-dash'
 
 import {
   domify,
@@ -15,7 +11,7 @@ import {
   event as domEvent
 } from 'min-dom'
 
-var TOGGLE_SELECTOR = '.djs-palette-toggle'
+var TOGGLE_SELECTOR = '.custom-palette-toggle'
 var ENTRY_SELECTOR = '.entry'
 var ELEMENT_SELECTOR = TOGGLE_SELECTOR + ', ' + ENTRY_SELECTOR
 
@@ -27,10 +23,20 @@ var DEFAULT_PRIORITY = 1000
 /**
  * A palette containing modeling elements.
  */
-function Palette (eventBus, canvas, paletteContainer) {
+function Palette (
+  eventBus,
+  canvas,
+  elementFactory,
+  create,
+  paletteContainer,
+  paletteEntries
+) {
   this._eventBus = eventBus
   this._canvas = canvas
+  this._entries = paletteEntries
   this._paletteContainer = paletteContainer
+  this._elementFactory = elementFactory
+  this._create = create
   var self = this
 
   eventBus.on('tool-manager.update', function (event) {
@@ -50,8 +56,14 @@ function Palette (eventBus, canvas, paletteContainer) {
   })
 }
 
-Palette.$inject = ['eventBus', 'canvas', 'config.paletteContainer']
-
+Palette.$inject = [
+  'eventBus',
+  'canvas',
+  'elementFactory',
+  'create',
+  'config.paletteContainer',
+  'config.paletteEntries'
+]
 /**
  * Register a provider with the palette
  *
@@ -128,20 +140,23 @@ Palette.prototype._init = function () {
   var parentContainer = this._getParentContainer()
 
   let _container = this._paletteContainer
-  // 这里使用 djs-palette 、 djs-palette-entries 作为类名是因为 使用工具栏的样式
+  // 这里使用 custom-palette 、 custom-palette-entries 作为类名是因为 使用工具栏的样式
   // 如果要自定义工具栏样式 可以修改此类名，为新类名写上自己的样式即可
   if (!_container) {
-    _container = domify('<div class="djs-palette"></div>')
+    _container = domify('<div class="custom-palette"></div>')
   } else {
-    domAttr(_container, 'class', 'djs-palette')
+    domAttr(_container, 'class', 'custom-palette')
   }
 
-  const paletteEntriesContainer = domQuery('.djs-palette-entries', _container)
+  const paletteEntriesContainer = domQuery(
+    '.custom-palette-entries',
+    _container
+  )
   if (!paletteEntriesContainer) {
-    _container.appendChild(domify('<div class="djs-palette-entries"></div>'))
+    _container.appendChild(domify('<div class="custom-palette-entries"></div>'))
   }
 
-  var container = this._container = _container
+  var container = (this._container = _container)
 
   parentContainer.appendChild(container)
 
@@ -221,9 +236,8 @@ Palette.prototype._toggleState = function (state) {
 
 // 修改 palette 布局样式，元素样式一般通过类名实现
 Palette.prototype._update = function () {
-  var entriesContainer = domQuery('.djs-palette-entries', this._container)
-  var entries = this._entries = this.getEntries()
-
+  var entriesContainer = domQuery('.custom-palette-entries', this._container)
+  var entries = (this._entries = this.getEntries())
   domClear(entriesContainer)
 
   forEach(entries, function (entry, id) {
@@ -231,12 +245,41 @@ Palette.prototype._update = function () {
 
     var container = domQuery('[data-group=' + grouping + ']', entriesContainer)
     if (!container) {
-      container = domify('<div class="group" data-group="' + grouping + '"></div>')
+      container = domify(
+        '<div class="group" data-group="' + grouping + '"></div>'
+      )
+      const arrowDown = 'el-icon-arrow-down'
+      const groupLabel = domify(
+        `<div class="groupLabel"><span title="${grouping}">${grouping}</span></i></i><i id="custom-palette-group-arrow" class="${arrowDown} a"></i></div></div>`
+      )
+
+      groupLabel.addEventListener('click', function () {
+        const iconArrowDown = this.querySelector('.el-icon-arrow-down')
+        const iconArrowLeft = this.querySelector('.el-icon-arrow-left')
+        if (iconArrowDown) {
+          // const isArrowDown = Array.from(iconArrowDown).includes('el-icon-arrow-down')
+          iconArrowDown.classList = ['el-icon-arrow-left']
+          const entry = this.parentNode.querySelectorAll('.entry')
+          forEach(entry, function (it) {
+            it.style.display = 'none'
+          })
+        }
+        if (iconArrowLeft) {
+          iconArrowLeft.classList = ['el-icon-arrow-down']
+          const entry = this.parentNode.querySelectorAll('.entry')
+          forEach(entry, function (it) {
+            it.style.display = 'block'
+          })
+        }
+      })
+
+      container.appendChild(groupLabel)
       entriesContainer.appendChild(container)
     }
 
-    var html = entry.html || (
-      entry.separator
+    var html =
+      entry.html ||
+      (entry.separator
         ? '<hr class="separator" />'
         : '<div class="entry" draggable="true"></div>')
 
@@ -272,6 +315,8 @@ Palette.prototype._update = function () {
  */
 Palette.prototype.trigger = function (action, event, autoActivate) {
   var entries = this._entries
+  var elementFactory = this._elementFactory
+  var create = this._create
   var entry
   var handler
   var originalEvent
@@ -291,15 +336,14 @@ Palette.prototype.trigger = function (action, event, autoActivate) {
   handler = entry.action
 
   originalEvent = event.originalEvent || event
-
-  // simple action (via callback function)
+  //  传入 action 的 dragstart方法 click 方法
   if (isFunction(handler)) {
     if (action === 'click') {
-      handler(originalEvent, autoActivate)
+      handler(originalEvent, autoActivate, elementFactory, create)
     }
   } else {
     if (handler[action]) {
-      handler[action](originalEvent, autoActivate)
+      handler[action](originalEvent, autoActivate, elementFactory, create)
     }
   }
 
@@ -360,11 +404,10 @@ Palette.prototype.isActiveTool = function (tool) {
 }
 
 Palette.prototype.updateToolHighlight = function (name) {
-  var entriesContainer,
-    toolsContainer
+  var entriesContainer, toolsContainer
 
   if (!this._toolsContainer) {
-    entriesContainer = domQuery('.djs-palette-entries', this._container)
+    entriesContainer = domQuery('.custom-palette-entries', this._container)
 
     this._toolsContainer = domQuery('[data-group=tools]', entriesContainer)
   }
@@ -419,9 +462,9 @@ Palette.prototype._getParentContainer = function () {
 /* markup definition */
 
 Palette.HTML_MARKUP =
-  '<div class="djs-palette">' +
-  '<div class="djs-palette-entries"></div>' +
-  '<div class="djs-palette-toggle"></div>' +
+  '<div class="custom-palette">' +
+  '<div class="custom-palette-entries"></div>' +
+  '<div class="custom-palette-toggle"></div>' +
   '</div>'
 
 // helpers //////////////////////
@@ -429,7 +472,9 @@ Palette.HTML_MARKUP =
 function addClasses (element, classNames) {
   var classes = domClasses(element)
 
-  var actualClassNames = isArray(classNames) ? classNames : classNames.split(/\s+/g)
+  var actualClassNames = isArray(classNames)
+    ? classNames
+    : classNames.split(/\s+/g)
   actualClassNames.forEach(function (cls) {
     classes.add(cls)
   })
