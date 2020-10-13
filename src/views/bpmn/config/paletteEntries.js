@@ -1,30 +1,21 @@
 import { assign } from 'min-dash'
-
-function createAction (type, group, className, title, translate, options) {
-    var shortType = type.replace(/^bpmn:/, '')
-
-    function createListener (event, autoActivate, elementFactory, create) {
-        var shape = elementFactory.createShape(assign({ type: type }, options))
-
-        if (options) {
-            shape.businessObject.di.isExpanded = options.isExpanded
-        }
-
-        create.start(event, shape)
-    }
-    return {
-        group: group,
-        className: className,
-        title: title || translate('Create {type}', { type: shortType }),
-        action: {
-            dragstart: createListener,
-            click: createListener
-        }
-    }
-}
+import {
+    append as svgAppend,
+    attr as svgAttr,
+    classes as svgClasses,
+    create as svgCreate,
+    remove as svgRemove
+} from 'tiny-svg'
 
 export default {
-    'create.start-event2': createAction(
+    'create.customtask': createAction(
+        'etl:Task', // etl.json 定义
+        '自定义',
+        'customShape customtask', // CustomPalette.js 做了特殊处理，能够加多个类名
+        'Create custom Task',
+        drawCustomTask
+    ),
+    'create.start-StartEvent': createAction(
         'bpmn:StartEvent',
         'event',
         'custom-icon-start-event-none',
@@ -39,19 +30,104 @@ export default {
     'create.task': createAction(
         'bpmn:Task',
         'activity',
-        'custom-icon-task',
+        'inShape custom-icon-task',
         'Create Task'
     ),
     'create.exclusive-gateway': createAction(
         'bpmn:ExclusiveGateway',
         'gateway',
-        'custom-icon-gateway-none',
+        'inShape custom-icon-gateway-none',
         'Create Gateway'
     ),
     'create.data-object': createAction(
         'bpmn:DataObjectReference',
         'data-object',
-        'custom-icon-data-object',
+        'inShape custom-icon-data-object',
         'Create DataObjectReference'
-    )
+    ),
 }
+
+function createAction (type, group, className, title, drawShape, translate, options) {
+    var shortType = type.replace(/^bpmn:/, '')
+
+    function createListener (event, autoActivate, elementFactory, create) {
+        var shape = elementFactory.createShape(assign({ type: type }, options))
+
+        if (options) {
+            shape.businessObject.di.isExpanded = options.isExpanded
+        }
+
+        create.start(event, shape)
+    }
+    return {
+        type,
+        group: group,
+        className: className,
+        title: title || translate('Create {type}', { type: shortType }),
+        drawShape,
+        action: {
+            dragstart: createListener,
+            click: createListener
+        }
+    }
+}
+
+function drawCustomTask (parentNode, element, textRenderer, entries) {
+    console.log('element', element)
+    const width = 130,
+        height = 60,
+        borderRadius = 20,
+        strokeColor = '#4483ec',
+        fillColor = '#a2c5fd'
+
+    element.width = width
+    element.height = height
+
+    const rect = drawRect(parentNode, width, height, borderRadius, strokeColor, fillColor)
+    renderLabel(textRenderer, parentNode, 'aaa')
+    element.enable = false
+    return rect
+}
+
+
+// helpers //////////
+
+function renderLabel (textRenderer, parentGfx, label, options) {
+
+    options = assign({
+        align: 'center-middle',
+    }, options);
+
+    var text = textRenderer.createText(label || '', options);
+
+    svgClasses(text).add('djs-label');
+
+    svgAppend(parentGfx, text);
+
+    return text;
+}
+
+// copied from https://github.com/bpmn-io/bpmn-js/blob/master/lib/draw/BpmnRenderer.js
+function drawRect (parentNode, width, height, borderRadius, strokeColor, fillColor) {
+    const rect = svgCreate('rect')
+
+    svgAttr(rect, {
+        width: width,
+        height: height,
+        rx: borderRadius,
+        ry: borderRadius,
+        stroke: strokeColor || '#000',
+        strokeWidth: 2,
+        fill: fillColor
+    })
+
+    svgAppend(parentNode, rect)
+
+    return rect
+}
+
+// copied from https://github.com/bpmn-io/diagram-js/blob/master/lib/core/GraphicsFactory.js
+function prependTo (newNode, parentNode, siblingNode) {
+    parentNode.insertBefore(newNode, siblingNode || parentNode.firstChild)
+}
+

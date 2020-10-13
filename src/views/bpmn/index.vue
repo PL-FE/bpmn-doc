@@ -27,9 +27,10 @@
 // 引入相关的依赖
 import BpmnModeler from 'bpmn-js/lib/Modeler'
 import customPalette from './customBpmn/palette'
+import customRenderer from './customBpmn/renderer'
 import entries from './config/paletteEntries'
+import etlExtension from './config/etl.json'
 import minimapModule from 'diagram-js-minimap'
-
 import { xmlStr } from './xmlData' // 这里是直接引用了xml字符串
 import {
   append as svgAppend,
@@ -64,23 +65,33 @@ export default {
       modules.splice(index, 1)
 
       const canvas = this.$refs.canvas
-      // 自定义工具栏位置
-      // 自定义样式 CustomPalette.js
       const palette = this.$refs.palette
       // 建模
       this.bpmnModeler = new BpmnModeler({
+        // 去除默认工具栏
         modules,
+        // 主要容器
         container: canvas,
+        // 工具栏容器
         paletteContainer: palette,
+        // 工具栏配置及实现自定义渲染方法
         paletteEntries: entries,
+        // 开启键盘快捷
         keyboard: {
           bindTo: document
         },
+        // 添加自定义元模型
+        moddleExtensions: {
+          etl: etlExtension
+        },
+        // 扩展
         additionalModules: [
           // 小地图
           minimapModule,
           // 自定义工具栏
-          customPalette
+          customPalette,
+          // 自定义渲染
+          customRenderer
           // {
           //   // 禁用滚轮滚动
           //   zoomScroll: ['value', ''],

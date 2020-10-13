@@ -62,6 +62,7 @@
   box-sizing: border-box;
   width: 96px;
   height: 100vh;
+  overflow: auto;
 
   .groupLabel {
     width: 100%;
@@ -96,18 +97,28 @@
     line-height: 46px;
     box-sizing: border-box;
     cursor: pointer;
+
+    &.inShape {
+      border: 2px solid #36bbf6;
+      background-color: #72d3ff;
+    }
+
+    &.customShape {
+      border: 2px solid #4483ec;
+      background-color: #a2c5fd;
+    }
   }
 
   // 开始事件
   .custom-icon-start-event-none {
-    border: 2px solid #ccc;
-    background-color: #00bb3f;
+    border: 2px solid #1cc315;
+    background-color: #45e25c;
     border-radius: 50%;
   }
 
   // 结束事件
   .custom-icon-end-event-none {
-    border: 2px solid #ccc;
+    border: 2px solid#de2626;
     background-color: #ff7373;
     border-radius: 50%;
   }
@@ -117,14 +128,10 @@
     border-radius: 10px;
     width: 60px;
     height: 40px;
-    border: 1px solid #ccc;
-    background-color: #2ca9e1;
   }
 
   // 网关
   .custom-icon-gateway-none {
-    background-color: #2ca9e1;
-    border: 1px solid #ccc;
     width: 36px;
     height: 36px;
     transform: rotate(45deg);
@@ -132,9 +139,13 @@
 
   // 数据对象
   .custom-icon-data-object {
-    background-color: #2ca9e1;
     height: 60px;
     width: 40px;
-    border: 1px solid #ccc;
+  }
+
+  .customtask {
+    border-radius: 10px;
+    width: 70px;
+    height: 40px;
   }
 }

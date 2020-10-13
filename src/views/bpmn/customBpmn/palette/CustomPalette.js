@@ -294,7 +294,8 @@ Palette.prototype._update = function () {
       }
 
       if (entry.className) {
-        addClasses(control, entry.className)
+        const classList = entry.className.split(' ')
+        addClasses(control, classList)
       }
 
       if (entry.imageUrl) {

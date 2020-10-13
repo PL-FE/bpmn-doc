@@ -1,0 +1,17 @@
+{
+  "name": "etl",
+  "uri": "http://etl.org/bpmn",
+  "prefix": "etl",
+  "xml": {
+    "tagAlias": "lowerCase"
+  },
+  "associations": [],
+  "types": [
+    {
+      "name": "Task",
+      "superClass": ["bpmn:UserTask"],
+      "properties": []
+    }
+  ],
+  "emumerations": []
+}
