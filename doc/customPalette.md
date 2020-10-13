@@ -1,6 +1,7 @@
 # 自定义 Palette
 
 由于 `bpmn-js` 构建在两个重要的库之上:`diagram-js` 和 `bpmn-moddle`
+
 `diagram-js` 是一个工具箱，用于在 web 上显示和修改图表。
 `diagram-js` 使用`依赖注入(DI)`来连接和发现图组件。
 所以为我们扩展 Bpmn 提供了很大方便，包括传递 元素信息、模型信息、Palette 容器信息等，都可以直接在 `new Modeler(option)` 中的 `option` 传递
