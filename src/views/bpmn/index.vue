@@ -28,6 +28,7 @@
 import BpmnModeler from 'bpmn-js/lib/Modeler'
 import customPalette from './customBpmn/palette'
 import customRenderer from './customBpmn/renderer'
+import customContextPad from './customBpmn/context-pad'
 import entries from './config/paletteEntries'
 import etlExtension from './config/etl.json'
 import minimapModule from 'diagram-js-minimap'
@@ -85,6 +86,8 @@ export default {
           customPalette,
           // 自定义渲染
           customRenderer,
+          // 自定义内容面板
+          customContextPad,
           {
             // 禁用左侧默认工具栏
             paletteProvider: ['value', ''],

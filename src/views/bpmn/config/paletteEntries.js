@@ -31,7 +31,8 @@ export default {
         'bpmn:Task',
         'activity',
         'inShape custom-icon-task',
-        'Create Task'
+        'Create Task',
+        drawTask
     ),
     'create.exclusive-gateway': createAction(
         'bpmn:ExclusiveGateway',
@@ -76,12 +77,25 @@ function createAction (type, group, className, title, drawShape, translate, opti
 }
 
 function drawCustomTask (parentNode, element, textRenderer, entries) {
-    console.log('element', element)
     const width = 130,
         height = 60,
         borderRadius = 20,
         strokeColor = '#4483ec',
-        fillColor = '#a2c5fd'
+        fillColor = !element.businessObject.suitable && '#a2c5fd'
+
+    element.width = width
+    element.height = height
+
+    const rect = drawRect(parentNode, width, height, borderRadius, strokeColor, fillColor)
+    return rect
+}
+
+function drawTask (parentNode, element, textRenderer, entries) {
+    const width = 100,
+        height = 80,
+        borderRadius = 20,
+        strokeColor = element.businessObject.suitable,
+        fillColor = '#fff'
 
     element.width = width
     element.height = height
