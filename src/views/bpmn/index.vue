@@ -59,17 +59,10 @@ export default {
   },
   methods: {
     async init () {
-      // 去除默认工具栏
-      const modules = BpmnModeler.prototype._modules
-      const index = modules.findIndex(it => it.paletteProvider)
-      modules.splice(index, 1)
-
       const canvas = this.$refs.canvas
       const palette = this.$refs.palette
       // 建模
       this.bpmnModeler = new BpmnModeler({
-        // 去除默认工具栏
-        modules,
         // 主要容器
         container: canvas,
         // 工具栏容器
@@ -91,19 +84,19 @@ export default {
           // 自定义工具栏
           customPalette,
           // 自定义渲染
-          customRenderer
-          // {
-          //   // 禁用滚轮滚动
-          //   zoomScroll: ['value', ''],
-          //   // 禁止拖动线
-          //   bendpoints: ['value', ''],
-          //   // 禁用左侧面板
-          //   paletteProvider: ['value', ''],
-          //   // 禁止点击节点出现contextPad
-          //   contextPadProvider: ['value', ''],
-          //   // 禁止双击节点出现label编辑框
-          //   labelEditingProvider: ['value', '']
-          // }
+          customRenderer,
+          {
+            // 禁用左侧默认工具栏
+            paletteProvider: ['value', ''],
+            // // 禁用滚轮滚动
+            // zoomScroll: ['value', ''],
+            // // 禁止拖动线
+            // bendpoints: ['value', ''],
+            // // 禁止点击节点出现contextPad
+            // contextPadProvider: ['value', ''],
+            // // 禁止双击节点出现label编辑框
+            // labelEditingProvider: ['value', '']
+          }
         ]
       })
       // 绑定事件

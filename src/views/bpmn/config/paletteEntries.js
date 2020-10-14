@@ -11,7 +11,7 @@ export default {
     'create.customtask': createAction(
         'etl:Task', // etl.json 定义
         '自定义',
-        'customShape customtask', // CustomPalette.js 做了特殊处理，能够加多个类名
+        'customShape customtask',
         'Create custom Task',
         drawCustomTask
     ),
@@ -57,6 +57,9 @@ function createAction (type, group, className, title, drawShape, translate, opti
             shape.businessObject.di.isExpanded = options.isExpanded
         }
 
+        // TODO: 自定义元模型 需要 实现 createText
+        shape.businessObject.name = type
+
         create.start(event, shape)
     }
     return {
@@ -84,28 +87,11 @@ function drawCustomTask (parentNode, element, textRenderer, entries) {
     element.height = height
 
     const rect = drawRect(parentNode, width, height, borderRadius, strokeColor, fillColor)
-    renderLabel(textRenderer, parentNode, 'aaa')
-    element.enable = false
     return rect
 }
 
 
 // helpers //////////
-
-function renderLabel (textRenderer, parentGfx, label, options) {
-
-    options = assign({
-        align: 'center-middle',
-    }, options);
-
-    var text = textRenderer.createText(label || '', options);
-
-    svgClasses(text).add('djs-label');
-
-    svgAppend(parentGfx, text);
-
-    return text;
-}
 
 // copied from https://github.com/bpmn-io/bpmn-js/blob/master/lib/draw/BpmnRenderer.js
 function drawRect (parentNode, width, height, borderRadius, strokeColor, fillColor) {
