@@ -88,7 +88,7 @@ Palette.$inject = [
 
 ```js
 // 工具栏样式主要由这两个方法实现，工具栏是 `HTML` 实现的，我们可以直接修改源码
-// 目前只支持 img ，可以自己扩展支持 SVG 等等
+// 目前可以使用图片静态资源 ，也可以自己扩展支持 SVG 等等
 Palette.prototype._update()
 ```
 
@@ -105,41 +105,77 @@ Palette.prototype._update()
 关键代码：
 
 ```js
-// 初始化的时候绑定一些事件
-domDelegate.bind(container, ELEMENT_SELECTOR, 'click', function(event) {
-  // 其他代码...
-  self.trigger('click', event)
-})
+Palette.prototype._init = function() {
+  // 一些其他代码
 
-domDelegate.bind(container, ENTRY_SELECTOR, 'dragstart', function(event) {
-  self.trigger('dragstart', event)
-})
+  // 初始化的时候绑定一些事件
+  domDelegate.bind(container, ELEMENT_SELECTOR, 'click', function(event) {
+    // 其他代码...
+    self.trigger('click', event)
+  })
 
-Palette.prototype.trigger = function(action, event, autoActivate) {
-  // 其他代码...
-  var elementFactory = this._elementFactory
-  var create = this._create
-  handler = entry.action
-  var originalEvent
-  if (isFunction(handler)) {
-    if (action === 'click') {
-      // 调用 click: click自定义渲染方法
-      handler(originalEvent, autoActivate, elementFactory, create)
+  domDelegate.bind(container, ENTRY_SELECTOR, 'dragstart', function(event) {
+    self.trigger('dragstart', event)
+  })
+
+  Palette.prototype.trigger = function(action, event, autoActivate) {
+    // 其他代码...
+    var elementFactory = this._elementFactory
+    var create = this._create
+    handler = entry.action
+    var originalEvent
+    if (isFunction(handler)) {
+      if (action === 'click') {
+        // 调用 click: click自定义渲染方法
+        handler(originalEvent, autoActivate, elementFactory, create)
+      }
+    } else {
+      if (handler[action]) {
+        // 调用  dragstart: dragstart自定义渲染方法
+        handler[action](originalEvent, autoActivate, elementFactory, create)
+      }
     }
-  } else {
-    if (handler[action]) {
-      // 调用  dragstart: dragstart自定义渲染方法
-      handler[action](originalEvent, autoActivate, elementFactory, create)
-    }
+
+    // silence other actions
+    event.preventDefault()
   }
-
-  // silence other actions
-  event.preventDefault()
 }
+```
+
+### 介绍配置文件 paletteEntries.js
+
+`paletteEntries.js` 返回的是一个对象，也可以是一个数组
+
+对象大概长这样
+
+```js
+{
+ 'create.data-object': {
+        type:'bpmn:DataObjectReference',
+        group: 'data-object',
+        className: 'inShape custom-icon-data-object',
+        title: 'Create DataObjectReference',
+         action: {
+            dragstart: createShape,
+            click: createShape
+        }
+        }
+}
+
+function createShape (event, autoActivate, elementFactory, create) {
+        var shape = elementFactory.createShape(assign({ type: type }, options))
+
+        // 可以设置默认值
+        shape.businessObject.name = type
+        create.start(event, shape)
+        // 执行完就可以创建一个新元素了
+    }
 ```
 
 ## 最后
 
 你将拥有一个全新的工具栏。
+
 可能对你有帮助的官方资源：
+
 - [bpmn-js-example-custom-elements ](https://github.com/bpmn-io/bpmn-js-example-custom-elements)
