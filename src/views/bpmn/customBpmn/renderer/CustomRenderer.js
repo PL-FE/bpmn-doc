@@ -46,7 +46,7 @@ CustomRenderer.prototype.getShapePath = function (shape) {
     return getRoundRectPath(shape, TASK_BORDER_RADIUS)
   }
 
-  return BpmnRenderer.prototype.getShapePath(shape)
+  return BpmnRenderer.prototype.getShapePath.call(this, shape)
 }
 
 CustomRenderer.$inject = [

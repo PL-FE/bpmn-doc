@@ -85,8 +85,16 @@ function drawCustomTask (parentNode, element, textRenderer, entries) {
 
     element.width = width
     element.height = height
-
     const rect = drawRect(parentNode, width, height, borderRadius, strokeColor, fillColor)
+    const text = textRenderer.createText(element.businessObject.name || '', {
+        box: element,
+        align: 'center-middle',
+        padding: 5,
+        size: {
+            width: 100
+        }
+    });
+    svgAppend(parentNode, text)
     return rect
 }
 
@@ -99,8 +107,16 @@ function drawTask (parentNode, element, textRenderer, entries) {
 
     element.width = width
     element.height = height
-
     const rect = drawRect(parentNode, width, height, borderRadius, strokeColor, fillColor)
+    const text = textRenderer.createText(element.businessObject.name || '', {
+        box: element,
+        align: 'center-middle',
+        padding: 5,
+        size: {
+            width: 100
+        }
+    });
+    svgAppend(parentNode, text)
     return rect
 }
 
