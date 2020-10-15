@@ -4,7 +4,7 @@
 
 `diagram-js` 是一个工具箱，用于在 web 上显示和修改图表。
 `diagram-js` 使用`依赖注入(DI)`来连接和发现图组件。
-为扩展 Bpmn 提供了很大方便，包括传递 元素信息、模型信息、Palette 容器信息等，都可以直接在 `new Modeler(option)` 中的 `option` 传递
+为扩展 Bpmn 提供了很大方便，包括传递 元素信息、模型信息、Palette 容器信息等，统一在 `new Modeler(option)` 中的 `option` 传递
 
 ---
 
@@ -12,9 +12,14 @@
 
 主要思路是将源码中的 `Palette` 相关源码拷贝出来，进行自定义修改后，通过 `additionalModules` 再传进去
 
-源码在手，为所欲为
-
 可自定义工具栏的 `布局、位置、大小颜色、指定工具栏的容器等`
+
+相关代码：
+
+- [src\views\bpmn\index.vue](../src/views/bpmn/index.vue)
+- [src\views\bpmn\customBpmn\palette](../src/views/bpmn/customBpmn/palette)
+- [src\main.js](../src/main.js)
+- [src\assets\css](../src/assets/css)
 
 ---
 
@@ -22,28 +27,35 @@
 
 #### 1. 入口
 
+[index.vue](../src/views/bpmn/index.vue)
+
 ```js
 import entries from '@/views/bpmn/config/paletteEntries'
 import customPalette from '@/views/bpmn/customBpmn/palette'
+
+// 去除默认工具栏
+const modules = BpmnModeler.prototype._modules
+const index = modules.findIndex(it => it.paletteProvider)
+modules.splice(index, 1)
 
 const canvas = this.$refs.canvas
 const palette = this.$refs.palette
 // 建模
 this.bpmnModeler = new BpmnModeler({
-  // 主要容器
-  container: canvas,
-  // 工具栏容器
-  paletteContainer: palette,
-  // 工具栏配置及实现自定义渲染方法
-  paletteEntries: entries,
-  additionalModules: [
-    // 自定义工具栏
-    customPalette,
-    {
-      // 去掉左侧默认工具栏
-      paletteProvider: ['value', '']
-    }
-  ]
+	// 主要容器
+	container: canvas,
+	// 工具栏容器
+	paletteContainer: palette,
+	// 工具栏配置及实现自定义渲染方法
+	paletteEntries: entries,
+	additionalModules: [
+		// 自定义工具栏
+		customPalette,
+		{
+			// 去掉左侧默认工具栏
+			//	paletteProvider: ['value', ''] // 这个去除不干净、还是会生成默认 palette
+		}
+	]
 })
 ```
 
@@ -51,48 +63,99 @@ this.bpmnModeler = new BpmnModeler({
 
 > `Provider` 是 `提供器;医疗服务提供者;属性;提供者;提供程序` 的意思，是给 `Palette` 提供数据的
 
+[CustomPaletteProvider.js](../src/views/bpmn/customBpmn/palette/CustomPaletteProvider.js)
+
 ```js
 PaletteProvider.$inject = [
   'config.paletteEntries'
   // 其他代码...
 ```
 
-通过注入 `$inject` 拿到传入的工具条目 `paletteEntries`
+`$inject` 注入需要的数据（工具条目） `paletteEntries`
 
 ```js
 PaletteProvider.prototype.getPaletteEntries = function(element) {
-  return this._entries
+	return this._entries
 }
 ```
 
-重写`PaletteProvider.prototype.getPaletteEntries`
+重写`PaletteProvider.prototype.getPaletteEntries` 方法
+
+将工具栏的元素提供给 `CustomPalette.js`
 
 #### 3. CustomPalette 实现样式
+
+[CustomPalette.js](../src/views/bpmn/customBpmn/palette/CustomPalette.js)
 
 首先看一下注入：
 
 ```js
 Palette.$inject = [
-  // 创建元素需要
-  'eventBus',
-  'canvas',
-  'elementFactory',
-  'create',
-  // 创建元素和指定工具栏容器需要
-  'config.paletteContainer', // 对应 new BpmnModeler 的 paletteContainer: palette,
-  'config.paletteEntries' // 对应 new BpmnModeler 的 paletteEntries: entries,
+	// 创建元素需要
+	'eventBus',
+	'canvas',
+	'elementFactory',
+	'create',
+	// 创建元素和指定工具栏容器需要
+	'config.paletteContainer', // 对应 new BpmnModeler 的 paletteContainer: palette,
+	'config.paletteEntries' // 对应 new BpmnModeler 的 paletteEntries: entries,
 ]
 ```
 
-有了上面的数据，下面开始使用
+有了上面的数据，下面开始修改工具栏布局的主要方法
+
+[Palette.prototype.\_update()](https://github.com/bpmn-io/diagram-js/blob/develop/lib/features/palette/Palette.js#L221)
+
+注意 `domQuery、domify、domAttr`等为 `bpmn` 的工具函数 `min-dom`
 
 ```js
-// 工具栏样式主要由这两个方法实现，工具栏是 `HTML` 实现的，我们可以直接修改源码
-// 目前可以使用图片静态资源 ，也可以自己扩展支持 SVG 等等
-Palette.prototype._update()
-```
+Palette.prototype._update = function() {
+// 搜索 canves 也就是指定的 bpmn 容器内有没有 .djs-palette-entries
+  var entriesContainer = domQuery('.custom-palette-entries', this._container)
+  var entries = this._entries = this.getEntries()
+  domClear(entriesContainer);
 
-修改完了，不要忘记修改样式，尤其是修改了默认工具栏类名，需要引入 `diagram-js.css` ，修改成想同的类名
+// 开始对每一个工具栏的元素遍历
+  forEach(entries, function(entry, id) {
+
+// 接下来对他进行样式添加、属性的添加、一些列操作
+// 大家可以在这里动手修改自己想要的工具栏
+    var grouping = entry.group || 'default';
+    //  设置分组
+    var container = domQuery('[data-group=' + grouping + ']', entriesContainer);
+    if (!container) {
+      container = domify('<div class="group" data-group="' + grouping + '"></div>');
+      entriesContainer.appendChild(container);
+    }
+
+// 如果传入 不是 separator 分割线，就代表是元素
+// <div class="entry" draggable="true"></div> 是元素本体
+    var html = entry.html || (
+      entry.separator ?
+        '<hr class="separator" />' :
+        '<div class="entry" draggable="true"></div>');
+
+
+    var control = domify(html);
+    container.appendChild(control);
+
+    if (!entry.separator) {
+      domAttr(control, 'data-action', id);
+
+      if (entry.title) {
+        domAttr(control, 'title', entry.title);
+      }
+
+      if (entry.className) {
+        addClasses(control, entry.className);
+      }
+  // 这里支持图片、大家可以自行扩展 svg 我认为 svg 更好看，当然字体图标也是不错的选择
+      if (entry.imageUrl) {
+        control.appendChild(domify('<img src="' + entry.imageUrl + '">'));
+      }
+    }
+  });
+```
 
 #### 4. CustomPalette 实现拖拽生成元素
 
@@ -106,47 +169,83 @@ Palette.prototype._update()
 
 ```js
 Palette.prototype._init = function() {
-  // 一些其他代码
+	var self = this
 
-  // 初始化的时候绑定一些事件
-  domDelegate.bind(container, ELEMENT_SELECTOR, 'click', function(event) {
-    // 其他代码...
-    self.trigger('click', event)
-  })
+	var eventBus = this._eventBus
 
-  domDelegate.bind(container, ENTRY_SELECTOR, 'dragstart', function(event) {
-    self.trigger('dragstart', event)
-  })
+	var parentContainer = this._getParentContainer()
+	// 获取传入的工具栏容器
+	var container = (this._container = this._paletteContainer)
+	// 未找到 使用默认
+	if (!container) {
+		container = this._container = domify(Palette.HTML_MARKUP)
+	} else {
+		// 为 传入的工具栏容器 创建子元素
+		addClasses(container, 'custom-palette')
+		const entries = domQuery('.custom-palette-entries', container)
+		const toggle = domQuery('.custom-palette-toggle', container)
 
-  Palette.prototype.trigger = function(action, event, autoActivate) {
-    // 其他代码...
-    var elementFactory = this._elementFactory
-    var create = this._create
-    handler = entry.action
-    var originalEvent
-    if (isFunction(handler)) {
-      if (action === 'click') {
-        // 调用 click: click自定义渲染方法
-        handler(originalEvent, autoActivate, elementFactory, create)
-      }
-    } else {
-      if (handler[action]) {
-        // 调用  dragstart: dragstart自定义渲染方法
-        handler[action](originalEvent, autoActivate, elementFactory, create)
-      }
-    }
+		if (!entries) {
+			container.appendChild(
+				domify('<div class="custom-palette-entries"></div>')
+			)
+		}
+		if (!toggle) {
+			container.appendChild(domify('<div class="custom-palette-toggle"></div>'))
+		}
+	}
+	// 在 大容器 加入工具栏
+	parentContainer.appendChild(container)
 
-    // silence other actions
-    event.preventDefault()
-  }
+	// 下面是绑定 click 、 dragstart
+
+	domDelegate.bind(container, ELEMENT_SELECTOR, 'click', function(event) {
+		var target = event.delegateTarget
+
+		if (domMatches(target, TOGGLE_SELECTOR)) {
+			return self.toggle()
+		}
+
+		self.trigger('click', event) // 关键方法 trigger 如下
+	})
+
+	// prevent drag propagation
+	domDelegate.bind(container, ENTRY_SELECTOR, 'dragstart', function(event) {
+		self.trigger('dragstart', event)
+	})
+}
+
+Palette.prototype.trigger = function(action, event, autoActivate) {
+	handler = entry.action
+
+	originalEvent = event.originalEvent || event
+
+	// simple action (via callback function)
+	//  传入 action 的 dragstart方法 click 方法
+	if (isFunction(handler)) {
+		if (action === 'click') {
+			handler(originalEvent, autoActivate, elementFactory, create)
+		}
+	} else {
+		if (handler[action]) {
+			handler[action](originalEvent, autoActivate, elementFactory, create)
+		}
+	}
+
+	// silence other actions
+	event.preventDefault()
 }
 ```
 
-### 介绍配置文件 paletteEntries.js
+#### 5. 配置文件 paletteEntries.js
+
+这个文件就是我们主要做配置的地方，如自定义工具栏及其功能、自定义渲染等
 
 `paletteEntries.js` 返回的是一个对象，也可以是一个数组
 
-对象大概长这样
+对象的内容可以由自己修改 [CustomPalette.js](../src/views/bpmn/customBpmn/palette/CustomPalette.js) 决定
+
+一般我们的对象大概长这样 👇
 
 ```js
 {
@@ -172,10 +271,24 @@ function createShape (event, autoActivate, elementFactory, create) {
     }
 ```
 
-## 最后
+如果你使用的是默认的元素类名，那么一切大功告成
 
-你将拥有一个全新的工具栏。
+但是修改了默认工具栏类名，需要引入 [diagram-js.css](https://github.com/bpmn-io/diagram-js/blob/develop/assets/diagram-js.css) ，修改成`相同的类名`
+
+结合在 `className` 写上对应的类名，使用 `css` 来美化它，或者图片。
+
+## 完成
+
+一切大功告成，你将拥有一个全新的工具栏。
 
 可能对你有帮助的官方资源：
 
 - [bpmn-js-example-custom-elements ](https://github.com/bpmn-io/bpmn-js-example-custom-elements)
+
+---
+
+## 最后
+
+突然，你发现通过工具栏生成的元素还保持着 `最初` 的样子。
+
+无需担心，因为我们还没告诉 `bpmn` 该怎么渲染它

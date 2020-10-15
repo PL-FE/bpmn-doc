@@ -25,3 +25,11 @@ vue + bpmn 预览： [http://bpmn-doc.pengliang.online/](http://bpmn-doc.penglia
 - [ ] 自定义 properties-panel
 - [x] <a href="./doc/customMiniMap.md">右上角小地图</a>
 - [x] <a href="./doc/bpmnApi.md">总结常用 API 🚩</a>
+
+## 资料
+
+可能对你有帮助的资料
+
+- [diagram-js](https://github.com/bpmn-io/diagram-js) 是一个工具箱，用于在 web 上显示和修改图表
+- [bpmn-js](https://github.com/bpmn-io/bpmn-js) 构建在两个重要的库之上: [diagram-js](https://github.com/bpmn-io/diagram-js) 和 [bpmn-moddle](https://github.com/bpmn-io/bpmn-moddle)
+- [examples](https://github.com/bpmn-io/bpmn-js-examples)一般在这里找 `demo`

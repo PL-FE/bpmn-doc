@@ -5,165 +5,165 @@
 
 // 网格背景
 .djs-container {
-  background-image: linear-gradient(
-      90deg,
-      rgba(200, 200, 200, 0.15) 10%,
-      rgba(0, 0, 0, 0) 10%
-    ),
-    linear-gradient(rgba(200, 200, 200, 0.15) 10%, rgba(0, 0, 0, 0) 10%);
-  background-size: 10px 10px;
+	background-image: linear-gradient(
+			90deg,
+			rgba(200, 200, 200, 0.15) 10%,
+			rgba(0, 0, 0, 0) 10%
+		),
+		linear-gradient(rgba(200, 200, 200, 0.15) 10%, rgba(0, 0, 0, 0) 10%);
+	background-size: 10px 10px;
 }
 
 // 线的样式
 .djs-connection {
-  // 平常的样式
-  path {
-    stroke: @lineColorNormal !important;
-    marker-end: url(#sequenceflow-arrow-normal) !important;
-  }
+	// 平常的样式
+	path {
+		stroke: @lineColorNormal !important;
+		marker-end: url(#sequenceflow-arrow-normal) !important;
+	}
 
-  // 选择时的样式
-  &.selected {
-    path {
-      stroke: @lineColorActive !important;
-      marker-end: url(#sequenceflow-arrow-active) !important;
-    }
-  }
+	// 选择时的样式
+	&.selected {
+		path {
+			stroke: @lineColorActive !important;
+			marker-end: url(#sequenceflow-arrow-active) !important;
+		}
+	}
 }
 
 // 拖拽时
 .djs-drag-active {
-  path {
-    stroke: @lineColorNormal !important;
-    marker-end: url(#sequenceflow-arrow-normal) !important;
-  }
+	path {
+		stroke: @lineColorNormal !important;
+		marker-end: url(#sequenceflow-arrow-normal) !important;
+	}
 }
 
 #sequenceflow-arrow-normal {
-  fill: @lineColorNormal;
-  stroke: @lineColorNormal;
+	fill: @lineColorNormal;
+	stroke: @lineColorNormal;
 }
 
 #sequenceflow-arrow-active {
-  fill: @lineColorActive;
-  stroke: @lineColorActive;
+	fill: @lineColorActive;
+	stroke: @lineColorActive;
 }
 
 .djs-container {
-  --bendpoint-fill-color: #ffeb3b;
-  --bendpoint-stroke-color: #ffeb3b;
+	--bendpoint-fill-color: #ffeb3b;
+	--bendpoint-stroke-color: #ffeb3b;
 }
 
 // hover 虚线
 .djs-element.hover .djs-outline {
-  stroke: #ff4d4d;
-  stroke-width: 1px;
+	stroke: #ff4d4d;
+	stroke-width: 1px;
 }
 
 // 左侧工具栏位置
 .custom-palette {
-  position: absolute;
-  left: 20px;
-  top: 0px;
-  box-sizing: border-box;
-  width: 96px;
-  height: 100vh;
-  overflow: auto;
+	position: absolute;
+	left: 20px;
+	top: 0px;
+	box-sizing: border-box;
+	width: 96px;
+	height: 100vh;
+	overflow: auto;
 
-  .groupLabel {
-    width: 100%;
-    height: 30px;
-    background-color: #e4e4e4;
-    margin-bottom: 10px;
-    cursor: pointer;
+	.groupLabel {
+		width: 100%;
+		height: 30px;
+		background-color: #e4e4e4;
+		margin-bottom: 10px;
+		cursor: pointer;
 
-    span {
-      display: inline-block;
-      width: calc(100% - 20px);
-      line-height: 30px;
-      overflow: hidden;
-      text-align: center;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      user-select: none;
-    }
+		span {
+			display: inline-block;
+			width: calc(100% - 20px);
+			line-height: 30px;
+			overflow: hidden;
+			text-align: center;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			user-select: none;
+		}
 
-    i {
-      vertical-align: super;
-    }
-  }
+		i {
+			vertical-align: super;
+		}
+	}
 
-  // 所有元素
-  .entry {
-    float: none;
-    margin: 0 auto;
-    margin-bottom: 30px;
-    width: 46px;
-    height: 46px;
-    line-height: 46px;
-    box-sizing: border-box;
-    cursor: pointer;
+	// 所有元素
+	.entry {
+		float: none;
+		margin: 0 auto;
+		margin-bottom: 30px;
+		width: 46px;
+		height: 46px;
+		line-height: 46px;
+		box-sizing: border-box;
+		cursor: pointer;
 
-    &.inShape {
-      border: 2px solid #36bbf6;
-      background-color: #72d3ff;
-    }
+		&.inShape {
+			border: 2px solid #36bbf6;
+			background-color: #72d3ff;
+		}
 
-    &.customShape {
-      border: 2px solid #4483ec;
-      background-color: #a2c5fd;
-    }
-  }
+		&.customShape {
+			border: 2px solid #4483ec;
+			background-color: #a2c5fd;
+		}
+	}
 
-  // 开始事件
-  .custom-icon-start-event-none {
-    border: 2px solid #1cc315;
-    background-color: #45e25c;
-    border-radius: 50%;
-  }
+	// 开始事件
+	.custom-icon-start-event-none {
+		border: 2px solid #1cc315;
+		background-color: #45e25c;
+		border-radius: 50%;
+	}
 
-  // 结束事件
-  .custom-icon-end-event-none {
-    border: 2px solid#de2626;
-    background-color: #ff7373;
-    border-radius: 50%;
-  }
+	// 结束事件
+	.custom-icon-end-event-none {
+		border: 2px solid#de2626;
+		background-color: #ff7373;
+		border-radius: 50%;
+	}
 
-  // 任务 Task
-  .custom-icon-task {
-    border-radius: 10px;
-    width: 60px;
-    height: 40px;
-  }
+	// 任务 Task
+	.custom-icon-task {
+		border-radius: 10px;
+		width: 60px;
+		height: 40px;
+	}
 
-  // 网关
-  .custom-icon-gateway-none {
-    width: 36px;
-    height: 36px;
-    transform: rotate(45deg);
-  }
+	// 网关
+	.custom-icon-gateway-none {
+		width: 36px;
+		height: 36px;
+		transform: rotate(45deg);
+	}
 
-  // 数据对象
-  .custom-icon-data-object {
-    height: 60px;
-    width: 40px;
-  }
+	// 数据对象
+	.custom-icon-data-object {
+		height: 60px;
+		width: 40px;
+	}
 
-  .customtask {
-    border-radius: 10px;
-    width: 70px;
-    height: 40px;
-  }
+	.customtask {
+		border-radius: 10px;
+		width: 70px;
+		height: 40px;
+	}
 }
 
 .bpmn-icon-task.red {
-  color: #cc0000 !important;
+	color: #cc0000 !important;
 }
 
 .bpmn-icon-task.yellow {
-  color: #ffc800 !important;
+	color: #ffc800 !important;
 }
 
 .bpmn-icon-task.green {
-  color: #52b415 !important;
+	color: #52b415 !important;
 }

@@ -17,7 +17,11 @@
         style="display: none"
         @change="loadXML" />
     </div>
-    <div ref="palette"></div>
+    <div ref="palette"
+      class="asasa">
+      <div class="custom-palette-entries"></div>
+      <div class="custom-palette-toggle"></div>
+    </div>
     <div class="canvas"
       ref="canvas"></div>
   </div>
@@ -60,6 +64,11 @@ export default {
   },
   methods: {
     async init () {
+      // 去除默认工具栏
+      const modules = BpmnModeler.prototype._modules
+      const index = modules.findIndex(it => it.paletteProvider)
+      modules.splice(index, 1)
+
       const canvas = this.$refs.canvas
       const palette = this.$refs.palette
       // 建模
@@ -90,7 +99,7 @@ export default {
           customContextPad,
           {
             // 禁用左侧默认工具栏
-            paletteProvider: ['value', ''],
+            // paletteProvider: ['value', '']// 去不干净，还是默认生成
             // // 禁用滚轮滚动
             // zoomScroll: ['value', ''],
             // // 禁止拖动线

@@ -1,4 +1,8 @@
-import { isArray, isFunction, forEach } from 'min-dash'
+import {
+  isArray,
+  isFunction,
+  forEach
+} from 'min-dash'
 
 import {
   domify,
@@ -23,20 +27,18 @@ var DEFAULT_PRIORITY = 1000
 /**
  * A palette containing modeling elements.
  */
-function Palette (
-  eventBus,
-  canvas,
+function Palette (eventBus, canvas,
   elementFactory,
   create,
   paletteContainer,
-  paletteEntries
-) {
+  paletteEntries) {
   this._eventBus = eventBus
   this._canvas = canvas
   this._entries = paletteEntries
   this._paletteContainer = paletteContainer
   this._elementFactory = elementFactory
   this._create = create
+
   var self = this
 
   eventBus.on('tool-manager.update', function (event) {
@@ -56,14 +58,12 @@ function Palette (
   })
 }
 
-Palette.$inject = [
-  'eventBus',
-  'canvas',
+Palette.$inject = ['eventBus', 'canvas',
   'elementFactory',
   'create',
   'config.paletteContainer',
-  'config.paletteEntries'
-]
+  'config.paletteEntries']
+
 /**
  * Register a provider with the palette
  *
@@ -138,27 +138,27 @@ Palette.prototype._init = function () {
   var eventBus = this._eventBus
 
   var parentContainer = this._getParentContainer()
-
-  let _container = this._paletteContainer
-  // 这里使用 custom-palette 、 custom-palette-entries 作为类名是因为 使用工具栏的样式
-  // 如果要自定义工具栏样式 可以修改此类名，为新类名写上自己的样式即可
-  if (!_container) {
-    _container = domify('<div class="custom-palette"></div>')
+  // 获取传入的工具栏容器
+  var container = this._container = this._paletteContainer
+  // 未找到 使用默认
+  if (!container) {
+    container = this._container = domify(Palette.HTML_MARKUP)
   } else {
-    domAttr(_container, 'class', 'custom-palette')
+    // 为 传入的工具栏容器 创建子元素
+    addClasses(container, 'custom-palette')
+    const entries = domQuery('.custom-palette-entries', container)
+    const toggle = domQuery('.custom-palette-toggle', container)
+
+    if (!entries) {
+      container.appendChild(domify('<div class="custom-palette-entries"></div>'))
+    }
+    if (!toggle) {
+      container.appendChild(domify('<div class="custom-palette-toggle"></div>'))
+    }
   }
-
-  const paletteEntriesContainer = domQuery(
-    '.custom-palette-entries',
-    _container
-  )
-  if (!paletteEntriesContainer) {
-    _container.appendChild(domify('<div class="custom-palette-entries"></div>'))
-  }
-
-  var container = (this._container = _container)
-
   parentContainer.appendChild(container)
+
+  // 下面是绑定 click 、 dragstart
 
   domDelegate.bind(container, ELEMENT_SELECTOR, 'click', function (event) {
     var target = event.delegateTarget
@@ -234,15 +234,15 @@ Palette.prototype._toggleState = function (state) {
   })
 }
 
-// 修改 palette 布局样式，元素样式一般通过类名实现
 Palette.prototype._update = function () {
   var entriesContainer = domQuery('.custom-palette-entries', this._container)
-  var entries = (this._entries = this.getEntries())
+  var entries = this._entries = this.getEntries()
   domClear(entriesContainer)
 
+  // 遍历工具栏元素
   forEach(entries, function (entry, id) {
     var grouping = entry.group || 'default'
-
+    // 设置分组
     var container = domQuery('[data-group=' + grouping + ']', entriesContainer)
     if (!container) {
       container = domify(
@@ -250,7 +250,7 @@ Palette.prototype._update = function () {
       )
       const arrowDown = 'el-icon-arrow-down'
       const groupLabel = domify(
-        `<div class="groupLabel"><span title="${grouping}">${grouping}</span></i></i><i id="custom-palette-group-arrow" class="${arrowDown} a"></i></div></div>`
+        `<div class="groupLabel"><span title="${grouping}">${grouping}</span></i></i><i id="custom-palette-group-arrow" class="${arrowDown}"></i></div></div>`
       )
 
       groupLabel.addEventListener('click', function () {
@@ -277,9 +277,8 @@ Palette.prototype._update = function () {
       entriesContainer.appendChild(container)
     }
 
-    var html =
-      entry.html ||
-      (entry.separator
+    var html = entry.html || (
+      entry.separator
         ? '<hr class="separator" />'
         : '<div class="entry" draggable="true"></div>')
 
@@ -336,6 +335,8 @@ Palette.prototype.trigger = function (action, event, autoActivate) {
   handler = entry.action
 
   originalEvent = event.originalEvent || event
+
+  // simple action (via callback function)
   //  传入 action 的 dragstart方法 click 方法
   if (isFunction(handler)) {
     if (action === 'click') {
@@ -356,13 +357,13 @@ Palette.prototype._layoutChanged = function () {
 }
 
 /**
- * Do we need to collapse to two columns?
- *
- * @param {number} availableHeight
- * @param {Object} entries
- *
- * @return {boolean}
- */
+   * Do we need to collapse to two columns?
+   *
+   * @param {number} availableHeight
+   * @param {Object} entries
+   *
+   * @return {boolean}
+   */
 Palette.prototype._needsCollapse = function (availableHeight, entries) {
   // top margin + bottom toggle + bottom margin
   // implementors must override this method if they
@@ -375,8 +376,8 @@ Palette.prototype._needsCollapse = function (availableHeight, entries) {
 }
 
 /**
- * Close the palette
- */
+   * Close the palette
+   */
 Palette.prototype.close = function () {
   this._toggleState({
     open: false,
@@ -385,8 +386,8 @@ Palette.prototype.close = function () {
 }
 
 /**
- * Open the palette
- */
+   * Open the palette
+   */
 Palette.prototype.open = function () {
   this._toggleState({ open: true })
 }
@@ -404,7 +405,8 @@ Palette.prototype.isActiveTool = function (tool) {
 }
 
 Palette.prototype.updateToolHighlight = function (name) {
-  var entriesContainer, toolsContainer
+  var entriesContainer,
+    toolsContainer
 
   if (!this._toolsContainer) {
     entriesContainer = domQuery('.custom-palette-entries', this._container)
@@ -434,27 +436,27 @@ Palette.prototype.updateToolHighlight = function (name) {
 }
 
 /**
- * Return true if the palette is opened.
- *
- * @example
- *
- * palette.open();
- *
- * if (palette.isOpen()) {
- *   // yes, we are open
- * }
- *
- * @return {boolean} true if palette is opened
- */
+   * Return true if the palette is opened.
+   *
+   * @example
+   *
+   * palette.open();
+   *
+   * if (palette.isOpen()) {
+   *   // yes, we are open
+   * }
+   *
+   * @return {boolean} true if palette is opened
+   */
 Palette.prototype.isOpen = function () {
   return domClasses(this._container).has(PALETTE_OPEN_CLS)
 }
 
 /**
- * Get container the palette lives in.
- *
- * @return {Element}
- */
+   * Get container the palette lives in.
+   *
+   * @return {Element}
+   */
 Palette.prototype._getParentContainer = function () {
   return this._canvas.getContainer()
 }
@@ -472,9 +474,7 @@ Palette.HTML_MARKUP =
 function addClasses (element, classNames) {
   var classes = domClasses(element)
 
-  var actualClassNames = isArray(classNames)
-    ? classNames
-    : classNames.split(/\s+/g)
+  var actualClassNames = isArray(classNames) ? classNames : classNames.split(/\s+/g)
   actualClassNames.forEach(function (cls) {
     classes.add(cls)
   })
