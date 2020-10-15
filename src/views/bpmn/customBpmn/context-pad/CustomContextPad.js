@@ -1,23 +1,21 @@
-const COLOR_RED = '#cc0000 ',
-  COLOR_YELLOW = 'ffc800',
-  COLOR_GREEN = '#52b415';
 import {
-  assign,
-  forEach,
-  isArray
-} from 'min-dash';
+  assign
+} from 'min-dash'
+const COLOR_RED = '#cc0000 '
+const COLOR_YELLOW = 'ffc800'
+const COLOR_GREEN = '#52b415'
 export default class CustomContextPad {
   constructor(bpmnFactory, config, contextPad, create, elementFactory, injector, translate) {
-    this.bpmnFactory = bpmnFactory;
-    this.create = create;
-    this.elementFactory = elementFactory;
-    this.translate = translate;
+    this.bpmnFactory = bpmnFactory
+    this.create = create
+    this.elementFactory = elementFactory
+    this.translate = translate
 
     if (config.autoPlace !== false) {
-      this.autoPlace = injector.get('autoPlace', false);
+      this.autoPlace = injector.get('autoPlace', false)
     }
 
-    contextPad.registerProvider(this);
+    contextPad.registerProvider(this)
   }
 
   getContextPadEntries (element) {
@@ -27,51 +25,50 @@ export default class CustomContextPad {
       create,
       elementFactory,
       translate
-    } = this;
+    } = this
 
-    let actions = {}
+    const actions = {}
     if (element.type === 'label') {
-      return actions;
+      return actions
     }
     function appendServiceTask (suitabilityScore) {
       return function (event, element) {
         console.log('autoPlace', autoPlace)
         if (autoPlace) {
-          const businessObject = bpmnFactory.create('bpmn:Task');
+          const businessObject = bpmnFactory.create('bpmn:Task')
 
-          businessObject.suitable = suitabilityScore;
-          businessObject.name = element.type;
+          businessObject.suitable = suitabilityScore
+          businessObject.name = element.type
 
           const shape = elementFactory.createShape({
             type: 'bpmn:Task',
             businessObject: businessObject
-          });
+          })
 
-          autoPlace.append(element, shape);
+          autoPlace.append(element, shape)
         } else {
-          appendServiceTaskStart(event, element);
+          appendServiceTaskStart(event, element)
         }
       }
     }
 
     function appendServiceTaskStart (suitabilityScore) {
       return function (event) {
-        const businessObject = bpmnFactory.create('bpmn:Task');
+        const businessObject = bpmnFactory.create('bpmn:Task')
 
-        businessObject.suitable = suitabilityScore;
-        businessObject.name = element.type;
+        businessObject.suitable = suitabilityScore
+        businessObject.name = element.type
 
         const shape = elementFactory.createShape({
           type: 'bpmn:Task',
           businessObject: businessObject
-        });
+        })
 
-        create.start(event, shape, element);
+        create.start(event, shape, element)
       }
     }
 
     if (element.type === 'bpmn:Task') {
-
       assign(actions, {
         'append.low-task': {
           group: 'model',
@@ -101,7 +98,6 @@ export default class CustomContextPad {
           }
         }
       })
-
     }
 
     return actions
@@ -116,4 +112,4 @@ CustomContextPad.$inject = [
   'elementFactory',
   'injector',
   'translate'
-];
+]

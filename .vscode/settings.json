@@ -1,0 +1,36 @@
+{
+  "workbench.editor.enablePreview": false, //打开文件不覆盖
+  "editor.minimap.enabled": false, //关闭快速预览
+  "files.autoSave": "afterDelay", //打开自动保存
+  "editor.formatOnSave": true, //每次保存自动格式化
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "editor.codeActionsOnSave": {
+    // 每次保存的时候将代码按eslint格式进行修复
+    "source.fixAll.eslint": true
+  },
+  "javascript.format.insertSpaceBeforeFunctionParenthesis": true, //让函数(名)和后面的括号之间加个空格
+  "vetur.format.defaultFormatter.html": "js-beautify-html", //格式化.vue中html
+  "vetur.format.defaultFormatter.js": "vscode-typescript", //让vue中的js按编辑器自带的ts格式进行格式化
+  "vetur.completion.autoImport": true,
+  "vetur.format.defaultFormatterOptions": {
+    "js-beautify-html": {
+      // - auto: 仅在超出行长度时才对属性进行换行。
+      // - force: 对除第一个属性外的其他每个属性进行换行。
+      // - force-aligned: 对除第一个属性外的其他每个属性进行换行，并保持对齐。
+      // - force-expand-multiline: 对每个属性进行换行。
+      // - aligned-multiple: 当超出折行长度时，将属性进行垂直对齐
+      "wrap_attributes": "force"
+    }
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "octref.vetur"
+  },
+  "[javascript]": {
+    // "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "prettier.semi": false
+}

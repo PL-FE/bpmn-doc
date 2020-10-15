@@ -4,14 +4,12 @@ import { getRoundRectPath } from 'bpmn-js/lib/draw/BpmnRenderUtil'
 import { some, find } from 'min-dash'
 
 import { is } from 'bpmn-js/lib/util/ModelUtil'
-import { inherits } from 'inherits'
 
-const HIGH_PRIORITY = 1500,
-  TASK_BORDER_RADIUS = 2
+const HIGH_PRIORITY = 1500
+const TASK_BORDER_RADIUS = 2
 export default function CustomRenderer (
   config, eventBus, styles, pathMap,
   canvas, textRenderer, paletteEntries) {
-
   BpmnRenderer.call(this, config, eventBus, styles, pathMap,
     canvas, textRenderer, HIGH_PRIORITY)
 
