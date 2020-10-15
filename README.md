@@ -14,7 +14,7 @@
 
 ## 在线预览
 
-vue + bpmn 预览： [http://bpmn-doc.pengliang.online/](http://bpmn-doc.pengliang.online/)
+vue + bpmn 预览： <a href="http://bpmn-doc.pengliang.online">http://bpmn-doc.pengliang.online</a>
 
 ## 功能
 
@@ -26,7 +26,7 @@ vue + bpmn 预览： [http://bpmn-doc.pengliang.online/](http://bpmn-doc.penglia
 - [x] <a href="./doc/customMiniMap.md">右上角小地图</a>
 - [x] <a href="./doc/bpmnApi.md">总结常用 API 🚩</a>
 
-## 资料
+## 相关
 
 可能对你有帮助的资料
 

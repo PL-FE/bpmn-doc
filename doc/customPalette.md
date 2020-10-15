@@ -14,12 +14,7 @@
 
 可自定义工具栏的 `布局、位置、大小颜色、指定工具栏的容器等`
 
-相关代码：
-
-- [src\views\bpmn\index.vue](../src/views/bpmn/index.vue)
-- [src\views\bpmn\customBpmn\palette](../src/views/bpmn/customBpmn/palette)
-- [src\main.js](../src/main.js)
-- [src\assets\css](../src/assets/css)
+注意：标记 🎯 的地方为重点
 
 ---
 
@@ -33,7 +28,7 @@
 import entries from '@/views/bpmn/config/paletteEntries'
 import customPalette from '@/views/bpmn/customBpmn/palette'
 
-// 去除默认工具栏
+// 🎯 去除默认工具栏
 const modules = BpmnModeler.prototype._modules
 const index = modules.findIndex(it => it.paletteProvider)
 modules.splice(index, 1)
@@ -53,11 +48,13 @@ this.bpmnModeler = new BpmnModeler({
 		customPalette,
 		{
 			// 去掉左侧默认工具栏
-			//	paletteProvider: ['value', ''] // 这个去除不干净、还是会生成默认 palette
+			// paletteProvider: ['value', ''] // 这个去除不干净、还是会生成默认 palette
 		}
 	]
 })
 ```
+
+主要是初始化 `BpmnModeler` 时传入自定义模块
 
 #### 2. CustomPaletteProvider 接收
 
@@ -67,15 +64,16 @@ this.bpmnModeler = new BpmnModeler({
 
 ```js
 PaletteProvider.$inject = [
-  'config.paletteEntries'
-  // 其他代码...
+	'config.paletteEntries'
+	// 其他代码...
+]
 ```
 
-`$inject` 注入需要的数据（工具条目） `paletteEntries`
+`$inject` 注入需要的数据（工具栏的元素） `paletteEntries`
 
 ```js
 PaletteProvider.prototype.getPaletteEntries = function(element) {
-	return this._entries
+	return this._entries 🎯
 }
 ```
 
@@ -85,20 +83,19 @@ PaletteProvider.prototype.getPaletteEntries = function(element) {
 
 #### 3. CustomPalette 实现样式
 
+这个函数是 `重点`
+
 [CustomPalette.js](../src/views/bpmn/customBpmn/palette/CustomPalette.js)
 
 首先看一下注入：
 
 ```js
 Palette.$inject = [
-	// 创建元素需要
-	'eventBus',
-	'canvas',
-	'elementFactory',
-	'create',
-	// 创建元素和指定工具栏容器需要
-	'config.paletteContainer', // 对应 new BpmnModeler 的 paletteContainer: palette,
-	'config.paletteEntries' // 对应 new BpmnModeler 的 paletteEntries: entries,
+	// ...其他代码
+
+	// 🎯 创建元素和指定工具栏容器需要
+	'config.paletteContainer', //  对应 new BpmnModeler 的 paletteContainer: palette,
+	'config.paletteEntries' //  对应 new BpmnModeler 的 paletteEntries: entries,
 ]
 ```
 
@@ -106,11 +103,11 @@ Palette.$inject = [
 
 [Palette.prototype.\_update()](https://github.com/bpmn-io/diagram-js/blob/develop/lib/features/palette/Palette.js#L221)
 
-注意 `domQuery、domify、domAttr`等为 `bpmn` 的工具函数 `min-dom`
+注意 `domQuery、domify、domAttr`等来自 `min-dom`, 是 `bpmn` 的工具函数
 
 ```js
 Palette.prototype._update = function() {
-// 搜索 canves 也就是指定的 bpmn 容器内有没有 .djs-palette-entries
+// 搜索 canves 也就是指定的 bpmn 容器内有没有 .custom-palette-entries
   var entriesContainer = domQuery('.custom-palette-entries', this._container)
   var entries = this._entries = this.getEntries()
   domClear(entriesContainer);
@@ -174,7 +171,7 @@ Palette.prototype._init = function() {
 	var eventBus = this._eventBus
 
 	var parentContainer = this._getParentContainer()
-	// 获取传入的工具栏容器
+	// 🎯 获取传入的工具栏容器
 	var container = (this._container = this._paletteContainer)
 	// 未找到 使用默认
 	if (!container) {
@@ -198,7 +195,6 @@ Palette.prototype._init = function() {
 	parentContainer.appendChild(container)
 
 	// 下面是绑定 click 、 dragstart
-
 	domDelegate.bind(container, ELEMENT_SELECTOR, 'click', function(event) {
 		var target = event.delegateTarget
 
@@ -206,7 +202,7 @@ Palette.prototype._init = function() {
 			return self.toggle()
 		}
 
-		self.trigger('click', event) // 关键方法 trigger 如下
+		self.trigger('click', event) //  关键方法 trigger 如下
 	})
 
 	// prevent drag propagation
@@ -221,7 +217,7 @@ Palette.prototype.trigger = function(action, event, autoActivate) {
 	originalEvent = event.originalEvent || event
 
 	// simple action (via callback function)
-	//  传入 action 的 dragstart方法 click 方法
+	//  🎯 传入 action 的 dragstart方法 click 方法
 	if (isFunction(handler)) {
 		if (action === 'click') {
 			handler(originalEvent, autoActivate, elementFactory, create)
@@ -277,18 +273,27 @@ function createShape (event, autoActivate, elementFactory, create) {
 
 结合在 `className` 写上对应的类名，使用 `css` 来美化它，或者图片。
 
-## 完成
-
-一切大功告成，你将拥有一个全新的工具栏。
-
-可能对你有帮助的官方资源：
-
-- [bpmn-js-example-custom-elements ](https://github.com/bpmn-io/bpmn-js-example-custom-elements)
-
 ---
 
 ## 最后
 
+一切大功告成，你将拥有一个全新的工具栏。
+
 突然，你发现通过工具栏生成的元素还保持着 `最初` 的样子。
 
 无需担心，因为我们还没告诉 `bpmn` 该怎么渲染它
+
+---
+
+### 相关
+
+自定义 palette 相关代码
+
+- [src\views\bpmn\index.vue](../src/views/bpmn/index.vue)
+- [src\views\bpmn\customBpmn\palette](../src/views/bpmn/customBpmn/palette)
+- [src\main.js](../src/main.js)
+- [src\assets\css](../src/assets/css)
+
+可能对你有帮助的官方资源：
+
+- [bpmn-js-example-custom-elements ](https://github.com/bpmn-io/bpmn-js-example-custom-elements)

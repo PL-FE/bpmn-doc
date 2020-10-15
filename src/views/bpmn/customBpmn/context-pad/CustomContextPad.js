@@ -5,7 +5,7 @@ const COLOR_RED = '#cc0000 '
 const COLOR_YELLOW = 'ffc800'
 const COLOR_GREEN = '#52b415'
 export default class CustomContextPad {
-  constructor(bpmnFactory, config, contextPad, create, elementFactory, injector, translate) {
+  constructor (bpmnFactory, config, contextPad, create, elementFactory, injector, translate) {
     this.bpmnFactory = bpmnFactory
     this.create = create
     this.elementFactory = elementFactory
