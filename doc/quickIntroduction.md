@@ -35,9 +35,9 @@ bpmn-js 体系结构
 
 ```js
 function MyLoggingPlugin(eventBus) {
-	eventBus.on('element.changed', function(event) {
-		console.log('element ', event.element, ' changed')
-	})
+  eventBus.on('element.changed', function(event) {
+    console.log('element ', event.element, ' changed')
+  })
 }
 
 // ensure the dependency names are still available after minification
@@ -51,9 +51,9 @@ import CoreModule from 'diagram-js/lib/core'
 
 // export as module
 export default {
-	__depends__: [CoreModule], // {2}
-	__init__: ['myLoggingPlugin'], // {3}
-	myLoggingPlugin: ['type', MyLoggingPlugin] // {1}
+  __depends__: [CoreModule], // {2}
+  __init__: ['myLoggingPlugin'], // {3}
+  myLoggingPlugin: ['type', MyLoggingPlugin] // {1}
 }
 ```
 
@@ -65,7 +65,7 @@ export default {
 import MyLoggingModule from 'path-to-my-logging-module'
 
 var diagram = new Diagram({
-	modules: [MyLoggingModule]
+  modules: [MyLoggingModule]
 })
 ```
 

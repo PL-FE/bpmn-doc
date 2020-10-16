@@ -46,9 +46,9 @@ import customPalette from './CustomPalette'
 import PaletteProvider from './CustomPaletteProvider'
 // 除了引进的模块的名字可以修改，其他的不建议修改，会报错
 export default {
-	__depends__: [customPalette],
-	__init__: ['customPaletteProvider'], // 调用 customPaletteProvider 来初始化
-	customPaletteProvider: ['type', PaletteProvider]
+  __depends__: [customPalette],
+  __init__: ['customPaletteProvider'], // 调用 customPaletteProvider 来初始化
+  customPaletteProvider: ['type', PaletteProvider]
 }
 ```
 
@@ -67,13 +67,13 @@ export default {
 PaletteProvider.$inject = ['config.paletteEntries', 'customPalette']
 
 export default function PaletteProvider(paletteEntries, customPalette) {
-	this._entries = paletteEntries
+  this._entries = paletteEntries
 
-	customPalette.registerProvider(this)
+  customPalette.registerProvider(this)
 }
 
 PaletteProvider.prototype.getPaletteEntries = function(element) {
-	return this._entries // 🎯 返回工具栏数据
+  return this._entries // 🎯 返回工具栏数据
 }
 ```
 
@@ -91,14 +91,14 @@ PaletteProvider.prototype.getPaletteEntries = function(element) {
 
 ```js
 Palette.$inject = [
-	'eventBus',
-	'canvas',
-	// ---------- 自定义区域 ------------
-	'elementFactory',
-	'create',
-	'config.paletteContainer',
-	'config.paletteEntries'
-	// ---------- 自定义区域 ------------
+  'eventBus',
+  'canvas',
+  // ---------- 自定义区域 ------------
+  'elementFactory',
+  'create',
+  'config.paletteContainer',
+  'config.paletteEntries'
+  // ---------- 自定义区域 ------------
 ]
 ```
 
@@ -107,20 +107,20 @@ Palette.$inject = [
 
 ```js
 function Palette(
-	eventBus,
-	canvas,
-	elementFactory,
-	create,
-	paletteContainer,
-	paletteEntries
+  eventBus,
+  canvas,
+  elementFactory,
+  create,
+  paletteContainer,
+  paletteEntries
 ) {
-	this._eventBus = eventBus
-	this._canvas = canvas
-	this._entries = paletteEntries // 传入的工具栏数据
-	this._paletteContainer = paletteContainer // 传入的工具栏容器
-	this._elementFactory = elementFactory
-	this._create = create
-	// ...
+  this._eventBus = eventBus
+  this._canvas = canvas
+  this._entries = paletteEntries // 传入的工具栏数据
+  this._paletteContainer = paletteContainer // 传入的工具栏容器
+  this._elementFactory = elementFactory
+  this._create = create
+  // ...
 }
 ```
 
@@ -133,22 +133,22 @@ function Palette(
 
 ```js
 Palette.prototype._init = function() {
-	// ...
+  // ...
 
-	var parentContainer = this._getParentContainer()
+  var parentContainer = this._getParentContainer()
 
-	var container = (this._container = domify(Palette.HTML_MARKUP))
+  var container = (this._container = domify(Palette.HTML_MARKUP))
 
-	parentContainer.appendChild(container)
+  parentContainer.appendChild(container)
 
-	// ...
+  // ...
 }
 
 Palette.HTML_MARKUP =
-	'<div class="djs-palette">' +
-	'<div class="djs-palette-entries"></div>' +
-	'<div class="djs-palette-toggle"></div>' +
-	'</div>'
+  '<div class="djs-palette">' +
+  '<div class="djs-palette-entries"></div>' +
+  '<div class="djs-palette-toggle"></div>' +
+  '</div>'
 ```
 
 默认是找到 `Palette.HTML_MARKUP` 这个 dom 元素，找不到就生成一模一样的
@@ -156,34 +156,34 @@ Palette.HTML_MARKUP =
 
 ```js
 Palette.prototype._init = function() {
-	var parentContainer = this._getParentContainer()
+  var parentContainer = this._getParentContainer()
 
-	// ---------- 自定义区域 ------------
+  // ---------- 自定义区域 ------------
 
-	// 🎯 获取传入的工具栏容器
-	var container = (this._container = this._paletteContainer)
-	// 未找到 使用默认
-	if (!container) {
-		container = this._container = domify(Palette.HTML_MARKUP)
-	} else {
-		// 为传入的工具栏容器 创建子元素
-		// 也就是构造得和 HTML_MARKUP 差不多的样子就 ok 了
-		addClasses(container, 'custom-palette')
-		const entries = domQuery('.custom-palette-entries', container)
-		const toggle = domQuery('.custom-palette-toggle', container)
+  // 🎯 获取传入的工具栏容器
+  var container = (this._container = this._paletteContainer)
+  // 未找到 使用默认
+  if (!container) {
+    container = this._container = domify(Palette.HTML_MARKUP)
+  } else {
+    // 为传入的工具栏容器 创建子元素
+    // 也就是构造得和 HTML_MARKUP 差不多的样子就 ok 了
+    addClasses(container, 'custom-palette')
+    const entries = domQuery('.custom-palette-entries', container)
+    const toggle = domQuery('.custom-palette-toggle', container)
 
-		if (!entries) {
-			container.appendChild(
-				domify('<div class="custom-palette-entries"></div>')
-			)
-		}
-		if (!toggle) {
-			container.appendChild(domify('<div class="custom-palette-toggle"></div>'))
-		}
-	}
+    if (!entries) {
+      container.appendChild(
+        domify('<div class="custom-palette-entries"></div>')
+      )
+    }
+    if (!toggle) {
+      container.appendChild(domify('<div class="custom-palette-toggle"></div>'))
+    }
+  }
 
-	// ---------- 自定义区域 ------------
-	parentContainer.appendChild(container)
+  // ---------- 自定义区域 ------------
+  parentContainer.appendChild(container)
 }
 ```
 
@@ -199,12 +199,12 @@ djs-palette-toggle => custom-palette-toggle
 
 ```js
 Palette.prototype._update = function() {
-	// 这里稍稍改一下类名即可 已经将 `djs-palette-entries => custom-palette-entries`
-	var entriesContainer = domQuery('.custom-palette-entries', this._container),
-		entries = (this._entries = this.getEntries())
+  // 这里稍稍改一下类名即可 已经将 `djs-palette-entries => custom-palette-entries`
+  var entriesContainer = domQuery('.custom-palette-entries', this._container),
+    entries = (this._entries = this.getEntries())
 
-	// 下面便是针对每一项工具元素的修改，包括分组、分割线、属性等，这里不再展开
-	// 详情可以运行此项目观察此文件
+  // 下面便是针对每一项工具元素的修改，包括分组、分割线、属性等，这里不再展开
+  // 详情可以运行此项目观察此文件
 }
 ```
 
@@ -214,46 +214,46 @@ Palette.prototype._update = function() {
 
 ```js
 Palette.prototype._init = function() {
-	domDelegate.bind(container, ELEMENT_SELECTOR, 'click', function(event) {
-		self.trigger('click', event)
-	})
+  domDelegate.bind(container, ELEMENT_SELECTOR, 'click', function(event) {
+    self.trigger('click', event)
+  })
 
-	domDelegate.bind(container, ENTRY_SELECTOR, 'dragstart', function(event) {
-		self.trigger('dragstart', event)
-	})
+  domDelegate.bind(container, ENTRY_SELECTOR, 'dragstart', function(event) {
+    self.trigger('dragstart', event)
+  })
 }
 
 Palette.prototype.trigger = function(action, event, autoActivate) {
-	var entries = this._entries,
-		entry,
-		handler,
-		originalEvent,
-		button = event.delegateTarget || event.target
+  var entries = this._entries,
+    entry,
+    handler,
+    originalEvent,
+    button = event.delegateTarget || event.target
 
-	// ---------- 自定义区域 ------------
-	// 创建元素的方法需要这两个构造器
-	var elementFactory = this._elementFactory,
-		create = this._create
-	// ---------- 自定义区域 ------------
+  // ---------- 自定义区域 ------------
+  // 创建元素的方法需要这两个构造器
+  var elementFactory = this._elementFactory,
+    create = this._create
+  // ---------- 自定义区域 ------------
 
-	handler = entry.action
+  handler = entry.action
 
-	originalEvent = event.originalEvent || event
+  originalEvent = event.originalEvent || event
 
-	// ---------- 自定义区域 ------------
-	// simple action (via callback function)
-	if (isFunction(handler)) {
-		if (action === 'click') {
-			handler(originalEvent, autoActivate, elementFactory, create) // 🎯 这里便是回调 action.click 事件
-		}
-	} else {
-		if (handler[action]) {
-			handler[action](originalEvent, autoActivate, elementFactory, create) // 🎯 这里便是回调 action.dragstart 或者其他事件
-		}
-	}
-	// ---------- 自定义区域 ------------
+  // ---------- 自定义区域 ------------
+  // simple action (via callback function)
+  if (isFunction(handler)) {
+    if (action === 'click') {
+      handler(originalEvent, autoActivate, elementFactory, create) // 🎯 这里便是回调 action.click 事件
+    }
+  } else {
+    if (handler[action]) {
+      handler[action](originalEvent, autoActivate, elementFactory, create) // 🎯 这里便是回调 action.dragstart 或者其他事件
+    }
+  }
+  // ---------- 自定义区域 ------------
 
-	event.preventDefault()
+  event.preventDefault()
 }
 ```
 
@@ -270,17 +270,17 @@ Palette.prototype.trigger = function(action, event, autoActivate) {
 
 ```js
 export default {
-	'create.task': {
-		type: 'bpmn:Task', // 决定元素类型
-		group: 'activity', // 3.2 自定义工具栏样式、布局 有使用到，根据这个字段来进行分组
-		className: 'custom-icon-task', // 3.2 自定义工具栏样式、布局 有使用到，根据这个字段来为对应的 dom 添加类名
-		title: 'Create Task', //  3.2 有用到，title 属性
-		action: {
-			// 3.3 使用，使生成元素
-			dragstart: createListener,
-			click: createListener
-		}
-	}
+  'create.task': {
+    type: 'bpmn:Task', // 决定元素类型
+    group: 'activity', // 3.2 自定义工具栏样式、布局 有使用到，根据这个字段来进行分组
+    className: 'custom-icon-task', // 3.2 自定义工具栏样式、布局 有使用到，根据这个字段来为对应的 dom 添加类名
+    title: 'Create Task', //  3.2 有用到，title 属性
+    action: {
+      // 3.3 使用，使生成元素
+      dragstart: createListener,
+      click: createListener
+    }
+  }
 }
 
 // 还记得 CustomPalette.js 吗？便是这里回调 createListener 函数
@@ -288,7 +288,7 @@ export default {
 // 		handler(originalEvent, autoActivate, elementFactory, create) // 🎯 这里便是回调 action.click 事件
 // 	}
 function createListener(event, autoActivate, elementFactory, create) {
-	create.start(event, shape)
+  create.start(event, shape)
 }
 ```
 
@@ -305,34 +305,34 @@ import { xmlStr } from './xmlData' // 这里是直接引用了xml字符串
 
 ```js
 export default {
-	// ...
-	init() {
-		// 去除默认工具栏
-		const modules = BpmnModeler.prototype._modules
-		const index = modules.findIndex(it => it.paletteProvider)
-		modules.splice(index, 1)
+  // ...
+  init() {
+    // 去除默认工具栏
+    const modules = BpmnModeler.prototype._modules
+    const index = modules.findIndex(it => it.paletteProvider)
+    modules.splice(index, 1)
 
-		const canvas = this.$refs.canvas
-		const palette = this.$refs.palette
-		// 建模
-		this.bpmnModeler = new BpmnModeler({
-			// 主要容器
-			container: canvas,
-			// 工具栏容器
-			paletteContainer: palette,
-			// 工具栏配置及实现自定义渲染方法
-			paletteEntries: entries,
-			additionalModules: [
-				// 自定义工具栏
-				customPalette,
-				{
-					// 禁用左侧默认工具栏
-					// paletteProvider: ['value', '']// 去不干净，还是 会生成 dom 元素
-				}
-			]
-		})
-		// ...
-	}
+    const canvas = this.$refs.canvas
+    const palette = this.$refs.palette
+    // 建模
+    this.bpmnModeler = new BpmnModeler({
+      // 主要容器
+      container: canvas,
+      // 工具栏容器
+      paletteContainer: palette,
+      // 工具栏配置及实现自定义渲染方法
+      paletteEntries: entries,
+      additionalModules: [
+        // 自定义工具栏
+        customPalette,
+        {
+          // 禁用左侧默认工具栏
+          // paletteProvider: ['value', '']// 去不干净，还是 会生成 dom 元素
+        }
+      ]
+    })
+    // ...
+  }
 }
 ```
 
@@ -350,20 +350,20 @@ export default {
  */
 
 .djs-palette {
-	position: absolute;
-	left: 20px;
-	top: 20px;
+  position: absolute;
+  left: 20px;
+  top: 20px;
 
-	box-sizing: border-box;
-	width: 48px;
+  box-sizing: border-box;
+  width: 48px;
 }
 
 .djs-palette .djs-palette-toggle {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .djs-palette:not(.open) .djs-palette-entries {
-	display: none;
+  display: none;
 }
 
 /* ... */
@@ -382,11 +382,11 @@ export default {
 ```css
 // 任务 Task
 .custom-icon-task {
-	width: 60px;
-	height: 40px;
-	border: 2px solid #36bbf6;
-	border-radius: 10px;
-	background-color: #72d3ff;
+  width: 60px;
+  height: 40px;
+  border: 2px solid #36bbf6;
+  border-radius: 10px;
+  background-color: #72d3ff;
 }
 ```
 

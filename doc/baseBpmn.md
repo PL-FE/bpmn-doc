@@ -5,7 +5,9 @@
 - [Modeler](https://github.com/bpmn-io/bpmn-js/blob/master/lib/Modeler.js) BPMN 图表建模器
 
 `Viewer` 功能最简单，仅用来展示
+
 `NavigatedViewer` 在 `Viewer` 上扩展了导航和缩放功能
+
 `Modeler` 融合了 `Viewer 和 NavigatedViewer`,并拥有工具栏、属性面板等，实现建模能力
 
 ---
@@ -28,8 +30,8 @@ css
 
 ```css
 .canves {
-	width: 100%;
-	height: 100vh;
+  width: 100%;
+  height: 100vh;
 }
 ```
 
@@ -43,25 +45,25 @@ js
 import Modeler from 'bpmn-js/lib/Viewer'
 import { xml } from './xmlData.js'
 export default {
-	data() {
-		return {
-			bpmnViewer: ''
-		}
-	},
-	async mounted() {
-		this.bpmnViewer = new Modeler({
-			container: this.$refs.canvas
-		})
+  data() {
+    return {
+      bpmnViewer: ''
+    }
+  },
+  async mounted() {
+    this.bpmnViewer = new Modeler({
+      container: this.$refs.canvas
+    })
 
-		try {
-			const { warnings } = await this.bpmnViewer.importXML(xml)
-			// 调整在正中间
-			this.bpmnViewer.get('canvas').zoom('fit-viewport', 'auto')
-			console.log('rendered')
-		} catch (err) {
-			console.log('error rendering', err)
-		}
-	}
+    try {
+      const { warnings } = await this.bpmnViewer.importXML(xml)
+      // 调整在正中间
+      this.bpmnViewer.get('canvas').zoom('fit-viewport', 'auto')
+      console.log('rendered')
+    } catch (err) {
+      console.log('error rendering', err)
+    }
+  }
 }
 ```
 
@@ -97,25 +99,25 @@ import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css'
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css'
 import { xml } from './xmlData.js'
 export default {
-	data() {
-		return {
-			bpmnModeler: ''
-		}
-	},
-	async mounted() {
-		this.bpmnModeler = new Modeler({
-			container: this.$refs.canvas
-		})
+  data() {
+    return {
+      bpmnModeler: ''
+    }
+  },
+  async mounted() {
+    this.bpmnModeler = new Modeler({
+      container: this.$refs.canvas
+    })
 
-		try {
-			const { warnings } = await this.bpmnModeler.importXML(xml)
-			// 调整在正中间
-			this.bpmnModeler.get('canvas').zoom('fit-viewport', 'auto')
-			console.log('rendered')
-		} catch (err) {
-			console.log('error rendering', err)
-		}
-	}
+    try {
+      const { warnings } = await this.bpmnModeler.importXML(xml)
+      // 调整在正中间
+      this.bpmnModeler.get('canvas').zoom('fit-viewport', 'auto')
+      console.log('rendered')
+    } catch (err) {
+      console.log('error rendering', err)
+    }
+  }
 }
 ```
 
