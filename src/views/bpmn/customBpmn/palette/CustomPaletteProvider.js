@@ -4,26 +4,16 @@
  */
 export default function PaletteProvider (
   paletteEntries,
-  customPalette,
-  create,
-  elementFactory,
-  translate
+  customPalette
 ) {
   this._entries = paletteEntries
-  this._palette = customPalette
-  this._create = create
-  this._elementFactory = elementFactory
-  this._translate = translate
 
   customPalette.registerProvider(this)
 }
 
 PaletteProvider.$inject = [
   'config.paletteEntries',
-  'customPalette',
-  'create',
-  'elementFactory',
-  'translate'
+  'customPalette'
 ]
 
 PaletteProvider.prototype.getPaletteEntries = function (element) {
