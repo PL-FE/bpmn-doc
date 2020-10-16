@@ -47,7 +47,7 @@ import { xml } from './xmlData.js'
 export default {
   data() {
     return {
-      bpmnViewer: ''
+      bpmnViewer: null
     }
   },
   async mounted() {
@@ -101,7 +101,7 @@ import { xml } from './xmlData.js'
 export default {
   data() {
     return {
-      bpmnModeler: ''
+      bpmnModeler: null
     }
   },
   async mounted() {
@@ -130,6 +130,4 @@ export default {
 
 可能你的 UI 图并不长这样，甚至没有你想要的功能。
 
-BPMN 提供了许多模块 以及 API 支持自定义扩展，能够满足大部分需求，在深入定制前，先了解下 BPMN 内部吧！~
-
-[BPMN 介绍](./quickIntroduction.md)
+没关系，BPMN 提供了许多模块 以及 API 支持自定义扩展，能够满足大部分需求，在深入定制前，[先了解下 BPMN 内部吧！~](<(./quickIntroduction.md)>)

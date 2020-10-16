@@ -30,6 +30,7 @@ bpmn-js 体系结构
 在 `diagram-js` 的上下文中讨论模块时，我们指的是提供命名服务及其实现的单元。从这个意义上说，服务是一个函数或实例，它可以使用其他服务来完成关系图上下文中的工作。
 
 > 🙋‍♂️ 是的，大部分的自定义都是基于此来完成的，理解很重要！
+> 所谓自定义就是重写或者覆盖某个功能的模块或者方法
 
 下面显示了一个与生命周期事件挂钩的服务。它通过另一个标准服务工具 eventBus 注册一个事件：
 
@@ -57,9 +58,9 @@ export default {
 }
 ```
 
-该定义告诉 DI 基础设施，该服务称为 `myloggingpluging{1}`，它依赖于 `diagram-js` 核心模块{2}，并且服务应该在创建图{3}时初始化。有关更多详细信息，请参阅 [didi](https://github.com/nikku/didi/blob/master/README.md) 文档
+该定义告诉 DI 基础设施，该服务称为 `myloggingpluging{1}`，它依赖于 `diagram-js` 核心模块{2}，并且应在创建关系图时初始化该服务{3}。有关更多详细信息，请参阅 [didi](https://github.com/nikku/didi/blob/master/README.md) 文档
 
-我们现在可以引导 diagram-js，传递我们的自定义模块：
+我们现在可以使用 diagram-js，传递我们的自定义模块：
 
 ```js
 import MyLoggingModule from 'path-to-my-logging-module'
