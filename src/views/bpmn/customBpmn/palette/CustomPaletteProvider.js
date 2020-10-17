@@ -4,16 +4,18 @@
  */
 export default function PaletteProvider (
   paletteEntries,
-  customPalette
+  customPalette,
+  spaceTool
 ) {
   this._entries = paletteEntries
-
+  console.log('spaceTool', spaceTool)
   customPalette.registerProvider(this)
 }
 
 PaletteProvider.$inject = [
   'config.paletteEntries',
-  'customPalette'
+  'customPalette',
+  'spaceTool'
 ]
 
 PaletteProvider.prototype.getPaletteEntries = function (element) {
