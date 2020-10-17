@@ -17,15 +17,17 @@
 bpmn-js 体系结构
 ![overview](./img/overview.svg)
 
-我们使用 [diagram-js](https://github.com/bpmn-io/diagram-js) 绘制图形和连线。它为我们提供了与这些图形元素进行交互的方法，以及诸如叠加层之类的其他工具，可以帮助用户构建功能强大的 BPMN 查看器。对于诸如建模之类的高级用例，它贡献了上下文垫，调色板和重做/撤消之类的功能。
+我们使用 [diagram-js](https://github.com/bpmn-io/diagram-js) 绘制图形和连线。它为我们提供了与这些图形元素进行交互的方法，以及诸如叠加层之类的其他工具，可以帮助用户构建功能强大的 BPMN 查看器。对于诸如建模之类的高级用例，它提供了上下文内容面板，调色板和重做/撤消之类的功能。
 
 [bpmn-moddle](https://github.com/bpmn-io/bpmn-moddle) 知道 [BPMN 2.0](https://www.omg.org/spec/BPMN/2.0/) 标准中定义的 BPMN 2.0 元模型。它使我们能够读写 BPMN 2.0 架构兼容的 XML 文档，并访问在图上绘制的图形和连线背后的 BPMN 相关信息。
 
 在这两个库的基础上，[bpmn-js](https://github.com/bpmn-io/bpmn-js) 定义了 BPMN 细节，例如外观，建模规则和工具（即调色板）。在以下段落中，我们将详细介绍各个组件。
 
+> 🙋‍♂️ 可以知道 bpmn-js 构建在 diagram-js 和 bpmn-moddle 这两个库之上，了解他们的关系能够很好的对他们进行自定义。
+
 ### 图交互/建模（diagram-js）
 
-在后台，[diagram-js](https://github.com/bpmn-io/diagram-js) 使用依赖注入（DI）来连接和发现图组件。该机制建立在 [didi](https://github.com/nikku/didi) 之上。
+在内部，[diagram-js](https://github.com/bpmn-io/diagram-js) 使用依赖注入（DI）来连接和发现图组件。该机制建立在 [didi](https://github.com/nikku/didi) 之上。
 
 在 `diagram-js` 的上下文中讨论模块时，我们指的是提供命名服务及其实现的单元。从这个意义上说，服务是一个函数或实例，它可以使用其他服务来完成关系图上下文中的工作。
 
@@ -79,10 +81,10 @@ var diagram = new Diagram({
 - [`Canvas`](https://github.com/bpmn-io/diagram-js/blob/master/lib/core/Canvas.js) - 提供了 api 用于添加和删除图形元素；处理生命周期的元素，并提供 api 来缩放和滚动。
 
 - [`EventBus`](https://github.com/bpmn-io/diagram-js/blob/master/lib/core/EventBus.js) -
-  这个库使用 fire 和 forget 策略的全局通信。相关模块可以订阅的各种事件，并在它们触发后立即采取行动。事件总线可以帮助我们解耦问题，并且模块化功能。
+  这个库使用 fire 和 forget 策略的全局通信。相关模块可以订阅的各种事件，并在它们触发后立即采取行动。`EventBus` 可以帮助我们解耦问题，并且模块化功能。
 - [`ElementFactory`](https://github.com/bpmn-io/diagram-js/blob/master/lib/core/ElementFactory.js) - 用于根据 diagram-js 的内部数据模型创建图形和连线的工厂。
 
-- [`ElementRegistry`](https://github.com/bpmn-io/diagram-js/blob/master/lib/core/ElementRegistry.js) - 知道添加到图表中的所有元素，并提供 API 来检索元素及其图形化表示（通过 id）。
+- [`ElementRegistry`](https://github.com/bpmn-io/diagram-js/blob/master/lib/core/ElementRegistry.js) - 知道添加到图表中的所有元素，并提供 API 来检索元素（通过 id）及其图形化表示。
 
 - [`GraphicsFactory`](https://github.com/bpmn-io/diagram-js/blob/master/lib/core/GraphicsFactory.js) - 负责创建图形和连线的图形表示。实际的外观由渲染器定义，即 [draw module](https://github.com/bpmn-io/diagram-js/tree/master/lib/draw) 模块内的 [DefaultRenderer](https://github.com/bpmn-io/diagram-js/blob/master/lib/draw/DefaultRenderer.js)
 
@@ -92,9 +94,9 @@ var diagram = new Diagram({
 
 ![data-model.png](./img/data-model.png)
 
-一个图形有父对象、子对象集合以及传入和传出连线的集合。
+一个图形有`父对象`、`子对象集合`以及`传入`和`传出`连线的集合。
 
-一个连线有一个父对象以及一个源头和目的地，指向一个图形。
+一个连线有一个`父对象`以及`来源`和`目的`，指向一个图形。
 
 [ElementRegistry](https://github.com/bpmn-io/diagram-js/blob/master/lib/core/ElementRegistry.js) 负责根据该模型创建图形和连线。在建模过程中，[Modeling 服务](https://github.com/bpmn-io/diagram-js/blob/master/lib/features/modeling/Modeling.js)将根据用户操作更新元素关系。
 
@@ -102,12 +104,10 @@ var diagram = new Diagram({
 
 除了数据模型及其核心服务之外，diagram-js 还提供了一个丰富的工具箱，其中包含其他帮助程序。
 
-Aside from the data model and its core services, diagram-js provides a rich toolbox of additional helpers.
-
 - [`CommandStack`](https://github.com/bpmn-io/diagram-js/blob/master/lib/command/CommandStack.js) - 负责建模过程中的重做和撤消。
 - [`ContextPad`](https://github.com/bpmn-io/diagram-js/blob/master/lib/features/context-pad/ContextPad.js) - 围绕提供元素的上下文操作。
 - [`Overlays`](https://github.com/bpmn-io/diagram-js/blob/master/lib/features/overlays/Overlays.js) - 提供了用于图表元素的附加信息 api 。
-- [`Modeling`](https://github.com/bpmn-io/diagram-js/blob/master/lib/features/modeling/Modeling.js) - 提供用于更新画布上元素的 API（移动、删除）🙋‍♂️ 这个常用
+- [`Modeling`](https://github.com/bpmn-io/diagram-js/blob/master/lib/features/modeling/Modeling.js) - 提供用于更新画布上元素的 API（移动、删除）- 🙋‍♂️ 这个常用
 - [`Palette`](https://github.com/bpmn-io/diagram-js/blob/master/lib/features/palette/Palette.js) - 左侧工具栏
 - ...
 
@@ -157,6 +157,8 @@ BPMN 元模型对于 BPMN-js 至关重要，因为它允许我们验证所使用
 }
 ```
 
+> 🙋‍♂️ 这是一个`开始节点`的解析数据，是 BPMN 解析 BPMN 文件或者 XML 得到的，描述了它本身的信息以及与它有关系的其他节点的信息。
+
 您可以通过 `businessObject` 属性从每个图形元素访问基础 BPMN 类型。
 
 [bpmn-js](https://github.com/bpmn-io/bpmn-js) 还通过知道了每个 BPMN 元素的外观 [BpmnRenderer](https://github.com/bpmn-io/bpmn-js/blob/master/lib/draw/BpmnRenderer.js)。通过插入渲染周期，您还可以定义各个 BPMN 元素的自定义表示。
@@ -197,3 +199,7 @@ BPMN 元模型对于 BPMN-js 至关重要，因为它允许我们验证所使用
 大部分都是通过修改他俩的代码来实现自定义一些功能
 我们要的功能基本都在 `lib/features/` 或者 `lib/core/` 以及 `lib/draw/` 中
 虽然寻找和阅读 BPMN 的文档艰难了点，但是他们的扩展做得还是很棒的，代码写得也很通俗易懂。
+
+---
+
+下面可以尝试一下[自定义工具栏](./customPalette.md)

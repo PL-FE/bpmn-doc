@@ -1,24 +1,18 @@
 # 自定义 Palette
 
-由于 `bpmn-js` 构建在两个重要的库之上:`diagram-js` 和 `bpmn-moddle`
-
-`diagram-js` 是一个工具箱，用于在 web 上显示和修改图表。
-`diagram-js` 使用`依赖注入(DI)`来连接和发现图组件。
-为扩展 Bpmn 提供了很大方便，包括传递 元素信息、模型信息、Palette 容器信息等，统一在 `new Modeler(option)` 中的 `option` 传递
-
----
-
-## 思路
-
-主要思路是将源码中的 `Palette` 相关源码拷贝出来，进行自定义修改后，通过 `additionalModules` 再传进去
-
-可自定义工具栏的 `布局、位置、大小颜色、指定工具栏的容器等`
-
-注意：标记 🎯 的地方为重点
+[了解 BPMN 内部](quickIntroduction.md)后，对一些模块以及它们之间的配合应该有了一定的概念，下面开始动手尝试修改一下 `palette` 工具栏
 
 ---
 
 ## 开始
+
+你将实现
+
+- 可指定工具栏容器
+- 自定义工具栏样式、布局
+- 通过配置生成工具栏
+
+注意：标记 🎯 的地方为重点
 
 #### 1. 创建相关文件
 
@@ -46,7 +40,7 @@ import customPalette from './CustomPalette'
 import PaletteProvider from './CustomPaletteProvider'
 // 除了引进的模块的名字可以修改，其他的不建议修改，会报错
 export default {
-  __depends__: [customPalette],
+  __depends__: [customPalette], // 依赖于 customPalette 这个模块
   __init__: ['customPaletteProvider'], // 调用 customPaletteProvider 来初始化
   customPaletteProvider: ['type', PaletteProvider]
 }
@@ -79,7 +73,7 @@ PaletteProvider.prototype.getPaletteEntries = function(element) {
 
 目的达成，下一步是修改 `CustomPalette.js`
 
-#### 3. 修改工具栏构造者 CustomPalette.js
+#### 3. 修改工具栏构造者 CustomPalette
 
 **目的：**
 
