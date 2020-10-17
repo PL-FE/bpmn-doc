@@ -43,7 +43,7 @@ js
 
 ```js
 import Modeler from 'bpmn-js/lib/Viewer'
-import { xml } from './xmlData.js'
+import { xmlStr } from './xmlData.js'
 export default {
   data() {
     return {
@@ -56,7 +56,7 @@ export default {
     })
 
     try {
-      const { warnings } = await this.bpmnViewer.importXML(xml)
+      const { warnings } = await this.bpmnViewer.importXML(xmlStr)
       // 调整在正中间
       this.bpmnViewer.get('canvas').zoom('fit-viewport', 'auto')
       console.log('rendered')
@@ -97,7 +97,7 @@ import 'bpmn-js/dist/assets/diagram-js.css' // 左边工具栏以及编辑节点
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css'
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css'
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css'
-import { xml } from './xmlData.js'
+import { xmlStr } from './xmlData.js'
 export default {
   data() {
     return {
@@ -110,7 +110,7 @@ export default {
     })
 
     try {
-      const { warnings } = await this.bpmnModeler.importXML(xml)
+      const { warnings } = await this.bpmnModeler.importXML(xmlStr)
       // 调整在正中间
       this.bpmnModeler.get('canvas').zoom('fit-viewport', 'auto')
       console.log('rendered')
