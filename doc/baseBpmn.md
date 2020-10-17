@@ -67,6 +67,8 @@ export default {
 }
 ```
 
+- [xmlStr](../src/components/xmlData.js)
+
 ---
 
 ### NavigatedViewer

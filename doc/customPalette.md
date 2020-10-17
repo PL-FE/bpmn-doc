@@ -60,18 +60,13 @@ export default {
 引入刚刚创建的文件
 
 ```js
-import customPalette from './customBpmn/palette'
+import customPalette from './palette'
 ```
 
 ```js
 export default {
   // ...
   init() {
-    // 去除默认工具栏
-    const modules = Modeler.prototype._modules
-    const index = modules.findIndex(it => it.paletteProvider)
-    modules.splice(index, 1)
-
     this.bpmnModeler = new BpmnModeler({
       additionalModules: [customPalette]
     })
@@ -83,6 +78,8 @@ export default {
 到此，当前页面应该是正常显示的，因为我们只是将文件拷贝出来，修改引用，方便后续的修改。
 
 #### 3. 修改工具栏构造者 CustomPalette
+
+修改 `CustomPalette.js` 文件
 
 **目的：**
 
@@ -134,7 +131,7 @@ function Palette(
 
 ##### 3.1 自定义工具栏样式、布局
 
-下面开始修改工具栏的样式和布局
+顺便提一下这是修改工具栏的样式和布局
 
 找到 `_update` 方法，这个方法是更新工具栏样式的方法
 
@@ -181,20 +178,19 @@ Palette.prototype.trigger = function(action, event, autoActivate) {
 
   originalEvent = event.originalEvent || event
 
-  // ---------- 自定义区域 ------------
   // simple action (via callback function)
   if (isFunction(handler)) {
     if (action === 'click') {
-      // 在原来 2 个参数的基础上，新增 2 个参数 elementFactory, create
-      handler(originalEvent, autoActivate, elementFactory, create) // 🎯 这里便是回调 action.click 事件
+      handler(originalEvent, autoActivate, elementFactory, create)
     }
   } else {
+    // ---------- 自定义区域 ------------
     if (handler[action]) {
       // 在原来 2 个参数的基础上，新增 2 个参数 elementFactory, create
-      handler[action](originalEvent, autoActivate, elementFactory, create) // 🎯 这里便是回调 action.dragstart 或者其他事件
+      handler[action](originalEvent, autoActivate, elementFactory, create) // 🎯 这里便是回调 action.dragstart 或者click 或者 其他事件
     }
+    // ---------- 自定义区域 ------------
   }
-  // ---------- 自定义区域 ------------
 
   event.preventDefault()
 }
@@ -205,6 +201,8 @@ Palette.prototype.trigger = function(action, event, autoActivate) {
 `CustomPalette.js` 至此基本完成了。
 
 #### 4. 修改数据的提供者 PaletteProvider
+
+现在开始修改 `PaletteProvider.js` 文件
 
 修改前，可以先看一下 `PaletteProvider.prototype.getPaletteEntries` 这个方法
 
@@ -268,7 +266,7 @@ PaletteProvider.prototype.getPaletteEntries = function(element) {
 
 #### 5. 配置工具栏
 
-同级目录下的 `config` 文件夹新建 `paletteEntries.js`,
+同级目录下新建 `config/paletteEntries.js`,
 
 `paletteEntries.js` 的目的是返回一个包含工具数据的集合（对象或数组）
 这里简单理解两个工具元素，`开始和结束`
@@ -312,6 +310,28 @@ function createAction(type, group, className, title, options) {
 }
 ```
 
+然后再做两件事，`引入工具栏配置`，`去除默认工具栏`
+
+```js
+export default {
+  // ...
+  init() {
+    // // 去除默认工具栏
+    const modules = Modeler.prototype._modules
+    const index = modules.findIndex(it => it.paletteProvider)
+    modules.splice(index, 1)
+
+    this.bpmnModeler = new BpmnModeler({
+      paletteEntries,
+      additionalModules: [customPalette]
+    })
+    // ...
+  }
+}
+```
+
+效果如下：
+
 ![customPalette_ok](./img/customPalette_ok.png)
 
 #### 修改样式
@@ -328,7 +348,7 @@ export default {
     'activity',
     'bpmn-icon-task-custom', // 🙋‍♂️ 使用图片后，记得修改成自己的类名
     'Create Task',
-    require('../img/task.png') // 🎯
+    require('./img/task.png') // 📌
   )
 }
 
@@ -339,7 +359,7 @@ function createAction(type, group, className, title, imageUrl) {
     group: group,
     className: className,
     title: title,
-    imageUrl, // 🎯
+    imageUrl, // 📌
     action: {
       dragstart: createListener,
       click: createListener
@@ -364,10 +384,8 @@ function createAction(type, group, className, title, imageUrl) {
 
 自定义 palette 相关代码
 
-- [src\views\bpmn\index.vue](../src/views/bpmn/index.vue)
-- [src\views\bpmn\customBpmn\palette](../src/views/bpmn/customBpmn/palette)
-- [src\main.js](../src/main.js)
-- [src\assets\css](../src/assets/css)
+- [src\components\palette](../src/components/palette)
+- [src\components\Bpmn.vue](../src/components/Bpmn.vue)
 
 可能对你有帮助的官方资源：
 

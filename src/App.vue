@@ -1,12 +1,23 @@
 <template>
   <div id="app">
-    <router-view />
+    <Bpmn />
   </div>
 </template>
 
-<style lang="less">
+<script>
+import Bpmn from './components/Bpmn'
+
+export default {
+  name: 'App',
+  components: {
+    Bpmn
+  }
+}
+</script>
+
+<style lang="less" >
 body {
   margin: 0;
-  overflow: hidden;
+  padding: 0;
 }
 </style>
