@@ -16,7 +16,7 @@ import { xmlStr } from './xmlData.js'
 import customPalette from './palette'
 import customRenderer from './renderer'
 import paletteEntries from './config/paletteEntries'
-
+import customContextPad from './contextPad'
 export default {
   data () {
     return {
@@ -32,7 +32,7 @@ export default {
     this.bpmnModeler = new Modeler({
       container: this.$refs.canvas,
       paletteEntries,
-      additionalModules: [customPalette, customRenderer]
+      additionalModules: [customPalette, customRenderer, customContextPad]
     })
 
     try {

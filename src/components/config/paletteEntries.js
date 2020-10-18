@@ -71,14 +71,25 @@ function createAction (type, group, className, title, imageUrl = '', drawShape) 
 
 function drawShape (parentNode, element, bpmnRenderer) {
   const shape = bpmnRenderer.drawShape(parentNode, element)
-
+  const suitable = element.businessObject.suitable
+  let color = '#52B415'
+  if (suitable) {
+    if (suitable > 50) {
+      color = 'green'
+    }
+    if (suitable === 50) {
+      color = 'yellow'
+    }
+    if (suitable < 50) {
+      color = 'red'
+    }
+  }
   if (is(element, 'bpmn:Task')) {
     const height = 80
     const width = 100
     element.width = width
     element.height = height
-
-    const rect = drawRect(parentNode, width, height, TASK_BORDER_RADIUS, '#52B415')
+    const rect = drawRect(parentNode, width, height, TASK_BORDER_RADIUS, color)
 
     prependTo(rect, parentNode)
 
@@ -87,7 +98,7 @@ function drawShape (parentNode, element, bpmnRenderer) {
     return shape
   }
 
-  const rect = drawRect(parentNode, 30, 20, TASK_BORDER_RADIUS, '#cc0000')
+  const rect = drawRect(parentNode, 30, 20, TASK_BORDER_RADIUS, color)
 
   svgAttr(rect, {
     transform: 'translate(-20, -10)'
