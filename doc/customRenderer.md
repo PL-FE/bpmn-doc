@@ -49,7 +49,7 @@ export default {
 
 你会发现自定义渲染已经成功了
 
-[customRenderer_init](./customRenderer_init.png)
+[customRenderer_init](./img/customRenderer_init.png)
 
 当然，我们需要的不仅如此
 
