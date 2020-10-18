@@ -350,7 +350,7 @@ function createAction(type, group, className, title, imageUrl) {
 
 自定义 palette 项目
 
-[Tag v1-1.0.0](https://github.com/PL-FE/bpmn-doc/tree/v1-1.0.0)
+[customPalette](https://github.com/PL-FE/bpmn-doc/tree/customPalette)
 
 可能对你有帮助的官方资源：
 
