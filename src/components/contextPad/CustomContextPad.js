@@ -3,7 +3,7 @@ const SUITABILITY_SCORE_AVERGE = 50
 const SUITABILITY_SCORE_LOW = 25
 
 export default class CustomContextPad {
-  constructor(bpmnFactory, config, contextPad, create, elementFactory, injector, translate) {
+  constructor (bpmnFactory, config, contextPad, create, elementFactory, injector, translate) {
     this.bpmnFactory = bpmnFactory
     this.create = create
     this.elementFactory = elementFactory
