@@ -22,7 +22,7 @@ vue + bpmn 预览： <a href="http://bpmn-doc.pengliang.online">http://bpmn-doc.
 - [x] <a href="./doc/quickIntroduction.md">了解 BPMN 内部</a>
 - [x] <a href="./doc/customPalette.md">自定义 Palette</a>
 - [x] <a href="./doc/customRenderer.md">自定义 Renderer</a>
-- [ ] <a href="./doc/customContextPad.md">自定义 contextPad</a>
+- [x] <a href="./doc/customContextPad.md">自定义 contextPad</a>
 - [x] <a href="./doc/customConnectionColor.md">自定义连线和箭头的颜色</a>
 - [ ] 自定义 properties-panel
 - [x] <a href="./doc/customMiniMap.md">右上角小地图</a>
