@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "all": "npm run build && node ./deploy.js"
   },
   "dependencies": {
     "bpmn-js": "^7.3.1",
