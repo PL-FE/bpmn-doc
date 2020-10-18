@@ -17,8 +17,8 @@ export default {
 function createAction (type, group, className, title, imageUrl) {
   // 还记得 CustomPalette.js 吗？便是这里回调 createListener 函数
   // if (action === 'click') {
-  // 		handler(originalEvent, autoActivate, elementFactory, create)
-  // 	}
+  // handler(originalEvent, autoActivate, elementFactory, create)
+  // }
   function createListener (event, autoActivate, elementFactory, create) {
     var shape = elementFactory.createShape({ type })
 
