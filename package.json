@@ -5,8 +5,9 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "dev": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "build": "vue-cli-service build",    
+    "lint": "vue-cli-service lint",
+    "all": "npm run build && node ./deploy.js"
   },
   "dependencies": {
     "bpmn-js": "^7.3.1",
@@ -32,7 +33,8 @@
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
     "prettier": "^1.19.1",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "sftp-sync-deploy": "^0.7.1"
   },
   "browserslist": [
     "> 1%",
