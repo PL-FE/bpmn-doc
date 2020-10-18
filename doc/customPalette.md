@@ -348,6 +348,8 @@ function createAction(type, group, className, title, imageUrl) {
 
 无需担心，因为我们还没告诉 `bpmn` 该怎么渲染它
 
+点击了解如何自定义渲染 [customRenderer](./customRenderer.md)
+
 ---
 
 ### 相关
