@@ -13,7 +13,7 @@ const HIGH_PRIORITY = 1500
 const TASK_BORDER_RADIUS = 2
 
 export default class CustomRenderer extends BaseRenderer {
-  constructor(eventBus, bpmnRenderer, paletteEntries) {
+  constructor (eventBus, bpmnRenderer, paletteEntries) {
     super(eventBus, HIGH_PRIORITY)
 
     this.bpmnRenderer = bpmnRenderer
