@@ -1,18 +1,23 @@
 {
-  "name": "bpmn-doc",
-  "version": "1.0.0",
+  "name": "bpmn-docc",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "dev": "vue-cli-service serve",
-    "build": "vue-cli-service build",    
+    "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "all": "npm run build && node ./deploy.js"
   },
   "dependencies": {
     "bpmn-js": "^7.3.1",
     "core-js": "^3.6.5",
-    "vue": "^2.6.11"
+    "diagram-js-minimap": "^2.0.3",
+    "element-ui": "^2.13.2",
+    "sftp-sync-deploy": "^0.7.1",
+    "vue": "^2.6.11",
+    "vue-router": "^3.2.0",
+    "vuex": "^3.4.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -33,8 +38,7 @@
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
     "prettier": "^1.19.1",
-    "vue-template-compiler": "^2.6.11",
-    "sftp-sync-deploy": "^0.7.1"
+    "vue-template-compiler": "^2.6.11"
   },
   "browserslist": [
     "> 1%",
