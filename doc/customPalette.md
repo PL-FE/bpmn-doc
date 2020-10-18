@@ -2,6 +2,10 @@
 
 [了解 BPMN 内部](quickIntroduction.md)后，对一些模块以及它们之间的配合应该有了一定的概念，下面开始动手尝试修改一下 `palette` 工具栏
 
+案例代码在这里取：
+
+[customPalette](https://github.com/PL-FE/bpmn-doc/tree/customPalette)
+
 ---
 
 ## 开始
@@ -347,10 +351,6 @@ function createAction(type, group, className, title, imageUrl) {
 ---
 
 ### 相关
-
-自定义 palette 项目
-
-[customPalette](https://github.com/PL-FE/bpmn-doc/tree/customPalette)
 
 可能对你有帮助的官方资源：
 

@@ -2,6 +2,10 @@
 
 在 [自定义 Palette](./customPalette.md) 的基础上继续修改
 
+案例代码在这里取：
+
+[customRenderer](https://github.com/PL-FE/bpmn-doc/tree/customRenderer)
+
 ## 开始
 
 由于画布中的图形为 `SVG`，不像 `Palette` 是使用 `HTML`，所以需要学习 [SVG 的基础知识](https://www.runoob.com/w3c/w3c-tutorial.html)
@@ -77,7 +81,7 @@ drawShape (parentNode, element) {
 }
 ```
 
-#### 修改 paletteEntries
+#### 3. 修改 paletteEntries
 
 我们主要对 `drawShape` 这个方法进行修改，期望能统一在一个文件中同时配置工具栏和自定义渲染
 
@@ -172,7 +176,7 @@ function drawShape(parentNode, element, bpmnRenderer) {
 }
 ```
 
-#### 修改 CustomRenderer
+#### 4. 修改 CustomRenderer
 
 注入需要的数据
 
@@ -206,10 +210,6 @@ CustomRenderer.$inject = ['eventBus', 'bpmnRenderer', 'config.paletteEntries']
 下面开始如何 [自定义 contextPad]()
 
 ### 相关
-
-自定义 renderer 项目
-
-[customRenderer](https://github.com/PL-FE/bpmn-doc/tree/customRenderer)
 
 可能对你有帮助的官方资源：
 
