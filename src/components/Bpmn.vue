@@ -14,6 +14,7 @@ import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css'
 import { xmlStr } from './xmlData.js'
 
 import customPalette from './palette'
+import customRenderer from './renderer'
 import paletteEntries from './config/paletteEntries'
 
 export default {
@@ -31,7 +32,7 @@ export default {
     this.bpmnModeler = new Modeler({
       container: this.$refs.canvas,
       paletteEntries,
-      additionalModules: [customPalette]
+      additionalModules: [customPalette, customRenderer]
     })
 
     try {
@@ -40,6 +41,7 @@ export default {
       this.bpmnModeler.get('canvas').zoom('fit-viewport', 'auto')
       console.log('rendered')
     } catch (err) {
+      
       console.log('error rendering', err)
     }
   }

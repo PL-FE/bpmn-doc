@@ -300,7 +300,7 @@ export default {
 
 ![customPalette_ok](./img/customPalette_ok.png)
 
-#### 修改样式
+#### 6. 修改样式
 
 `bpmn:Task` 使用了字体图标 `bpmn-icon-task`，
 下面我们修改它，换成 img。
