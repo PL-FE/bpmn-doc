@@ -350,7 +350,7 @@ function createAction(type, group, className, title, imageUrl) {
 
 点击了解如何自定义渲染 [customRenderer](./customRenderer.md)
 
-完整目录： 👉 [点击这里](../README.md)
+完整目录：👉 [点击这里](../README.md)
 
 ---
 
