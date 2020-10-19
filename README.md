@@ -1,8 +1,4 @@
-# bpmn.js-Doc
-
-本篇笔记正在编辑，待整理 【2020 年 10 月 13 日 19:25:29】
-
----
+# bpmn.js-doc
 
 [![](https://img.shields.io/badge/Bpmn.js-^7.3.1-33aadd?style=flat-square)](https://www.bt.cn/)
 
