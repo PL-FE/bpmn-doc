@@ -8,7 +8,9 @@
 
 在线预览 bpmn-modeling-api-cn
 
-[https://pl-fe.github.io/bpmn-modeling-api-cn.github.io/](https://pl-fe.github.io/bpmn-modeling-api-cn.github.io/)
+网址 1 ： [https://pl-fe.github.io/bpmn-modeling-api-cn.github.io/](https://pl-fe.github.io/bpmn-modeling-api-cn.github.io/)
+
+网址 2 ： [http://bpmn-doc-example.pengliang.online/modeling-api/](http://bpmn-doc-example.pengliang.online/modeling-api/)
 
 官方 bpmn-modeling-api
 
