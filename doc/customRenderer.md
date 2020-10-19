@@ -209,6 +209,8 @@ CustomRenderer.$inject = ['eventBus', 'bpmnRenderer', 'config.paletteEntries']
 
 下面开始如何 [自定义 contextPad](./customContextPad.md)
 
+完整目录： 👉 [点击这里](../README.md)
+
 ### 相关
 
 可能对你有帮助的官方资源：
