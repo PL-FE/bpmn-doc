@@ -4,7 +4,7 @@
 
 案例代码在这里取：
 
-customContextPad
+[customContextPad](https://github.com/PL-FE/bpmn-doc/tree/customContextPad)
 
 ## 开始
 
@@ -60,7 +60,7 @@ export default {
 
 #### 3. 查看 CustomContextPad
 
-回到 `CustomContextPad.js`
+回到 `CustomContextPad.js`,其中一段代码，如下
 
 ```js
  'append.low-task': {
@@ -74,7 +74,11 @@ export default {
       }
 ```
 
-这次通过类名来修改外观， palette 是通过图片。
+所以我们可以通过类名来修改外观，
+
+新建一个 `bpmn.less` 文件作为自定义样式
+
+bpmn.less
 
 ```css
 .bpmn-icon-task.red {
@@ -114,6 +118,8 @@ const SUITABILITY_SCORE_LOW = 25
 并赋值给每个元素的 `businessObject.suitable`
 
 这样我们就可以在渲染的时候判断得分展示对应的分数
+
+paletteEntries.js
 
 ```js
 function drawShape(parentNode, element, bpmnRenderer) {
@@ -164,7 +170,9 @@ function drawShape(parentNode, element, bpmnRenderer) {
 以上，只是简单举例了如何修改自定义内容面板。
 如果去除它默认的内容，由于使用几率比较少,可以修改它的提供器，就像 [customPalette](./customPalette.md)。
 
-下一步，[自定义属性面板](#)
+下一步 [自定义属性面板]
+
+完整目录： 👉 [点击这里](../README.md)
 
 ### 相关
 
