@@ -58,7 +58,7 @@
 * [elementRegistry.add](#elementRegistryadd)
 * [elementRegistry.remove](#elementRegistryremove)
 * [elementRegistry.get](#elementRegistryget)
-* [elementRegistry.getAll](#[elementRegistrygetAll)
+* [elementRegistry.getAll](#elementRegistrygetAll)
 * [elementRegistry.updateId](#elementRegistryupdateId)
 * [elementRegistry.filter](#elementRegistryfilter)
 * [elementRegistry.forEach](#elementRegistryforEach)

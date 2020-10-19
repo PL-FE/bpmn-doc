@@ -304,7 +304,7 @@ export default {
 
 ![customPalette_ok](./img/customPalette_ok.png)
 
-#### 修改样式
+#### 6. 修改样式
 
 `bpmn:Task` 使用了字体图标 `bpmn-icon-task`，
 下面我们修改它，换成 img。
@@ -347,6 +347,10 @@ function createAction(type, group, className, title, imageUrl) {
 突然，你发现通过工具栏生成的元素还保持着 `最初` 的样子。
 
 无需担心，因为我们还没告诉 `bpmn` 该怎么渲染它
+
+点击了解如何自定义渲染 [customRenderer](./customRenderer.md)
+
+完整目录： 👉 [点击这里](../README.md)
 
 ---
 
