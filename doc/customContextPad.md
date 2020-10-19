@@ -1,6 +1,6 @@
 # 自定义 contextPad
 
-在 [自定义 contextPad](./customRenderer.md) 的基础上继续修改
+在 [自定义 customRenderer](./customRenderer.md) 的基础上继续修改
 
 案例代码在这里取：
 
