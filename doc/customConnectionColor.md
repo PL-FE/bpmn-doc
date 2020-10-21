@@ -1,3 +1,15 @@
+# 官方方法
+
+```js
+const modeling = this.modeler.get('modeling')
+modeling.setColor(element, {
+  fill: 'blue',
+  stroke: 'red'
+})
+```
+
+[官方 demo](https://github.com/bpmn-io/bpmn-js-examples/tree/master/colors)
+
 # 自定义连线和箭头的颜色
 
 `NavigatedViewer`、`Viewer`、`Modeler`三种模式都适用
