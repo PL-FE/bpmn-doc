@@ -20,7 +20,7 @@
     |-- index.js
 ```
 
-这里比较方便直接去官方的 Demo 中取代码
+这里比较方便，可以直接去官方的 Demo 中取代码
 [bpmn-js-example-custom-elements](https://github.com/bpmn-io/bpmn-js-example-custom-elements/blob/master/app/custom/CustomContextPad.js)
 
 接下来是 index.js
