@@ -1,4 +1,12 @@
-# 官方方法
+# 设置颜色
+
+官方提供了 4 中方法
+
+[官方 demo](https://github.com/bpmn-io/bpmn-js-examples/tree/master/colors)
+
+我这里推荐两种
+
+## 一、官方 API
 
 ```js
 const modeling = this.modeler.get('modeling')
@@ -8,9 +16,7 @@ modeling.setColor(element, {
 })
 ```
 
-[官方 demo](https://github.com/bpmn-io/bpmn-js-examples/tree/master/colors)
-
-# 自定义连线和箭头的颜色
+## 二、通过 css 自定义连线和箭头的颜色
 
 `NavigatedViewer`、`Viewer`、`Modeler`三种模式都适用
 配合自定义渲染加上不同的类名，能够达到每条线有不一样的颜色
@@ -18,7 +24,7 @@ modeling.setColor(element, {
 
 ---
 
-## 思路
+### 思路
 
 主要 通过 css 改变颜色
 
