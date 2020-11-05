@@ -137,7 +137,7 @@ Palette.prototype._init = function () {
 
   var eventBus = this._eventBus
 
-  var parentContainer = this._getParentContainer()
+  // var parentContainer = this._getParentContainer()
   // 获取传入的工具栏容器
   var container = this._container = this._paletteContainer
   // 未找到 使用默认
@@ -156,7 +156,7 @@ Palette.prototype._init = function () {
       container.appendChild(domify('<div class="custom-palette-toggle"></div>'))
     }
   }
-  parentContainer.appendChild(container)
+  // parentContainer.appendChild(container)
 
   // 下面是绑定 click 、 dragstart
 
