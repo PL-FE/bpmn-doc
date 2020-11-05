@@ -66,7 +66,7 @@ function Palette(
 // 使用指定的容器
 Palette.prototype._init = function() {
   // ...
-  var parentContainer = this._getParentContainer()
+  // var parentContainer = this._getParentContainer()
   // 获取传入的工具栏容器
   var container = (this._container = this._paletteContainer)
   // 未找到 使用默认
@@ -87,7 +87,7 @@ Palette.prototype._init = function() {
       container.appendChild(domify('<div class="custom-palette-toggle"></div>'))
     }
   }
-  parentContainer.appendChild(container)
+  // parentContainer.appendChild(container) // 这句会将 palette 加入 canvas
   // ...
 }
 
@@ -121,3 +121,5 @@ Palette.prototype._init = function() {
 代码 [CustomPalette.js](https://github.com/PL-FE/bpmn-doc/blob/dev/src/views/bpmn/customBpmn/palette/CustomPalette.js)
 
 建议直接取官方代码修改，安全又保险！:[Palette.js](https://github.com/bpmn-io/diagram-js/blob/develop/lib/features/palette/Palette.js)
+
+完整目录： 👉 [点击这里](https://github.com/PL-FE/bpmn-doc/blob/main/README.md)
