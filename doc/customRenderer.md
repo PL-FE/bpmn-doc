@@ -49,7 +49,7 @@ export default {
 
 你会发现自定义渲染已经成功了
 
-[customRenderer_init](./customRenderer_init.png)
+[customRenderer_init](./img/customRenderer_init.png)
 
 当然，我们需要的不仅如此
 
@@ -207,7 +207,9 @@ CustomRenderer.$inject = ['eventBus', 'bpmnRenderer', 'config.paletteEntries']
 
 自定义渲染已经完成，更多的是思考如何绘制 SVG ,给每个不同的元素不同的 `drawShape`
 
-下面开始如何 [自定义 contextPad]()
+下面开始如何 [自定义 contextPad](./customContextPad.md)
+
+完整目录： 👉 [点击这里](../README.md)
 
 ### 相关
 

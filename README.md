@@ -1,14 +1,18 @@
-# bpmn.js-Doc
-
-本篇笔记正在编辑，待整理 【2020 年 10 月 13 日 19:25:29】
-
----
+# bpmn.js-doc
 
 [![](https://img.shields.io/badge/Bpmn.js-^7.3.1-33aadd?style=flat-square)](https://www.bt.cn/)
 
 这里总结了 `bpmn-js` 用法以及一些 `API`
 由于本人也是新手，有些地方总结得不到位或者用词不当，这个笔记会在日后不断完善，望各位老爷多多指点 😚
 本篇笔记旨在技术交流，觉得还可以的希望可以给的 `star`🤝
+
+不同功能的代码在不同分支中
+
+- main 是主分支
+- dev 是开发分支，功能比较多，代码比较乱 😂
+- customPalette 自定义工具栏分支
+- customRenderer
+- ...
 
 ---
 
@@ -21,10 +25,10 @@ vue + bpmn 预览： <a href="http://bpmn-doc.pengliang.online">http://bpmn-doc.
 - [x] <a href="./doc/baseBpmn.md">基础使用</a>
 - [x] <a href="./doc/quickIntroduction.md">了解 BPMN 内部</a>
 - [x] <a href="./doc/customPalette.md">自定义 Palette</a>
-- [x] <a href="./doc/customPalette.md">自定义 Palette</a>
-- [x] <a href="./doc/customPaletteCantainer.md">指定 Renderer 容器</a>
+- [x] <a href="./doc/customPaletteCantainer.md">指定 Palette 容器</a>
+- [x] <a href="./doc/customRenderer.md">自定义 Renderer</a>
+- [x] <a href="./doc/customContextPad.md">自定义 contextPad</a>
 - [x] <a href="./doc/customConnectionColor.md">自定义连线和箭头的颜色</a>
-- [ ] 自定义 contextPad
 - [ ] 自定义 properties-panel
 - [x] <a href="./doc/customMiniMap.md">右上角小地图</a>
 - [x] <a href="./doc/bpmnApi.md">总结常用 API 🚩</a>
