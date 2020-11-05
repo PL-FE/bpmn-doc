@@ -17,10 +17,7 @@
         style="display: none"
         @change="loadXML" />
     </div>
-    <div ref="palette"
-      class="asasa">
-      <div class="custom-palette-entries"></div>
-      <div class="custom-palette-toggle"></div>
+    <div ref="palette">
     </div>
     <div class="canvas"
       ref="canvas"></div>
