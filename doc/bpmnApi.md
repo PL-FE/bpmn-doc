@@ -25,6 +25,103 @@
 - [Modeling](https://github.com/bpmn-io/diagram-js/blob/master/lib/features/modeling/Modeling.js): 提供用于`更新`画布上的元素`(移动、删除)`的 api
 - GraphicsFactory: 负责创建图形和连接的图形表示。实际的外观是由渲染器定义的，即绘制模块中的 DefaultRenderer。
 
+### 项目中常用
+
+基础 API 建议先看上面的 [网址](http://bpmn-doc-example.pengliang.online/modeling-api/)
+
+- 还原
+
+```js
+bpmnModeler.get('commandStack').redo()
+```
+
+- 撤销
+
+```js
+bpmnModeler.get('commandStack').undo()
+```
+
+- 设置元素颜色
+
+```js
+const modeling = this.bpmnModeler.get('modeling')
+modeling.setColor(element, {
+  fill: '#fff',
+  stroke: '#fff'
+})
+```
+
+- 对齐
+
+```js
+// {Array} elements
+// {String} position:  left/top/right/bottom/cneter/middle
+bpmnModeler.get('alignElements').trigger(elements, position)
+```
+
+- 水平垂直对齐
+
+```js
+// {Array} elements
+// {String} axis:  /horizontal/vertical
+bpmnModeler.get('distributeElements').trigger(elements, axis)
+```
+
+- 缩放
+
+```js
+// {Number} radio : 1.0
+bpmnModeler.get('canvas').zoom(radio)
+```
+
+- 更新元素属性
+
+```js
+const modeling = bpmnModeler.modeler.get('modeling')
+modeling.updateProperties(element, {
+  key: value
+})
+```
+
+- 保存 XML
+
+```js
+bpmnModeler.saveXML({ format: true })
+```
+
+- 保存为 SVG
+
+```js
+bpmnModeler.saveSVG().then(result => {
+  const { svg } = result
+  const svgBlob = new Blob([svg], {
+    type: 'image/svg+xml'
+  })
+  const downloadLink = document.createElement('a')
+  downloadLink.download = `bpmn-${+new Date()}.SVG`
+  downloadLink.innerHTML = 'Get BPMN SVG'
+  downloadLink.href = window.URL.createObjectURL(svgBlob)
+  downloadLink.onclick = function(event) {
+    document.body.removeChild(event.target)
+  }
+  downloadLink.style.visibility = 'hidden'
+  document.body.appendChild(downloadLink)
+  downloadLink.click()
+})
+```
+
+- 导入 BOMN 文件
+
+```js
+// 事先拿到文件流 file
+const reader = new FileReader()
+reader.readAsText(file)
+reader.onload = function() {
+  xml = this.result
+  // 这里可以拿到 xml
+}
+```
+
 ### Index
 
 建议使用<kbd>Ctrl</kbd> + <kbd>F</kbd> 或  <kbd>command</kbd> + <kbd>F</kbd>搜索

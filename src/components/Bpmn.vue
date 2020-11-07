@@ -36,7 +36,8 @@ export default {
     })
 
     try {
-      await this.bpmnModeler.importXML(xmlStr)
+      const res = await this.bpmnModeler.importXML(xmlStr)
+      console.log('res', res)
       // 调整在正中间
       this.bpmnModeler.get('canvas').zoom('fit-viewport', 'auto')
       console.log('rendered')
