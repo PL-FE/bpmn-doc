@@ -8,8 +8,8 @@
 
 不同功能的代码在不同分支中
 
-- [main](https://github.com/PL-FE/bpmn-doc/tree/main) 是主分支
-- [dev](https://github.com/PL-FE/bpmn-doc/tree/dev) 是开发分支，功能比较多，代码比较乱 😂
+- [main](https://github.com/PL-FE/bpmn-doc/tree/main) 主分支
+- [dev](https://github.com/PL-FE/bpmn-doc/tree/dev) 开发分支，<a href="http://bpmn-doc.pengliang.online">预览页面的</a>的代码分支，完整度高
 - [customPalette](https://github.com/PL-FE/bpmn-doc/tree/customPalette) 自定义工具栏分支
 - [customRenderer](https://github.com/PL-FE/bpmn-doc/tree/customRenderer)
 - ...
@@ -25,7 +25,7 @@ vue + bpmn 预览： <a href="http://bpmn-doc.pengliang.online">http://bpmn-doc.
 - [x] <a href="./doc/baseBpmn.md">基础使用</a>
 - [x] <a href="./doc/quickIntroduction.md">了解 BPMN 内部</a>
 - [x] <a href="./doc/customPalette.md">自定义 Palette</a>
-- [x] <a href="./doc/customPaletteContainer.md">自定义 Palette = 指定 Palette 容器</a>
+- [x] <a href="./doc/customPaletteContainer.md">自定义 Palette => 指定 Palette 容器</a>
 - [x] <a href="./doc/customRenderer.md">自定义 Renderer</a>
 - [x] <a href="./doc/customContextPad.md">自定义 contextPad</a>
 - [x] <a href="./doc/customConnectionColor.md">自定义连线和箭头的颜色</a>
