@@ -17,6 +17,7 @@ import customPalette from './palette'
 import customRenderer from './renderer'
 import paletteEntries from './config/paletteEntries'
 import customContextPad from './contextPad'
+import customRules from './rules'
 export default {
   data () {
     return {
@@ -25,16 +26,22 @@ export default {
   },
   async mounted () {
     // // 去除默认工具栏
-    const modules = Modeler.prototype._modules
-    const index = modules.findIndex(it => it.paletteProvider)
-    modules.splice(index, 1)
+    // const modules = Modeler.prototype._modules
+    // const index = modules.findIndex(it => it.paletteProvider)
+    // modules.splice(index, 1)
 
     this.bpmnModeler = new Modeler({
       container: this.$refs.canvas,
       paletteEntries,
-      additionalModules: [customPalette, customRenderer, customContextPad]
+      additionalModules: [customPalette, customRenderer, customContextPad, customRules]
     })
-
+    const eventBus = this.bpmnModeler.get('eventBus')
+    const eventTypes = Object.keys(eventBus._listeners)
+    eventTypes.forEach(it => {
+      eventBus.on(it, e => {
+        console.log(it, e)
+      })
+    })
     try {
       const res = await this.bpmnModeler.importXML(xmlStr)
       console.log('res', res)
