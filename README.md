@@ -5,7 +5,6 @@
 这里总结了 `bpmn-js` 用法以及一些 `API`
 由于本人也是新手，有些地方总结得不到位或者用词不当，这个笔记会在日后不断完善，望各位老爷多多指点 😚
 本篇笔记旨在技术交流，觉得还可以的希望可以给的 `star`🤝
-
 不同功能的代码在不同分支中
 
 - [main](https://github.com/PL-FE/bpmn-doc/tree/main) 主分支
@@ -13,6 +12,11 @@
 - [customPalette](https://github.com/PL-FE/bpmn-doc/tree/customPalette) 自定义工具栏分支
 - [customRenderer](https://github.com/PL-FE/bpmn-doc/tree/customRenderer)
 - ...
+
+欢迎留言交流：
+
+- [Issues](https://github.com/PL-FE/bpmn-doc/issues/new)
+- penglianger@qq.com
 
 ---
 
