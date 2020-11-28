@@ -122,6 +122,19 @@ reader.onload = function() {
 }
 ```
 
+- 手动移动元素
+
+```js
+/**
+ * @param {Array<djs.mode.Base>} shapes  目标 shape 数组 
+ * @param {Point} delta {x:0, y: 10} 这里是相对位置
+ * @param {djs.model.Base} [target] 这里一般是根元素 根元素 <Root>
+ * @param {Object} [hints] {attach: false, oldParent: 根元素 <Root>， primaryShape: 鼠标拖动的 shape }
+ * @param {boolean} [hints.attach=false]
+ */
+Modeling.prototype.moveElements = function (shapes, delta, target, hints) {}
+```
+
 ### Index
 
 建议使用<kbd>Ctrl</kbd> + <kbd>F</kbd> 或  <kbd>command</kbd> + <kbd>F</kbd>搜索
