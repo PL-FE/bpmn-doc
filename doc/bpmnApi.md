@@ -77,7 +77,7 @@ bpmnModeler.get('canvas').zoom(radio)
 - 更新元素属性
 
 ```js
-const modeling = bpmnModeler.modeler.get('modeling')
+const modeling = bpmnModeler.get('modeling')
 modeling.updateProperties(element, {
   key: value
 })
