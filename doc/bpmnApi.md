@@ -77,7 +77,7 @@ bpmnModeler.get('canvas').zoom(radio)
 - 更新元素属性
 
 ```js
-const modeling = bpmnModeler.modeler.get('modeling')
+const modeling = bpmnModeler.get('modeling')
 modeling.updateProperties(element, {
   key: value
 })
@@ -125,6 +125,19 @@ reader.onload = function() {
 - 穿透
 
 对于自定义渲染有较多业务场景，如： 点击`SVG 元素`下的 `svg`，一个很有用的 `CSS` [pointer-events](https://developer.mozilla.org/zh-CN/docs/Web/CSS/pointer-events) （`穿透` ）可以帮助你。
+
+- 手动移动元素
+
+```js
+/**
+ * @param {Array<djs.mode.Base>} shapes  目标 shape 数组
+ * @param {Point} delta {x:0, y: 10} 这里是相对位置
+ * @param {djs.model.Base} [target] 这里一般是根元素 根元素 <Root>
+ * @param {Object} [hints] {attach: false, oldParent: 根元素 <Root>， primaryShape: 鼠标拖动的 shape }
+ * @param {boolean} [hints.attach=false]
+ */
+Modeling.prototype.moveElements = function(shapes, delta, target, hints) {}
+```
 
 ### Index
 
