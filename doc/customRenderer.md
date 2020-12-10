@@ -213,6 +213,8 @@ CustomRenderer.$inject = ['eventBus', 'bpmnRenderer', 'config.paletteEntries']
 
 ### 相关
 
+对于自定义渲染有较多业务场景，如： 点击`SVG 元素`下的 `svg`，一个很有用的 `CSS 样式` [pointer-events](https://developer.mozilla.org/zh-CN/docs/Web/CSS/pointer-events) （`穿透` ）可以帮助你。
+
 可能对你有帮助的官方资源：
 
 - [bpmn-js-example-custom-rendering](https://github.com/bpmn-io/bpmn-js-example-custom-rendering/blob/master/app/custom)

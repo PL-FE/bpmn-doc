@@ -122,6 +122,10 @@ reader.onload = function() {
 }
 ```
 
+- 穿透
+
+对于自定义渲染有较多业务场景，如： 点击`SVG 元素`下的 `svg`，一个很有用的 `CSS` [pointer-events](https://developer.mozilla.org/zh-CN/docs/Web/CSS/pointer-events) （`穿透` ）可以帮助你。
+
 ### Index
 
 建议使用<kbd>Ctrl</kbd> + <kbd>F</kbd> 或  <kbd>command</kbd> + <kbd>F</kbd>搜索
