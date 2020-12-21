@@ -15,7 +15,7 @@
 
 欢迎留言交流：
 
-- [Issues](https://github.com/PL-FE/bpmn-doc/issues/new)
+- [Q&A](https://github.com/PL-FE/bpmn-doc/discussions/categories/q-a)
 - penglianger@qq.com
 
 ---
