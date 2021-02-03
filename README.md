@@ -37,6 +37,7 @@ vue + bpmn 预览： <a href="http://bpmn-doc.pengliang.online">http://bpmn-doc.
 - [ ] 自定义 properties-panel
 - [x] <a href="./doc/customMiniMap.md">右上角小地图</a>
 - [x] <a href="./doc/bpmnApi.md">总结常用 API 🚩</a>
+- [x] <a href="./doc/addFeatures.md">为 Viewer 添加一些功能</a>
 - [x] <a href="https://github.com/PL-FE/bpmn-camunda">bpmn-camunda DEMO</a>
 
 ## 相关
