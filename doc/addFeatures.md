@@ -26,8 +26,7 @@ new BpmnModeler({
 
 事实上 [Modeler](https://github.com/bpmn-io/bpmn-js/blob/develop/lib/Modeler.js) 就是这么做的。
 
-可以看到 [BaseModeler](https://github.com/bpmn-io/bpmn-js/blob/develop/lib/BaseModeler.js)
-这一句
+可以看到 [BaseModeler](https://github.com/bpmn-io/bpmn-js/blob/develop/lib/BaseModeler.js) 这一句
 
 ```js
 inherits(BaseModeler, BaseViewer)
@@ -148,3 +147,5 @@ const bpmnViewer = new Viewer({
 可能对你有帮助的官方资源：
 
 - [Modeler](https://github.com/bpmn-io/bpmn-js/blob/develop/lib/Modeler.js)
+
+- 完整目录： 👉 [点击这里](../README.md)
