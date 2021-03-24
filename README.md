@@ -8,7 +8,7 @@
 不同功能的代码在不同分支中
 
 - [main](https://github.com/PL-FE/bpmn-doc/tree/main) 主分支
-- [dev](https://github.com/PL-FE/bpmn-doc/tree/dev) 开发分支，<a href="http://bpmn-doc.pengliang.online">预览页面的</a>的代码分支，完整度高
+- [dev](https://github.com/PL-FE/bpmn-doc/tree/dev) 开发分支，<a href="http://bpmn-doc.pl-fe.cn">预览页面的</a>的代码分支，完整度高
 - [customPalette](https://github.com/PL-FE/bpmn-doc/tree/customPalette) 自定义工具栏分支
 - [customRenderer](https://github.com/PL-FE/bpmn-doc/tree/customRenderer)
 - ...
@@ -22,7 +22,7 @@
 
 ## 在线预览
 
-vue + bpmn 预览： <a href="http://bpmn-doc.pengliang.online">http://bpmn-doc.pengliang.online</a>
+vue + bpmn 预览： <a href="http://bpmn-doc.pl-fe.cn">http://bpmn-doc.pl-fe.cn</a>
 
 ## 功能
 
