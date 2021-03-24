@@ -18,7 +18,7 @@
 
 ## 在线预览
 
-vue + bpmn 预览： <a href="http://bpmn-doc.pengliang.online">http://bpmn-doc.pengliang.online</a>
+vue + bpmn 预览： <a href="http://bpmn-doc.pl-fe.cn">http://bpmn-doc.pl-fe.cn</a>
 
 ## 功能
 
