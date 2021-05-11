@@ -54,7 +54,7 @@ bpmnModeler.importXML(xml).then(() => {
   const marker = svgCreate('marker')
 
   svgAttr(marker, {
-    id: '#sequenceflow-arrow-normal',
+    id: 'sequenceflow-arrow-normal',
     viewBox: '0 0 20 20',
     refX: '11',
     refY: '10',
