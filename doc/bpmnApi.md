@@ -10,7 +10,7 @@
 
 网址 1 ： [https://pl-fe.github.io/bpmn-modeling-api-cn.github.io/](https://pl-fe.github.io/bpmn-modeling-api-cn.github.io/)
 
-网址 2 ： [http://bpmn-doc-example.pengliang.online/modeling-api/](http://bpmn-doc-example.pengliang.online/modeling-api/)
+网址 2 ： [http://bpmn-doc-example.pl-fe.cn/modeling-api/](http://bpmn-doc-example.pl-fe.cn/modeling-api/)
 
 官方 bpmn-modeling-api
 
@@ -27,7 +27,7 @@
 
 ### 项目中常用
 
-基础 API 建议先看上面的 [网址](http://bpmn-doc-example.pengliang.online/modeling-api/)
+基础 API 建议先看上面的 [网址](http://bpmn-doc-example.pl-fe.cn/modeling-api/)
 
 - 还原
 

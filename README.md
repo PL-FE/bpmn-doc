@@ -8,7 +8,7 @@
 不同功能的代码在不同分支中
 
 - [main](https://github.com/PL-FE/bpmn-doc/tree/main) 主分支
-- [dev](https://github.com/PL-FE/bpmn-doc/tree/dev) 开发分支，<a href="http://bpmn-doc.pengliang.online">预览页面的</a>的代码分支，完整度高
+- [dev](https://github.com/PL-FE/bpmn-doc/tree/dev) 开发分支，<a href="http://bpmn-doc.pl-fe.cn">预览页面的</a>的代码分支，完整度高
 - [customPalette](https://github.com/PL-FE/bpmn-doc/tree/customPalette) 自定义工具栏分支
 - [customRenderer](https://github.com/PL-FE/bpmn-doc/tree/customRenderer)
 - ...
@@ -34,7 +34,7 @@ vue + bpmn 预览： <a href="http://bpmn-doc.pl-fe.cn">http://bpmn-doc.pl-fe.cn
 - [x] <a href="./doc/customContextPad.md">自定义 contextPad</a>
 - [x] <a href="./doc/customConnectionColor.md">自定义连线和箭头的颜色</a>
 - [x] <a href="./doc/customRules.md">自定义规则</a>
-- [ ] 自定义 properties-panel
+- [x] <a href="./doc/customPropertiesPanel.md">自定义 properties-panel</a>
 - [x] <a href="./doc/customMiniMap.md">右上角小地图</a>
 - [x] <a href="./doc/bpmnApi.md">总结常用 API 🚩</a>
 - [x] <a href="./doc/addFeatures.md">为 Viewer 添加一些功能</a>
