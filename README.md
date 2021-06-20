@@ -40,6 +40,8 @@ vue + bpmn 预览： <a href="http://bpmn-doc.pl-fe.cn">http://bpmn-doc.pl-fe.cn
 - [x] <a href="./doc/addFeatures.md">为 Viewer 添加一些功能</a>
 - [x] <a href="https://github.com/PL-FE/bpmn-camunda">bpmn-camunda DEMO</a>
 
+- [x] <a href="./doc/question.md">答疑</a>
+
 ## 相关
 
 可能对你有帮助的资料
