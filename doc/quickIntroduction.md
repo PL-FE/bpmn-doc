@@ -184,6 +184,7 @@ BPMN 元模型对于 BPMN-js 至关重要，因为它允许我们验证所使用
 - [示例](https://github.com/bpmn-io/bpmn-js-examples)-大量示例展示了如何嵌入和扩展 bpmn-js。
 - 源代码（[bpmn-js](https://github.com/bpmn-io/bpmn-js)，[diagram-js](https://github.com/bpmn-io/diagram-js)）-大多有据可查；应该给您关于这个库内部的深刻见解。
 - [论坛](https://forum.bpmn.io/c/developers)-获得使用和扩展 bpmn-js 的帮助的好地方。
+- [BPMN-JS 中的依赖注入设计](https://sobird.me/design-of-dependency-injection-in-bpmn-js.htm)
 
 ---
 
