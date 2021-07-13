@@ -41,6 +41,8 @@ import {
 } from 'tiny-svg'
 
 import { query as domQuery } from 'min-dom'
+import { addResizeListener, removeResizeListener } from 'element-ui/src/utils/resize-event'
+import { _fitViewport } from '@/views/bpmn/customBpmn/utils/index.js'
 
 export default {
   name: 'Bpmn',
@@ -55,9 +57,14 @@ export default {
     }
   },
   mounted () {
+    addResizeListener(this.$refs.canvas, this.resizeListener)
+
     this.$nextTick(() => {
       this.init()
     })
+  },
+  beforeDestroy () {
+    removeResizeListener(this.$refs.canvas, this.resizeListener)
   },
   methods: {
     async init () {
@@ -318,6 +325,11 @@ export default {
       const element = this.getElementById(id)
       const modeling = this.bpmnModeler.get('modeling')
       modeling.updateProperties(element, AttrObj)
+    },
+
+    resizeListener () {
+      const canvas = this.bpmnModeler.get('canvas')
+      _fitViewport.call(canvas, true)
     }
   }
 }
