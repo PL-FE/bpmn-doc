@@ -29,6 +29,8 @@ var DEFAULT_PRIORITY = 1000
  */
 function Palette (eventBus, canvas,
   elementFactory,
+  bpmnFactory,
+  moddle,
   create,
   paletteContainer,
   paletteEntries) {
@@ -37,6 +39,8 @@ function Palette (eventBus, canvas,
   this._entries = paletteEntries
   this._paletteContainer = paletteContainer
   this._elementFactory = elementFactory
+  this._model = moddle
+  this._bpmnFactory = bpmnFactory
   this._create = create
 
   var self = this
@@ -60,6 +64,8 @@ function Palette (eventBus, canvas,
 
 Palette.$inject = ['eventBus', 'canvas',
   'elementFactory',
+  'bpmnFactory',
+  'moddle',
   'create',
   'config.paletteContainer',
   'config.paletteEntries']
@@ -315,6 +321,8 @@ Palette.prototype._update = function () {
 Palette.prototype.trigger = function (action, event, autoActivate) {
   var entries = this._entries
   var elementFactory = this._elementFactory
+  var bpmnFactory = this._bpmnFactory
+  var model = this._model
   var create = this._create
   var entry
   var handler
@@ -340,11 +348,11 @@ Palette.prototype.trigger = function (action, event, autoActivate) {
   //  传入 action 的 dragstart方法 click 方法
   if (isFunction(handler)) {
     if (action === 'click') {
-      handler(originalEvent, autoActivate, elementFactory, create)
+      handler(originalEvent, autoActivate, elementFactory, bpmnFactory, model, create)
     }
   } else {
     if (handler[action]) {
-      handler[action](originalEvent, autoActivate, elementFactory, create)
+      handler[action](originalEvent, autoActivate, elementFactory, bpmnFactory, model, create)
     }
   }
 

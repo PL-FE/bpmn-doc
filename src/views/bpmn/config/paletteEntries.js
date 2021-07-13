@@ -57,15 +57,15 @@ function createAction (
 ) {
   var shortType = type.replace(/^bpmn:/, '')
 
-  function createListener (event, autoActivate, elementFactory, create) {
-    var shape = elementFactory.createShape(assign({ type: type }, options))
+  function createListener (event, autoActivate, elementFactory, bpmnFactory, model, create) {
+    const prefix = type + +new Date() + '_'
+    const id = model.ids.nextPrefixed(prefix, { type })
+    const taskBusinessObject = bpmnFactory.create(type, { id, name: id })
+    var shape = elementFactory.createShape(assign({ type: type }, options, { businessObject: taskBusinessObject }))
 
     if (options) {
       shape.businessObject.di.isExpanded = options.isExpanded
     }
-
-    // TODO: 自定义元模型 需要 实现 createText
-    shape.businessObject.name = type
 
     create.start(event, shape)
   }

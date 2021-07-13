@@ -34,6 +34,6 @@ import 'diagram-js-minimap/assets/diagram-js-minimap.css'
 
 ## 最后
 
-[在线预览](http://bpmn-doc.pengliang.online/)
+[在线预览](http://bpmn-doc.pl-fe.cn/)
 
 完整目录： 👉 [点击这里](../README.md)

@@ -54,7 +54,7 @@ bpmnModeler.importXML(xml).then(() => {
   const marker = svgCreate('marker')
 
   svgAttr(marker, {
-    id: '#sequenceflow-arrow-normal',
+    id: 'sequenceflow-arrow-normal',
     viewBox: '0 0 20 20',
     refX: '11',
     refY: '10',
@@ -79,6 +79,6 @@ bpmnModeler.importXML(xml).then(() => {
 
 ## 最后
 
-[在线预览](http://bpmn-doc.pengliang.online/)
+[在线预览](http://bpmn-doc.pl-fe.cn/)
 
 完整目录： 👉 [点击这里](../README.md)
