@@ -117,3 +117,98 @@ function createListener(
 在线预览：[http://bpmn-doc.pl-fe.cn/](http://bpmn-doc.pl-fe.cn/)
 如果我写的不是很清楚，那么这里有一些极简例子[选择业务对象](https://pl-fe.github.io/bpmn-modeling-api-cn.github.io/)
 ![](./img/业务对象.jpg)
+
+## 2 保持居中
+
+> 如有副作用，欢迎交流
+
+期望效果：
+![居中](./img/居中.gif)
+实际上，画布在快速改变的第一时间拿到的是缓存的尺寸。导致居中计算不正确。如下
+
+![居中](./img/偶尔居中.gif)
+解决方法，每次拿最新的画布尺寸。即重写一些居中的方法。
+关键代码： https://github.com/bpmn-io/diagram-js/blob/develop/lib/core/Canvas.js#L976
+
+```js
+Canvas.prototype._fitViewport = function(center) {
+  // var vbox = this.viewbox() 修改成如下
+  var vbox = this.viewbox(false)
+  // ...
+}
+```
+
+```js
+Canvas.prototype.viewbox = function(box) {
+  // 由此可看到，当 box 不传值时，默认拿到的是缓存
+  if (box === undefined && this._cachedViewbox) {
+    return this._cachedViewbox
+  }
+  // ...
+  // 入参为 false 将走进这个判断，获取最新的画布尺寸。
+  if (!box) {
+  }
+}
+```
+
+完整代码：
+
+```js
+import {
+  addResizeListener,
+  removeResizeListener
+} from 'element-ui/src/utils/resize-event'
+
+export default {
+  mounted() {
+    addResizeListener(this.$refs.canvas, this.resizeListener)
+  },
+  beforeDestroy() {
+    removeResizeListener(this.$refs.canvas, this.resizeListener)
+  },
+  resizeListener() {
+    const canvas = this.bpmnModeler.get('canvas')
+    _fitViewport.call(canvas, true)
+  }
+}
+
+function _fitViewport(center) {
+  var vbox = this.viewbox(false)
+  var outer = vbox.outer
+  var inner = vbox.inner
+  var newScale
+  var newViewbox
+
+  if (
+    inner.x >= 0 &&
+    inner.y >= 0 &&
+    inner.x + inner.width <= outer.width &&
+    inner.y + inner.height <= outer.height &&
+    !center
+  ) {
+    newViewbox = {
+      x: 0,
+      y: 0,
+      width: Math.max(inner.width + inner.x, outer.width),
+      height: Math.max(inner.height + inner.y, outer.height)
+    }
+  } else {
+    newScale = Math.min(
+      1,
+      outer.width / inner.width,
+      outer.height / inner.height
+    )
+    newViewbox = {
+      x: inner.x + (center ? inner.width / 2 - outer.width / newScale / 2 : 0),
+      y:
+        inner.y + (center ? inner.height / 2 - outer.height / newScale / 2 : 0),
+      width: outer.width / newScale,
+      height: outer.height / newScale
+    }
+  }
+
+  this.viewbox(newViewbox)
+
+  return this.viewbox(false).scale
+}
+```
