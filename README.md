@@ -44,8 +44,34 @@ vue + bpmn 预览： <a href="http://bpmn-doc.pl-fe.cn">http://bpmn-doc.pl-fe.cn
 
 ## 相关
 
-可能对你有帮助的资料
+### Demo
+
+[zjmzxfzhl (前后端)](https://gitee.com/zjm16/zjmzxfzhl)
+
+[devframework (前后端 activiti7) ](https://gitee.com/devframework/springbootvue)
+
+[miyuesc (自定义属性面板)](https://github.com/miyuesc/bpmn-process-designer)
+
+### 资料
+
+[论坛（能够解决 80% 问题） 需要翻墙](https://forum.bpmn.io/)
+
+[LinDaiDai 的中文文档](https://github.com/LinDaiDai/bpmn-chinese-document)
+
+[易样 (如何适配 activiti)](https://juejin.cn/post/6844904186304266253)
+
+[miyuesc 总结的文档](https://juejin.cn/post/6900793894263488519)
+
+[Bpmn 系列文章-详细](https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzU5MDY1MzcyOQ==&action=getalbum&album_id=1576254888626454529&scene=173&from_msgid=2247484449&from_itemidx=1&count=3&nolastread=1#wechat_redirect)
+
+[Bpmn-js 自定义文件说明](https://juejin.cn/post/6912331982701592590)
+
+### 翻源码
 
 - [diagram-js](https://github.com/bpmn-io/diagram-js) 是一个工具箱，用于在 web 上显示和修改图表
 - [bpmn-js](https://github.com/bpmn-io/bpmn-js) 构建在两个重要的库之上: [diagram-js](https://github.com/bpmn-io/diagram-js) 和 [bpmn-moddle](https://github.com/bpmn-io/bpmn-moddle)
 - [examples](https://github.com/bpmn-io/bpmn-js-examples)一般在这里找 `demo`
+
+### 最后
+
+**star 不断，更新不断** 😊
