@@ -4,6 +4,8 @@
 
 <a href="#2-保持居中">2 保持居中</a>
 
+<a href="#3-元素如何放大缩小">3 元素如何放大缩小</a>
+
 ## 1 如何自定义 id
 
 **如何将 id,例如 `Task_1hcentk` 改成自己想要的格式 ？**
@@ -216,3 +218,11 @@ function _fitViewport(center) {
   return this.viewbox(false).scale
 }
 ```
+
+## 3 元素如何放大缩小
+
+效果
+![resize](./img/resize.gif)
+
+https://github.com/philippfromme/camunda-modeler-plugin-resize-tasks
+https://github.com/ElCondor1969/bpmn-js-task-resize
