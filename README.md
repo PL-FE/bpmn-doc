@@ -58,9 +58,11 @@ vue + bpmn 预览： <a href="http://bpmn-doc.pl-fe.cn">http://bpmn-doc.pl-fe.cn
 
 [LinDaiDai 的中文文档](https://github.com/LinDaiDai/bpmn-chinese-document)
 
-[易样 (如何适配 activiti)](https://juejin.cn/post/6844904186304266253)
+[miyuesc 总结十分全面的文档（2022/7/7更新）](https://juejin.cn/post/7117481147277246500)
 
 [miyuesc 总结的文档](https://juejin.cn/post/6900793894263488519)
+
+[易样 (如何适配 activiti)](https://juejin.cn/post/6844904186304266253)
 
 [Bpmn 系列文章-详细](https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzU5MDY1MzcyOQ==&action=getalbum&album_id=1576254888626454529&scene=173&from_msgid=2247484449&from_itemidx=1&count=3&nolastread=1#wechat_redirect)
 
