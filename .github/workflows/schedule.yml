@@ -27,6 +27,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           script: |
+            docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }} registry.cn-hangzhou.aliyuncs.com
             docker stop bpmn-doc || true
             docker rm bpmn-doc || true
             docker rmi registry.cn-hangzhou.aliyuncs.com/pengliang/bpmn-doc:latest || true
