@@ -32,4 +32,4 @@ jobs:
             docker rm bpmn-doc || true
             docker rmi registry.cn-hangzhou.aliyuncs.com/pengliang/bpmn-doc:latest || true
             docker pull registry.cn-hangzhou.aliyuncs.com/pengliang/bpmn-doc:latest
-            docker run -d -p 10001:8080 --name bpmn-doc registry.cn-hangzhou.aliyuncs.com/pengliang/bpmn-doc:latest
+            docker run -d -p 10001:80 --name bpmn-doc registry.cn-hangzhou.aliyuncs.com/pengliang/bpmn-doc:latest
