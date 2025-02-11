@@ -1,7 +1,7 @@
-FROM node:14
+FROM node:18
 COPY ./ /app
 WORKDIR /app
-RUN npm install -g pnpm@7.33.7
+RUN npm install -g pnpm
 RUN pnpm config set registry https://registry.npmmirror.com
 RUN pnpm install && npm run build
 
