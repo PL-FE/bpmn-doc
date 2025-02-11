@@ -15,7 +15,7 @@ jobs:
           node-version: 20
       - name: 打包镜像, 上传 Docker Hub
         run: |
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }} registry.cn-hangzhou.aliyuncs.com
           docker build -t bpmn-doc-image  .
           docker tag bpmn-doc-image registry.cn-hangzhou.aliyuncs.com/pengliang/bpmn-doc:latest
           docker push registry.cn-hangzhou.aliyuncs.com/pengliang/bpmn-doc:latest
