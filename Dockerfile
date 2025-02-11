@@ -1,9 +1,7 @@
 FROM node:20
 COPY ./ /app
 WORKDIR /app
-RUN npm install -g pnpm
-RUN pnpm config set registry https://registry.npmmirror.com
-RUN pnpm install && npm run build
+RUN npm install && npm run build
 
 FROM nginx
 RUN mkdir /app
