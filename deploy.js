@@ -4,7 +4,7 @@ const { HOST: host, PASSWORD: password, REMOTEDIR: remoteDir } = process.env
 const config = {
   host, // Required.
   username: 'root', // Required.
-  password, // Optional.
+  password, // Optional
   localDir: './dist', // Required, Absolute or relative to cwd.
   remoteDir // Required, Absolute path only.
 }
