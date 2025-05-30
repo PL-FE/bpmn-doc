@@ -28,6 +28,7 @@ vue + bpmn 预览： <a href="http://bpmn-doc.pl-fe.cn">http://bpmn-doc.pl-fe.cn
 
 - [x] <a href="./doc/baseBpmn.md">基础使用</a>
 - [x] <a href="./doc/quickIntroduction.md">了解 BPMN 内部</a>
+- [x] <a href="./doc/customPalette-plus.md">最简单实现自定义Palette</a>
 - [x] <a href="./doc/customPalette.md">自定义 Palette</a>
 - [x] <a href="./doc/customPaletteContainer.md">自定义 Palette => 指定 Palette 容器</a>
 - [x] <a href="./doc/customRenderer.md">自定义 Renderer</a>
