@@ -26,3 +26,9 @@
 3.注入回去
 
 ![](./img/palette4.png)
+
+## 效果
+
+![](./img/palette6.png)
+
+![](./img/palette5.png)
