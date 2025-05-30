@@ -1,8 +1,4 @@
-import {
-  isArray,
-  isFunction,
-  forEach
-} from 'min-dash';
+import { isArray, isFunction, forEach } from 'min-dash'
 
 import {
   domify,
@@ -13,49 +9,44 @@ import {
   matches as domMatches,
   delegate as domDelegate,
   event as domEvent
-} from 'min-dom';
+} from 'min-dom'
 
+var TOGGLE_SELECTOR = '.djs-palette-toggle'
+var ENTRY_SELECTOR = '.entry'
+var ELEMENT_SELECTOR = TOGGLE_SELECTOR + ', ' + ENTRY_SELECTOR
 
-var TOGGLE_SELECTOR = '.djs-palette-toggle',
-    ENTRY_SELECTOR = '.entry',
-    ELEMENT_SELECTOR = TOGGLE_SELECTOR + ', ' + ENTRY_SELECTOR;
+var PALETTE_OPEN_CLS = 'open'
+var PALETTE_TWO_COLUMN_CLS = 'two-column'
 
-var PALETTE_OPEN_CLS = 'open',
-    PALETTE_TWO_COLUMN_CLS = 'two-column';
-
-var DEFAULT_PRIORITY = 1000;
-
+var DEFAULT_PRIORITY = 1000
 
 /**
  * A palette containing modeling elements.
  */
 export default function Palette(eventBus, canvas) {
+  this._eventBus = eventBus
+  this._canvas = canvas
 
-  this._eventBus = eventBus;
-  this._canvas = canvas;
-
-  var self = this;
+  var self = this
 
   eventBus.on('tool-manager.update', function(event) {
-    var tool = event.tool;
+    var tool = event.tool
 
-    self.updateToolHighlight(tool);
-  });
+    self.updateToolHighlight(tool)
+  })
 
   eventBus.on('i18n.changed', function() {
-    self._update();
-  });
+    self._update()
+  })
 
   eventBus.on('diagram.init', function() {
+    self._diagramInitialized = true
 
-    self._diagramInitialized = true;
-
-    self._rebuild();
-  });
+    self._rebuild()
+  })
 }
 
-Palette.$inject = [ 'eventBus', 'canvas' ];
-
+Palette.$inject = ['eventBus', 'canvas']
 
 /**
  * Register a provider with the palette
@@ -82,17 +73,16 @@ Palette.$inject = [ 'eventBus', 'canvas' ];
  */
 Palette.prototype.registerProvider = function(priority, provider) {
   if (!provider) {
-    provider = priority;
-    priority = DEFAULT_PRIORITY;
+    provider = priority
+    priority = DEFAULT_PRIORITY
   }
 
   this._eventBus.on('palette.getProviders', priority, function(event) {
-    event.providers.push(provider);
-  });
+    event.providers.push(provider)
+  })
 
-  this._rebuild();
-};
-
+  this._rebuild()
+}
 
 /**
  * Returns the palette entries
@@ -100,84 +90,80 @@ Palette.prototype.registerProvider = function(priority, provider) {
  * @return {Object<string, PaletteEntryDescriptor>} map of entries
  */
 Palette.prototype.getEntries = function() {
-  var providers = this._getProviders();
+  var providers = this._getProviders()
 
-  return providers.reduce(addPaletteEntries, {});
-};
+  return providers.reduce(addPaletteEntries, {})
+}
 
 Palette.prototype._rebuild = function() {
-
   if (!this._diagramInitialized) {
-    return;
+    return
   }
 
-  var providers = this._getProviders();
+  var providers = this._getProviders()
 
   if (!providers.length) {
-    return;
+    return
   }
 
   if (!this._container) {
-    this._init();
+    this._init()
   }
 
-  this._update();
-};
+  this._update()
+}
 
 /**
  * Initialize
  */
 Palette.prototype._init = function() {
+  var self = this
 
-  var self = this;
+  var eventBus = this._eventBus
 
-  var eventBus = this._eventBus;
+  var parentContainer = this._getParentContainer()
 
-  var parentContainer = this._getParentContainer();
+  var container = (this._container = domify(Palette.HTML_MARKUP))
 
-  var container = this._container = domify(Palette.HTML_MARKUP);
-
-  parentContainer.appendChild(container);
+  parentContainer.appendChild(container)
 
   domDelegate.bind(container, ELEMENT_SELECTOR, 'click', function(event) {
-
-    var target = event.delegateTarget;
+    var target = event.delegateTarget
 
     if (domMatches(target, TOGGLE_SELECTOR)) {
-      return self.toggle();
+      return self.toggle()
     }
 
-    self.trigger('click', event);
-  });
+    self.trigger('click', event)
+  })
 
   // prevent drag propagation
   domEvent.bind(container, 'mousedown', function(event) {
-    event.stopPropagation();
-  });
+    event.stopPropagation()
+  })
 
   // prevent drag propagation
   domDelegate.bind(container, ENTRY_SELECTOR, 'dragstart', function(event) {
-    self.trigger('dragstart', event);
-  });
+    self.trigger('dragstart', event)
+  })
 
-  eventBus.on('canvas.resized', this._layoutChanged, this);
+  eventBus.on('canvas.resized', this._layoutChanged, this)
 
   eventBus.fire('palette.create', {
     container: container
-  });
-};
+  })
+}
 
 Palette.prototype._getProviders = function(id) {
-
   var event = this._eventBus.createEvent({
     type: 'palette.getProviders',
     providers: []
-  });
+  })
 
-  this._eventBus.fire(event);
+  this._eventBus.fire(event)
 
-  return event.providers;
-};
+  return event.providers
+}
 
 /**
  * Update palette state.
@@ -185,84 +171,82 @@ Palette.prototype._getProviders = function(id) {
  * @param  {Object} [state] { open, twoColumn }
  */
 Palette.prototype._toggleState = function(state) {
+  state = state || {}
 
-  state = state || {};
+  var parent = this._getParentContainer()
+  var container = this._container
 
-  var parent = this._getParentContainer(),
-      container = this._container;
+  var eventBus = this._eventBus
 
-  var eventBus = this._eventBus;
+  var twoColumn
 
-  var twoColumn;
-
-  var cls = domClasses(container);
+  var cls = domClasses(container)
 
   if ('twoColumn' in state) {
-    twoColumn = state.twoColumn;
+    twoColumn = state.twoColumn
   } else {
-    twoColumn = this._needsCollapse(parent.clientHeight, this._entries || {});
+    twoColumn = this._needsCollapse(parent.clientHeight, this._entries || {})
   }
 
   // always update two column
-  cls.toggle(PALETTE_TWO_COLUMN_CLS, twoColumn);
+  cls.toggle(PALETTE_TWO_COLUMN_CLS, twoColumn)
 
   if ('open' in state) {
-    cls.toggle(PALETTE_OPEN_CLS, state.open);
+    cls.toggle(PALETTE_OPEN_CLS, state.open)
   }
 
   eventBus.fire('palette.changed', {
     twoColumn: twoColumn,
     open: this.isOpen()
-  });
-};
+  })
+}
 
 Palette.prototype._update = function() {
+  var entriesContainer = domQuery('.djs-palette-entries', this._container)
+  var entries = (this._entries = this.getEntries())
 
-  var entriesContainer = domQuery('.djs-palette-entries', this._container),
-      entries = this._entries = this.getEntries();
-
-  domClear(entriesContainer);
+  domClear(entriesContainer)
 
   forEach(entries, function(entry, id) {
+    var grouping = entry.group || 'default'
 
-    var grouping = entry.group || 'default';
-
-    var container = domQuery('[data-group=' + grouping + ']', entriesContainer);
+    var container = domQuery('[data-group=' + grouping + ']', entriesContainer)
     if (!container) {
-      container = domify('<div class="group" data-group="' + grouping + '"></div>');
-      entriesContainer.appendChild(container);
+      container = domify(
+        '<div class="group" data-group="' + grouping + '"></div>'
+      )
+      entriesContainer.appendChild(container)
     }
 
-    var html = entry.html || (
-      entry.separator ?
-        '<hr class="separator" />' :
-        '<div class="entry" draggable="true"></div>');
+    var html =
+      entry.html ||
+      (entry.separator
+        ? '<hr class="separator" />'
+        : '<div class="entry" draggable="true"></div>')
 
-
-    var control = domify(html);
-    container.appendChild(control);
+    var control = domify(html)
+    container.appendChild(control)
 
     if (!entry.separator) {
-      domAttr(control, 'data-action', id);
+      domAttr(control, 'data-action', id)
 
       if (entry.title) {
-        domAttr(control, 'title', entry.title);
+        domAttr(control, 'title', entry.title)
       }
 
       if (entry.className) {
-        addClasses(control, entry.className);
+        addClasses(control, entry.className)
       }
 
       if (entry.imageUrl) {
-        control.appendChild(domify('<img src="' + entry.imageUrl + '">'));
+        control.appendChild(domify('<img src="' + entry.imageUrl + '">'))
       }
     }
-  });
+  })
 
   // open after update
-  this.open();
-};
-
+  this.open()
+}
 
 /**
  * Trigger an action available on the palette
@@ -271,45 +255,45 @@ Palette.prototype._update = function() {
  * @param  {Event} event
  */
 Palette.prototype.trigger = function(action, event, autoActivate) {
-  var entries = this._entries,
-      entry,
-      handler,
-      originalEvent,
-      button = event.delegateTarget || event.target;
+  var entries = this._entries
+  var entry
+  var handler
+  var originalEvent
+  var button = event.delegateTarget || event.target
 
   if (!button) {
-    return event.preventDefault();
+    return event.preventDefault()
   }
 
-  entry = entries[domAttr(button, 'data-action')];
+  entry = entries[domAttr(button, 'data-action')]
 
   // when user clicks on the palette and not on an action
   if (!entry) {
-    return;
+    return
   }
 
-  handler = entry.action;
+  handler = entry.action
 
-  originalEvent = event.originalEvent || event;
+  originalEvent = event.originalEvent || event
 
   // simple action (via callback function)
   if (isFunction(handler)) {
     if (action === 'click') {
-      handler(originalEvent, autoActivate);
+      handler(originalEvent, autoActivate)
     }
   } else {
     if (handler[action]) {
-      handler[action](originalEvent, autoActivate);
+      handler[action](originalEvent, autoActivate)
     }
   }
 
   // silence other actions
-  event.preventDefault();
-};
+  event.preventDefault()
+}
 
 Palette.prototype._layoutChanged = function() {
-  this._toggleState({});
-};
+  this._toggleState({})
+}
 
 /**
  * Do we need to collapse to two columns?
@@ -320,80 +304,74 @@ Palette.prototype._layoutChanged = function() {
  * @return {boolean}
  */
 Palette.prototype._needsCollapse = function(availableHeight, entries) {
-
   // top margin + bottom toggle + bottom margin
   // implementors must override this method if they
   // change the palette styles
-  var margin = 20 + 10 + 20;
+  var margin = 20 + 10 + 20
 
-  var entriesHeight = Object.keys(entries).length * 46;
+  var entriesHeight = Object.keys(entries).length * 46
 
-  return availableHeight < entriesHeight + margin;
-};
+  return availableHeight < entriesHeight + margin
+}
 
 /**
  * Close the palette
  */
 Palette.prototype.close = function() {
-
   this._toggleState({
     open: false,
     twoColumn: false
-  });
-};
-
+  })
+}
 
 /**
  * Open the palette
  */
 Palette.prototype.open = function() {
-  this._toggleState({ open: true });
-};
-
+  this._toggleState({ open: true })
+}
 
 Palette.prototype.toggle = function(open) {
   if (this.isOpen()) {
-    this.close();
+    this.close()
   } else {
-    this.open();
+    this.open()
   }
-};
+}
 
 Palette.prototype.isActiveTool = function(tool) {
-  return tool && this._activeTool === tool;
-};
+  return tool && this._activeTool === tool
+}
 
 Palette.prototype.updateToolHighlight = function(name) {
-  var entriesContainer,
-      toolsContainer;
+  var entriesContainer, toolsContainer
 
   if (!this._toolsContainer) {
-    entriesContainer = domQuery('.djs-palette-entries', this._container);
+    entriesContainer = domQuery('.djs-palette-entries', this._container)
 
-    this._toolsContainer = domQuery('[data-group=tools]', entriesContainer);
+    this._toolsContainer = domQuery('[data-group=tools]', entriesContainer)
   }
 
-  toolsContainer = this._toolsContainer;
+  toolsContainer = this._toolsContainer
 
   forEach(toolsContainer.children, function(tool) {
-    var actionName = tool.getAttribute('data-action');
+    var actionName = tool.getAttribute('data-action')
 
     if (!actionName) {
-      return;
+      return
     }
 
-    var toolClasses = domClasses(tool);
+    var toolClasses = domClasses(tool)
 
-    actionName = actionName.replace('-tool', '');
+    actionName = actionName.replace('-tool', '')
 
     if (toolClasses.contains('entry') && actionName === name) {
-      toolClasses.add('highlighted-entry');
+      toolClasses.add('highlighted-entry')
     } else {
-      toolClasses.remove('highlighted-entry');
+      toolClasses.remove('highlighted-entry')
     }
-  });
-};
-
+  })
+}
 
 /**
  * Return true if the palette is opened.
@@ -409,8 +387,8 @@ Palette.prototype.updateToolHighlight = function(name) {
  * @return {boolean} true if palette is opened
  */
 Palette.prototype.isOpen = function() {
-  return domClasses(this._container).has(PALETTE_OPEN_CLS);
-};
+  return domClasses(this._container).has(PALETTE_OPEN_CLS)
+}
 
 /**
  * Get container the palette lives in.
@@ -418,42 +396,41 @@ Palette.prototype.isOpen = function() {
  * @return {Element}
  */
 Palette.prototype._getParentContainer = function() {
-  return this._canvas.getContainer();
-};
-
+  return this._canvas.getContainer()
+}
 
 /* markup definition */
 
 Palette.HTML_MARKUP =
   '<div class="djs-palette">' +
-    '<div class="djs-palette-entries"></div>' +
-    '<div class="djs-palette-toggle"></div>' +
-  '</div>';
-
+  '<p>自定义</p>' +
+  '<div class="djs-palette-entries"></div>' +
+  '<div class="djs-palette-toggle"></div>' +
+  '</div>'
 
 // helpers //////////////////////
 
 function addClasses(element, classNames) {
+  var classes = domClasses(element)
 
-  var classes = domClasses(element);
-
-  var actualClassNames = isArray(classNames) ? classNames : classNames.split(/\s+/g);
+  var actualClassNames = isArray(classNames)
+    ? classNames
+    : classNames.split(/\s+/g)
   actualClassNames.forEach(function(cls) {
-    classes.add(cls);
-  });
+    classes.add(cls)
+  })
 }
 
 function addPaletteEntries(entries, provider) {
-
-  var entriesOrUpdater = provider.getPaletteEntries();
+  var entriesOrUpdater = provider.getPaletteEntries()
 
   if (isFunction(entriesOrUpdater)) {
-    return entriesOrUpdater(entries);
+    return entriesOrUpdater(entries)
   }
 
   forEach(entriesOrUpdater, function(entry, id) {
-    entries[id] = entry;
-  });
+    entries[id] = entry
+  })
 
-  return entries;
+  return entries
 }
