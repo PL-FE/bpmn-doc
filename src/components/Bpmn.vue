@@ -14,7 +14,6 @@ import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css'
 import { xmlStr } from './xmlData.js'
 
 import customPalette from './palette'
-import paletteEntries from './config/paletteEntries'
 
 export default {
   data () {
@@ -30,7 +29,6 @@ export default {
 
     this.bpmnModeler = new Modeler({
       container: this.$refs.canvas,
-      paletteEntries,
       additionalModules: [customPalette]
     })
 

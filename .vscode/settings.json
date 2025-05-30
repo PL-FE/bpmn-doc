@@ -6,8 +6,7 @@
   "editor.tabSize": 2,
   "editor.detectIndentation": false,
   "editor.codeActionsOnSave": {
-    // 每次保存的时候将代码按eslint格式进行修复
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": "explicit"
   },
   "javascript.format.insertSpaceBeforeFunctionParenthesis": true, //让函数(名)和后面的括号之间加个空格
   "vetur.format.defaultFormatter.html": "js-beautify-html", //格式化.vue中html
