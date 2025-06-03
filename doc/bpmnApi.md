@@ -110,7 +110,7 @@ bpmnModeler.saveSVG().then(result => {
 })
 ```
 
-- 导入 BOMN 文件
+- 导入 BPMN 文件
 
 ```js
 // 事先拿到文件流 file
