@@ -8,7 +8,9 @@
 
 在线预览 bpmn-modeling-api-cn
 
-[https://pl-fe.github.io/bpmn-modeling-api-cn.github.io/](https://pl-fe.github.io/bpmn-modeling-api-cn.github.io/)
+网址 1 ： [https://pl-fe.github.io/bpmn-modeling-api-cn.github.io/](https://pl-fe.github.io/bpmn-modeling-api-cn.github.io/)
+
+网址 2 ： [http://bpmn-doc-example.pl-fe.cn/modeling-api/](http://bpmn-doc-example.pl-fe.cn/modeling-api/)
 
 官方 bpmn-modeling-api
 
@@ -22,6 +24,120 @@
 - [ElementRegistry](https://github.com/bpmn-io/diagram-js/blob/master/lib/core/ElementRegistry.js): 知道添加到图中的所有元素，并提供 api 来根据 id `检索元素及其图形表示`。
 - [Modeling](https://github.com/bpmn-io/diagram-js/blob/master/lib/features/modeling/Modeling.js): 提供用于`更新`画布上的元素`(移动、删除)`的 api
 - GraphicsFactory: 负责创建图形和连接的图形表示。实际的外观是由渲染器定义的，即绘制模块中的 DefaultRenderer。
+
+### 项目中常用
+
+基础 API 建议先看上面的 [网址](http://bpmn-doc-example.pl-fe.cn/modeling-api/)
+
+- 还原
+
+```js
+bpmnModeler.get('commandStack').redo()
+```
+
+- 撤销
+
+```js
+bpmnModeler.get('commandStack').undo()
+```
+
+- 设置元素颜色
+
+```js
+const modeling = this.bpmnModeler.get('modeling')
+modeling.setColor(element, {
+  fill: '#fff',
+  stroke: '#fff'
+})
+```
+
+- 对齐
+
+```js
+// {Array} elements
+// {String} position:  left/top/right/bottom/cneter/middle
+bpmnModeler.get('alignElements').trigger(elements, position)
+```
+
+- 水平垂直对齐
+
+```js
+// {Array} elements
+// {String} axis:  /horizontal/vertical
+bpmnModeler.get('distributeElements').trigger(elements, axis)
+```
+
+- 缩放
+
+```js
+// {Number} radio : 1.0
+bpmnModeler.get('canvas').zoom(radio)
+```
+
+- 更新元素属性
+
+```js
+const modeling = bpmnModeler.get('modeling')
+modeling.updateProperties(element, {
+  key: value
+})
+```
+
+- 保存 XML
+
+```js
+bpmnModeler.saveXML({ format: true })
+```
+
+- 保存为 SVG
+
+```js
+bpmnModeler.saveSVG().then(result => {
+  const { svg } = result
+  const svgBlob = new Blob([svg], {
+    type: 'image/svg+xml'
+  })
+  const downloadLink = document.createElement('a')
+  downloadLink.download = `bpmn-${+new Date()}.SVG`
+  downloadLink.innerHTML = 'Get BPMN SVG'
+  downloadLink.href = window.URL.createObjectURL(svgBlob)
+  downloadLink.onclick = function(event) {
+    document.body.removeChild(event.target)
+  }
+  downloadLink.style.visibility = 'hidden'
+  document.body.appendChild(downloadLink)
+  downloadLink.click()
+})
+```
+
+- 导入 BPMN 文件
+
+```js
+// 事先拿到文件流 file
+const reader = new FileReader()
+reader.readAsText(file)
+reader.onload = function() {
+  xml = this.result
+  // 这里可以拿到 xml
+}
+```
+
+- 穿透
+
+对于自定义渲染有较多业务场景，如： 点击`SVG 元素`下的 `svg`，一个很有用的 `CSS` [pointer-events](https://developer.mozilla.org/zh-CN/docs/Web/CSS/pointer-events) （`穿透` ）可以帮助你。
+
+- 手动移动元素
+
+```js
+/**
+ * @param {Array<djs.mode.Base>} shapes  目标 shape 数组
+ * @param {Point} delta {x:0, y: 10} 这里是相对位置
+ * @param {djs.model.Base} [target] 这里一般是根元素 根元素 <Root>
+ * @param {Object} [hints] {attach: false, oldParent: 根元素 <Root>， primaryShape: 鼠标拖动的 shape }
+ * @param {boolean} [hints.attach=false]
+ */
+Modeling.prototype.moveElements = function(shapes, delta, target, hints) {}
+```
 
 ### Index
 

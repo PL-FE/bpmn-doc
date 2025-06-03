@@ -209,9 +209,11 @@ CustomRenderer.$inject = ['eventBus', 'bpmnRenderer', 'config.paletteEntries']
 
 下面开始如何 [自定义 contextPad](./customContextPad.md)
 
-完整目录： 👉 [点击这里](../README.md)
+完整目录： 👉 [点击这里](https://github.com/PL-FE/bpmn-doc/blob/main/README.md)
 
 ### 相关
+
+对于自定义渲染有较多业务场景，如： 点击`SVG 元素`下的 `svg`，一个很有用的 `CSS 样式` [pointer-events](https://developer.mozilla.org/zh-CN/docs/Web/CSS/pointer-events) （`穿透` ）可以帮助你。
 
 可能对你有帮助的官方资源：
 
